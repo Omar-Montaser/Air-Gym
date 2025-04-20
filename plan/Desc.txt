@@ -1,0 +1,43 @@
+Air Gym
+
+Architecture: MVC + DAO
+Model: Classes
+View: FXMLs
+Controller: Business and UI logic (Engine + Controllers)
+DAO: interacts with mssql database through JDBC
+
+Features:
+
+1-Admin:
+Member Management: 
+CRUD on member profiles/data
+Assign membership plans
+
+Trainer Management: 
+	CRUD on Trainer profiles/data
+	Store CVs of each Trainer (Will open a google drive link)
+
+Branch & Equipment Management:
+	CRUD on Branch details
+	Track maintenance, profits, expenses
+
+	Payment Tracking
+		View payment history
+		Update payment status (paid, pending)
+	
+Session/Class Management
+	CRUD Sessions
+	Assign Trainers
+	View Session Bookings
+
+2- Member
+	View Profile Info (can change name, password, number)
+	View payment history
+	View + Renew Subscription
+View + Book Sessions
+Fitness Tracker: Will fill in a form, then customised calories & macros are calculated
+	-Meal Logging (Calorie Ring + Macros Chart) 
+	-Exercise Logging
+	
+
+	
