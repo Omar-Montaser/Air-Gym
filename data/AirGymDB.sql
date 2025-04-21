@@ -82,7 +82,7 @@ CREATE TABLE Session (
     Status VARCHAR(20) CHECK (Status IN ('Scheduled', 'Completed', 'Cancelled', 'Full')) DEFAULT 'Scheduled'
 );
 
-CREATE TABLE Booking (
+CREATE TABLE Booked_Sessions (
     BookingID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT FOREIGN KEY REFERENCES Member(UserID),
     SessionID INT FOREIGN KEY REFERENCES Session(SessionID),
