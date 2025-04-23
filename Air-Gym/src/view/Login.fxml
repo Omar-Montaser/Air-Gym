@@ -27,9 +27,9 @@
             </ImageView>
          </children>
       </HBox>
-      <VBox layoutX="292.0" layoutY="200.0" prefHeight="387.0" prefWidth="442.0" styleClass="login-container" stylesheets="@assets/css/login.css">
+      <VBox layoutX="327.0" layoutY="200.0" prefHeight="387.0" prefWidth="442.0" styleClass="login-container" stylesheets="@assets/css/login.css">
          <children>
-            <Label alignment="CENTER" prefHeight="30.0" prefWidth="603.0" style="-fx-font-size: 20;" text="Login" />
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="603.0" style="-fx-font-size: 30;" text="Login" />
             <HBox prefHeight="11.0" prefWidth="382.0">
                <children>
                   <Label prefWidth="100.0" style="-fx-font-size: 18;" text="ID" />

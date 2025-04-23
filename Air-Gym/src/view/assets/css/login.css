@@ -1,6 +1,6 @@
 
 .login-container {
-    -fx-background-color: #00000066; /* semi-transparent black */
+    -fx-background-color: #00000066;
     -fx-padding: 30;
     -fx-spacing: 15;
     -fx-alignment: center;
