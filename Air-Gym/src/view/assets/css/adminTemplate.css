@@ -161,7 +161,7 @@
 }
 .form-sh{
         -fx-font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
-        -fx-font-size: 18px;
+        -fx-font-size: 12px;
         -fx-font-weight: 600;
         -fx-text-fill: #333333;
         -fx-padding: 10 0 10 0;
