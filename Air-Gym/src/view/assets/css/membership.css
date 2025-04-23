@@ -1,0 +1,48 @@
+/* Base style for all membership boxes */
+.membership-box {
+    -fx-background-radius: 12px;
+    -fx-padding: 15px;
+    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 2, 2);
+    -fx-spacing: 10;
+}
+
+.basic-membership {
+    -fx-background-color: #757575; 
+}
+
+.standard-membership {
+    -fx-background-color: #8b597e; 
+}
+
+.premium-membership {
+    -fx-background-color: #cbba62; 
+}
+
+.vip-membership {
+    -fx-background-color: #557bc2; 
+}
+
+/* Optional hover effect */
+.membership-box:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.95;
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+.membership-box Label {
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-style: italic;
+    -fx-wrap-text: true;
+}
+
+.membership-title {
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}

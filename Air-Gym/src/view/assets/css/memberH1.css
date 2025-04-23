@@ -1,6 +1,5 @@
 .top-container {
     -fx-background-color: #00000066;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.2, 0, 4);
 }
 .logout-button {
     -fx-background-color: transparent;
@@ -57,7 +56,86 @@
 }
 
 #bookSessionBtn:pressed {
+    -fx-background-color: linear-gradient(to right, #008A57, #00A763);
+}
+
+#cancelSessionBtn {
+    -fx-background-color: grey;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0.2, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+#cancelSessionBtn:hover {
+    -fx-background-color: linear-gradient(to right, #ED2D2D, #FF5252);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FF525255, 8, 0.2, 0, 3);
+}
+
+#cancelSessionBtn:pressed {
+    -fx-background-color: linear-gradient(to right, #CC2424, #ED2D2D);
+}
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #CCCCCC;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 6 12;
+    -fx-background-radius: 6;
+}
+
+.logout-button:hover {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.nav-panel {
+    -fx-background-color: #7a7a7a;
+}
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill:  #CCCCCC;;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;  
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #00000066;
+}
+#welcomeLabel {
+    -fx-font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    -fx-font-size: 28px;
+    -fx-text-fill: linear-gradient(to right, #2b5876, #4e4376);
+    -fx-font-weight: bold;
+    -fx-padding: 15px 0 5px 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0.5, 0, 1);
+}
+#bookSessionBtn {
+    -fx-background-color: #2C2C2E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+
+#bookSessionBtn:hover {
+    /* -fx-background-color: linear-gradient(to right, #0072ED, #00AEEF); */
     -fx-background-color:linear-gradient(to right, #2b5876, #4e4376);  
+}
+
+#bookSessionBtn:pressed {
+    -fx-background-color:linear-gradient(to right, #1c3a4e, #3a3351);  
 }
 
 #cancelSessionBtn {
