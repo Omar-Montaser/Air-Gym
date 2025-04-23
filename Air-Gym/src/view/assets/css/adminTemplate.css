@@ -1,0 +1,139 @@
+#menuButton {
+    -fx-font-family: 'Roboto', 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #d3d3d3;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 60px;
+    -fx-border-color: transparent;
+    -fx-margin: 5px 0;
+}
+
+#menuButton:hover {
+    -fx-background-color: #bbbbbb;
+}
+
+#menuButton:pressed {
+    -fx-background-color: #999999;
+}
+.welcome-label {
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgba(0, 0, 0, 0.6) , 3, 0.2 , 1 , 1 );
+    -fx-padding: 10 0 20 0;
+    -fx-alignment: center;
+}
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-text-fill: white;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 16 6 16;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.logout-button:pressed {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: black;
+}
+.table-view {
+    -fx-background-color: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #eeeeee;
+}
+
+.table-view .column-header, 
+.table-view .filler {
+    -fx-size: 35px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #cccccc;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-alignment: center;
+}
+
+.table-row-cell {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: transparent;
+    -fx-padding: 4px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #eaeaea;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #bbbbbb;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #dddddd;
+}
+
+.new-entry-button {
+    -fx-background-color: #d3d3d3; /* Light grey */
+    -fx-text-fill: black;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0.2, 0, 1);
+}
+
+.new-entry-button:hover {
+    -fx-background-color: #bcbcbc;
+}
+
+.new-entry-button:pressed {
+    -fx-background-color: #999999;
+    -fx-text-fill: white;
+}
+
+
+.delete-button {
+    -fx-background-color: #ff5e5e; /* Soft red */
+    -fx-text-fill: white;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0.2, 0, 1);
+}
+
+.delete-button:hover {
+    -fx-background-color: #e64545;
+}
+
+.delete-button:pressed {
+    -fx-background-color: #c03030;
+}

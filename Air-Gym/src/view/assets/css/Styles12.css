@@ -1,0 +1,158 @@
+.root{
+    -fx-background-size: cover;
+}
+.exit{
+    -fx-background-color:  #2962b3;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+}
+
+.checkBox{
+    -fx-background-color: transparent;
+    -fx-border-color: #d7d7d7;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 5px;
+}
+.checkBox:hover{
+    -fx-background-color: #f3f3f3;
+    -fx-border-color: #2962b3;
+    -fx-border-radius: 5px;
+}
+.checkBox:selected{
+    -fx-background-color: #2962b3;
+    -fx-border-color: #2962b3;
+    -fx-border-radius: 5px;
+}
+.DatePicker{
+    -fx-background-color: transparent;
+    -fx-border-color: #d7d7d7;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+.DatePicker:focused{
+    -fx-border-color: #2962b3;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.combo-box{
+    -fx-background-color: transparent;
+    -fx-border-color: #d7d7d7;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+.combo-box:focused{
+    -fx-border-color: #2962b3;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+.combo-box-popup{
+    -fx-background-color: #f3f3f3;
+}
+.loginbutton{
+    -fx-background-color: #2962b3;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+}
+.loginbutton:hover{
+    -fx-background-color: #1e4a8f;
+}
+.loginbutton:disabled{
+    -fx-background-color: #d7d7d7;
+}
+.donebutton{
+    -fx-background-color: #2962b3;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+}
+.donebutton:hover{
+    -fx-background-color: #1e4a8f;
+}
+.donebutton:disabled{
+    -fx-background-color: #d7d7d7;
+}
+.nextbutton{
+    -fx-background-color: #2962b3;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+.nextbutton:hover{
+    -fx-background-color: #1e4a8f;
+}
+.nextbutton:disabled{
+    -fx-background-color: #d7d7d7;
+}
+.backbutton{
+    -fx-background-color: #2962b3;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+.backbutton:hover{
+    -fx-background-color: #1e4a8f;
+}
+.backbutton:disabled{
+    -fx-background-color: #d7d7d7;
+}
+
+.visiblebutton{
+    -fx-background-color: transparent;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+}
+.visiblebutton:hover{
+    -fx-background-color: #a8a5a5;
+}
+.visiblebutton:disabled{
+    -fx-background-color: #d7d7d7;
+}
+
+
+
+
+
+
+
+
+.seen{
+    -fx-background-color: transparent;
+    -fx-background-radius: 50px;
+    -fx-cursor: hand;
+}
+.exit:hover{
+    -fx-background-color: #e04353;
+}
+.text-field{
+    -fx-background-color: #f3f3f3;
+    -fx-border-color: #d7d7d7;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+
+.text-field:focused{
+    -fx-border-color: #2962b3;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+.text-field:hover{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #2962b3;
+}
+
+.whitebackground {
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+}
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+.round_layout{
+    -fx-border-radius: 50;
+    -fx-border-color: #d7d7d7;
+}
+.selected{
+    -fx-background-color: #f3f3f3;
+}
+.mouse-moved:hover{
+    -fx-background-color: #e4e4e4;
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 10);
+}

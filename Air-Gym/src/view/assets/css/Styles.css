@@ -1,0 +1,57 @@
+.whitebackground {
+    -fx-background-color: #fff;
+    -fx-border-width: 1px;
+}
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+.transparent:hover{
+    -fx-background-color: rgba(0,0,0,0.1);
+}
+.round_layout{
+    -fx-border-radius: 50;
+    -fx-border-color: #d7d7d7;
+}
+.selected{
+    -fx-background-color: #f3f3f3;
+}
+.mouse-moved:hover{
+    -fx-background-color: #4285F4;
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 10, 0, 0, 10);
+}.button12 {
+     -fx-background-color: #4285F4; /* Blue color */
+     -fx-color: #ffffff;
+     -fx-border: none;
+     -fx-border-radius: 4px; /* Rounded corners */
+     -fx-cursor: pointer;
+     -fx-transition: background-color 0.3s ease; /* Smooth hover effect */
+ }
+.button1:hover {
+    -fx-background-color: #357AE8;
+}
+.bubuButon {
+    -fx-background-color: transparent;
+    -fx-border-width: 2px 0px 2px 0px;
+    -fx-border-color: #d7d7d7;
+}
+.bubuButon:hover {
+    -fx-background-color: #4285F4;
+}
+
+.text-field{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #d7d7d7;
+}
+.text-field:hover{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #2962b3;
+}
+.text-field:focused{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #2962b3;
+}
