@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="611.0" fitWidth="1130.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/images/LogInCover.jpeg" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER" layoutX="-2.0" layoutY="8.0" prefHeight="185.0" prefWidth="1100.0">
+         <children>
+            <ImageView fitHeight="204.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/LOGO%203.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox layoutX="292.0" layoutY="200.0" prefHeight="387.0" prefWidth="442.0" styleClass="login-container" stylesheets="@assets/css/login.css">
+         <children>
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="603.0" style="-fx-font-size: 20;" text="Login" />
+            <HBox prefHeight="11.0" prefWidth="382.0">
+               <children>
+                  <Label prefWidth="100.0" style="-fx-font-size: 18;" text="ID" />
+                  <TextField prefHeight="0.0" prefWidth="173.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="2.0" prefWidth="382.0">
+               <children>
+                  <Label prefWidth="100.0" style="-fx-font-size: 18;" text="Password" />
+                  <TextField prefHeight="7.0" prefWidth="173.0" />
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+            <Label prefHeight="22.0" prefWidth="220.0" styleClass="link-label" text="Forgot Password?">
+               <padding>
+                  <Insets left="120.0" />
+               </padding>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="432.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="174.0" styleClass="login-button" text="Login">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="432.0">
+               <children>
+                  <Label styleClass="link-label" text="Continue as Guest" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
