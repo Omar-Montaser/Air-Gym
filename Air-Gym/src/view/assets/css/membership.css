@@ -35,7 +35,7 @@
 .membership-box Label {
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
     -fx-font-style: italic;
     -fx-wrap-text: true;
 }

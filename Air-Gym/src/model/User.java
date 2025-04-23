@@ -1,16 +1,23 @@
 package model;
 
 public class User {
-    private final int USER_ID;
+    private final String USER_ID;
+    //TODO add AD, MEM and PT before each id when retrieved from database
     private String firstName;
     private String lastName;
+    private String password;
     private String phoneNumber;
     private String gender;
     private java.sql.Date dateOfBirth;
     private final String role;
 //=======================================Constructor===================================
-    public User(int USER_ID, String firstName, String lastName, String phoneNumber, String gender, java.sql.Date dateOfBirth, String role) {
+    public User(String USER_ID, String firstName, String lastName, String password,String phoneNumber, String gender, java.sql.Date dateOfBirth, String role) {
         this.USER_ID = USER_ID;
+        this.password=password; 
+        //TODO Registration:
+        //using password, create hash and salt inorder to store in DB
+        //TODO Retrieving:
+        //using hash & salt, return password
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -18,7 +25,7 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.role = role;
     }
-    public User(int USER_ID, String firstName, String lastName, String phoneNumber, String gender, String role) {
+    public User(String USER_ID, String firstName, String lastName,String password, String phoneNumber, String gender, String role) {
         this.USER_ID = USER_ID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,7 +35,7 @@ public class User {
         this.dateOfBirth = null;
     }
 //=======================================Get&Set=======================================
-    public int getUserId() {
+    public String getUserId() {
         return USER_ID;
     }
     public String getFirstName() {

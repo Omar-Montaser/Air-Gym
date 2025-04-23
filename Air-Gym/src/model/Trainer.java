@@ -6,9 +6,9 @@ public class Trainer extends User {
     private int branchId;
     private String status;
 //=======================================Constructor===================================
-    public Trainer(int userId, String firstName, String lastName, String phoneNumber, String gender, java.sql.Date dateOfBirth, String role,
+    public Trainer(String userId, String firstName, String lastName,String password, String phoneNumber, String gender, java.sql.Date dateOfBirth, String role,
                    String specialization, int experienceYears, double salary, int branchId, String status) {
-        super(userId, firstName, lastName, phoneNumber, gender, dateOfBirth, role); 
+        super(userId, firstName, lastName,password, phoneNumber, gender, dateOfBirth, role); 
         this.specialization = specialization;
         this.experienceYears = experienceYears;
         this.salary = salary;
