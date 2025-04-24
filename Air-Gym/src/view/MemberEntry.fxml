@@ -21,7 +21,7 @@
                <children>
                   <ImageView fitHeight="120.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/images/LOGO%202.png" />
+                        <Image url="@assets/images/LOGO2.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="40.0" />
@@ -46,16 +46,21 @@
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
          </children>
       </VBox>
-      <HBox layoutX="196.0" layoutY="-5.0" prefHeight="60.0" prefWidth="905.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
+      <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="907.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="welcome-label" text="Welcome Admin!">
                <HBox.margin>
                   <Insets left="10.0" top="20.0" />
                </HBox.margin>
             </Text>
-            <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+            <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Back">
                <HBox.margin>
-                  <Insets left="550.0" top="15.0" />
+                  <Insets left="550.0" right="10.0" top="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button layoutX="716.0" layoutY="25.0" mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="15.0" />
                </HBox.margin>
             </Button>
          </children>
