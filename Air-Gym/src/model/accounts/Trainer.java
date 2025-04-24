@@ -1,4 +1,4 @@
-package model;
+package model.accounts;
 public class Trainer extends User {
     private String specialization;
     private int experienceYears;
