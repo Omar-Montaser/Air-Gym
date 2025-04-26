@@ -100,32 +100,32 @@
           </children>
        </VBox>
       <Label id="welcomeLabel" layoutX="611.0" layoutY="200.0" prefHeight="53.0" prefWidth="313.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Upcoming Events:" />
-      <ScrollPane layoutX="613.0" layoutY="264.0" prefHeight="162.0" prefWidth="484.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="614.0" layoutY="249.0" prefHeight="318.0" prefWidth="438.0" style="-fx-background-color: #e3e3e3;">
          <content>
-            <HBox prefHeight="142.0" prefWidth="982.0" spacing="10.0" style="-fx-background-color: #e3e3e3;">
+            <VBox prefHeight="651.0" prefWidth="422.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
                <children>
-                  <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/images/EVENT%203.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="222.0" fitWidth="421.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/images/EVENT%204.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="221.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/images/EVENT%201.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="419.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/images/EVENT%202.jpg" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="419.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/EVENT%203.jpg" />
+                     </image>
+                  </ImageView>
                </children>
-            </HBox>
+            </VBox>
          </content>
       </ScrollPane>
     </children>

@@ -1,101 +1,115 @@
 CREATE DATABASE AirGym;
 GO
-
 USE AirGym;
 GO
-
 
 CREATE TABLE Branch (
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
     Location VARCHAR(255) NOT NULL,
-    PhoneNumber VARCHAR(15),
-    OpeningDate DATE,
-    Status VARCHAR(20) CHECK (Status IN ('Active', 'Maintenance', 'Closed')) DEFAULT 'Active'
+    PhoneNumber VARCHAR(15) NOT NULL,
+    OpeningDate DATE NOT NULL,
+    Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed'))
 );
 
 CREATE TABLE MembershipType (
-    MembershipID INT IDENTITY(1,1) PRIMARY KEY,
+    MembershipTypeID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
     Description TEXT,
-    Price DECIMAL(10,2) NOT NULL,
-    Duration INT NOT NULL,
-    noOfSessions INT,
-    noOfPrivateSessions INT,
-    FreezeDuration INT,
-    InBody BIT DEFAULT 0,
-    AccessLevel VARCHAR(100)
+    AccessLevel INT NOT NULL,
+    MonthlyPrice DECIMAL(10,2) NOT NULL,
+    NoOfSessions INT NOT NULL DEFAULT 0,
+    PrivateTrainer BIT NOT NULL DEFAULT 0,
+    FreezeDuration INT NOT NULL DEFAULT 0,
+    InBody BIT NOT NULL DEFAULT 0,
+    ColorHex VARCHAR(7) CHECK (ColorHex LIKE '#______')
 );
-CREATE TABLE User (
+
+CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY,
-    -- For login
-    -- Username VARCHAR(50) NOT NULL UNIQUE, 
-    -- PasswordSalt CHAR(29) NOT NULL,
-    -- PasswordHash VARCHAR(255) NOT NULL,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    PhoneNumber VARCHAR(15),
-    Gender VARCHAR(10) CHECK (Gender IN ('Male', 'Female')),
-    DateOfBirth DATE,
-    Role VARCHAR(20) CHECK (Role IN ('Admin', 'Member', 'Trainer')) NOT NULL
+    PasswordSalt CHAR(29) NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
+    Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
+    DateOfBirth DATE NOT NULL,
+    Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
 );
 
 CREATE TABLE Trainer (
-    UserID INT PRIMARY KEY FOREIGN KEY REFERENCES [User](UserID),
-
-    Specialization VARCHAR(100),
+    UserID INT PRIMARY KEY,
+    Specialization VARCHAR(100) NOT NULL,
     ExperienceYears INT CHECK (ExperienceYears >= 0),
-    Salary DECIMAL(10,2),
-    -- CVPath VARCHAR(255), -- Optional: link to uploaded CV
-    BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
-    Status VARCHAR(20) CHECK (Status IN ('Active', 'OnLeave', 'Terminated')) DEFAULT 'Active'
+    Salary DECIMAL(10,2) NOT NULL,
+    BranchID INT NULL, 
+    Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'OnLeave', 'Terminated')),
+    
+    CONSTRAINT FK_Trainer_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    CONSTRAINT FK_Trainer_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL
 );
 
 CREATE TABLE Member (
-    UserID INT PRIMARY KEY FOREIGN KEY REFERENCES [User](UserID),
+    UserID INT PRIMARY KEY,
+    MembershipTypeID INT NULL, -- FK later
+    SubscriptionDuration INT NOT NULL,
+    SubscriptionStartDate DATE NOT NULL,
+    SubscriptionEndDate DATE NOT NULL,
+    UsedSessions INT NOT NULL DEFAULT 0,
+    BranchID INT NULL, 
+    TrainerID INT NULL,
+    SubscriptionStatus VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Pending', 'Cancelled', 'OnHold')),
 
-    JoinDate DATE DEFAULT GETDATE(),
-    MembershipID INT FOREIGN KEY REFERENCES MembershipType(MembershipID),
-    BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
-    TrainerID INT NULL FOREIGN KEY REFERENCES Trainer(UserID), -- PT
-    PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
-    SubscriptionStatus VARCHAR(20) CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Pending', 'Cancelled', 'OnHold')) DEFAULT 'Active'
+    CONSTRAINT FK_Member_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    CONSTRAINT FK_Member_MembershipType FOREIGN KEY (MembershipTypeID) REFERENCES MembershipType(MembershipTypeID) ON DELETE SET NULL,
+    CONSTRAINT FK_Member_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL
 );
 
 CREATE TABLE Equipment (
     EquipmentID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
-    PurchaseDate DATE,
+    PurchaseDate DATE NOT NULL,
     MaintenanceDate DATE,
-    Status VARCHAR(20) CHECK (Status IN ('Available','Maintenance','Retired')) DEFAULT 'Available',
-    BranchID INT FOREIGN KEY REFERENCES Branch(BranchID)
+    Status VARCHAR(20) NOT NULL DEFAULT 'Available' CHECK (Status IN ('Available', 'Maintenance', 'Retired')),
+    BranchID INT NOT NULL,
+
+    CONSTRAINT FK_Equipment_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE CASCADE
 );
 
 CREATE TABLE Session (
     SessionID INT IDENTITY(1,1) PRIMARY KEY,
-    TrainerID INT FOREIGN KEY REFERENCES Trainer(UserID),
-    BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
-    SessionType VARCHAR(20) CHECK (SessionType IN ('Yoga', 'HIIT', 'Cycling', 'Pilates', 'Boxing', 'Zumba')),
+    TrainerID INT NOT NULL,
+    BranchID INT NOT NULL,
+    SessionType VARCHAR(20) NOT NULL CHECK (SessionType IN ('Yoga', 'HIIT', 'Cycling', 'Pilates', 'Boxing', 'Zumba')),
     MaxCapacity INT NOT NULL CHECK (MaxCapacity > 0),
     DateTime DATETIME NOT NULL,
-    Duration INT NOT NULL CHECK (Duration > 0), -- in minutes
-    Status VARCHAR(20) CHECK (Status IN ('Scheduled', 'Completed', 'Cancelled', 'Full')) DEFAULT 'Scheduled'
-);
+    Duration INT NOT NULL CHECK (Duration > 0),
+    Status VARCHAR(20) NOT NULL DEFAULT 'Scheduled' CHECK (Status IN ('Scheduled', 'Completed', 'Cancelled', 'Full')),
 
-CREATE TABLE Booked_Sessions (
-    BookingID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT FOREIGN KEY REFERENCES Member(UserID),
-    SessionID INT FOREIGN KEY REFERENCES Session(SessionID),
-    Status VARCHAR(20) CHECK (Status IN ('Confirmed', 'Cancelled', 'NoShow', 'Pending')) DEFAULT 'Pending',
-    PaymentStatus VARCHAR(20) CHECK (PaymentStatus IN ('Paid', 'Pending', 'Refunded', 'Failed')),
-    BookingDate DATETIME DEFAULT GETDATE()
+    CONSTRAINT FK_Session_Trainer FOREIGN KEY (TrainerID) REFERENCES Trainer(UserID) ON DELETE CASCADE,
+    CONSTRAINT FK_Session_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE CASCADE
 );
 
 CREATE TABLE Payment (
     PaymentID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT FOREIGN KEY REFERENCES User(UserID),
+    Category VARCHAR(50) NOT NULL CHECK (Category IN ('Membership', 'Session', 'Other')),
+    MemberID INT NOT NULL, 
+    PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
     PaymentDate DATETIME DEFAULT GETDATE(),
     Amount DECIMAL(10,2) NOT NULL,
-    PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
-    Status VARCHAR(20) CHECK (Status IN ('Completed', 'Pending', 'Failed', 'Refunded'))
+    Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending', 'Failed', 'Refunded')),
+
+    CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE Booking (
+    BookingID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL, 
+    SessionID INT NOT NULL,
+    PaymentID INT NULL,
+    Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled', 'NoShow', 'Pending')),
+    BookingDate DATETIME DEFAULT GETDATE(),
+
+    CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
+    CONSTRAINT FK_Booking_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID) ON DELETE CASCADE
 );
