@@ -1,4 +1,5 @@
 package model.accounts;
+
 public class Trainer extends User {
     private String specialization;
     private int experienceYears;
@@ -6,9 +7,9 @@ public class Trainer extends User {
     private int branchId;
     private String status;
 //=======================================Constructor===================================
-    public Trainer(String userId, String firstName, String lastName,String password, String phoneNumber, String gender, java.sql.Date dateOfBirth, String role,
+    public Trainer(String userId, String firstName, String lastName,String password, String phoneNumber, String gender, java.sql.Date dateOfBirth,
                    String specialization, int experienceYears, double salary, int branchId, String status) {
-        super(userId, firstName, lastName,password, phoneNumber, gender, dateOfBirth, role); 
+        super('T'+userId, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Trainer"); 
         this.specialization = specialization;
         this.experienceYears = experienceYears;
         this.salary = salary;

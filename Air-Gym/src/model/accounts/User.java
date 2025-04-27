@@ -11,22 +11,19 @@ public class User {
     private java.sql.Date dateOfBirth;
     private final String role;
 //=======================================Constructor===================================
-    public User(String USER_ID, String firstName, String lastName, String password,String phoneNumber, String gender, java.sql.Date dateOfBirth, String role) {
+    public User(String USER_ID,  String firstName, String lastName, String password,String phoneNumber, String gender, java.sql.Date dateOfBirth,String role) {
         this.USER_ID = USER_ID;
         this.password=password; 
-        //TODO Registration:
-        //using password, create hash and salt inorder to store in DB
-        //TODO Retrieving:
-        //using hash & salt, return password
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.role = role;
+        this.role=role;
     }
     public User(String USER_ID, String firstName, String lastName,String password, String phoneNumber, String gender, String role) {
         this.USER_ID = USER_ID;
+        this.password=password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -77,6 +74,12 @@ public class User {
     }
     public void setDateOfBirth(java.sql.Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

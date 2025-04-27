@@ -4,26 +4,27 @@ public class MembershipType {
     private int membershipID;
     private String name;
     private String description;
-    private double monthlyPrice;
-    private int duration;
-    private int noOfSessions;
-    private int noOfPrivateSessions;
-    private int freezeDuration;
-    private boolean inBody;
     private int accessLevel;
+    private double monthlyPrice;
+    private int noOfSessions;
+    private boolean privateTrainer;
+    private int freezeDuration;
+    private int inBody;
+    private String colorHex;
+
 //================================================Constructor=============================================
-    public MembershipType(int membershipID, String name, String description, double monthlyPrice, int duration,
-        int noOfSessions, int noOfPrivateSessions, int freezeDuration, boolean inBody, int accessLevel) {
-        this.membershipID = membershipID;
-        this.name = name;
-        this.description = description;
-        this.monthlyPrice = monthlyPrice;
-        this.duration = duration;
-        this.noOfSessions = noOfSessions;
-        this.noOfPrivateSessions = noOfPrivateSessions;
-        this.freezeDuration = freezeDuration;
-        this.inBody = inBody;
-        this.accessLevel = accessLevel;
+    public MembershipType(int membershipID, String name, String description, String accessLevel, double monthlyPrice,
+        int noOfSessions,boolean privateTrainer, int freezeDuration, int inBody, String colorHex) {
+            this.membershipID = membershipID;
+            this.name = name;
+            this.description = description;
+            this.accessLevel = Integer.parseInt(accessLevel);
+            this.monthlyPrice = monthlyPrice;
+            this.noOfSessions = noOfSessions;
+            this.privateTrainer = privateTrainer;
+            this.freezeDuration = freezeDuration;
+            this.inBody = inBody;
+            this.colorHex = colorHex;
     }
 //==================================================Get&Set=============================================
     public int getMembershipID() {
@@ -50,23 +51,11 @@ public class MembershipType {
     public void setMonthlyPrice(double monthlyPrice) {
         this.monthlyPrice = monthlyPrice;
     }
-    public int getDuration() {
-        return duration;
-    }
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
     public int getNoOfSessions() {
         return noOfSessions;
     }
     public void setNoOfSessions(int noOfSessions) {
         this.noOfSessions = noOfSessions;
-    }
-    public int getNoOfPrivateSessions() {
-        return noOfPrivateSessions;
-    }
-    public void setNoOfPrivateSessions(int noOfPrivateSessions) {
-        this.noOfPrivateSessions = noOfPrivateSessions;
     }
     public int getFreezeDuration() {
         return freezeDuration;
@@ -74,10 +63,10 @@ public class MembershipType {
     public void setFreezeDuration(int freezeDuration) {
         this.freezeDuration = freezeDuration;
     }
-    public boolean isInBody() {
+    public int getInBody() {
         return inBody;
     }
-    public void setInBody(boolean inBody) {
+    public void setInBody(int inBody) {
         this.inBody = inBody;
     }
     public int getAccessLevel() {
@@ -85,6 +74,18 @@ public class MembershipType {
     }
     public void setAccessLevel(int accessLevel) {
         this.accessLevel = accessLevel;
+    }
+    public boolean getPrivateTrainer() {
+        return privateTrainer;
+    }
+    public void setPrivateTrainer(boolean privateTrainer) {
+        this.privateTrainer = privateTrainer;
+    }
+    public String getColorHex() {
+        return colorHex;
+    }
+    public void setColorHex(String colorHex) {
+        this.colorHex = colorHex;
     }
 
     

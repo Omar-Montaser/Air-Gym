@@ -4,18 +4,20 @@ import java.sql.Timestamp;
 
 public class Payment {
     private int paymentID;
-    private int userID;
+    private String category;
+    private int memberID;
+    private String paymentMethod;
     private Timestamp paymentDate;
     private double amount;
-    private String paymentMethod;
     private String status;
 //================================================Constructor=============================================
-    public Payment(int paymentID, int userID, Timestamp paymentDate, double amount, String paymentMethod, String status) {
+    public Payment(int paymentID, String category, int memberID, String paymentMethod, Timestamp paymentDate, double amount, String status) {
         this.paymentID = paymentID;
-        this.userID = userID;
+        this.category = category;
+        this.memberID = memberID;
+        this.paymentMethod = paymentMethod;
         this.paymentDate = paymentDate;
         this.amount = amount;
-        this.paymentMethod = paymentMethod;
         this.status = status;
     }
 //==================================================Get&Set===============================================
@@ -25,11 +27,17 @@ public class Payment {
     public void setPaymentID(int paymentID) {
         this.paymentID = paymentID;
     }
-    public int getUserID() {
-        return userID;
+    public int getMemberID() {
+        return memberID;
     }
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setMemberID(int memberID) {
+        this.memberID = memberID;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
     public Timestamp getPaymentDate() {
         return paymentDate;

@@ -6,18 +6,18 @@ public class Booking {
     private int bookingID;
     private int userID;
     private int sessionID;
+    private String paymentID;
     private String status;
-    private String paymentStatus;
     private Timestamp bookingDate;
 
 //================================================Constructor=============================================
-    public Booking(int bookingID, int userID, int sessionID, String status, String paymentStatus,
+    public Booking(int bookingID, int userID, int sessionID, String status, String paymentID,
             Timestamp bookingDate) {
         this.bookingID = bookingID;
         this.userID = userID;
         this.sessionID = sessionID;
         this.status = status;
-        this.paymentStatus = paymentStatus;
+        this.paymentID = paymentID;
         this.bookingDate = bookingDate;
     }
 //==================================================Get&Set===============================================
@@ -45,11 +45,11 @@ public class Booking {
     public void setStatus(String status) {
         this.status = status;
     }
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public String getPaymentID() {
+        return paymentID;
     }
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
     }
     public Timestamp getBookingDate() {
         return bookingDate;
