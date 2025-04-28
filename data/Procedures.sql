@@ -73,7 +73,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 'Completed'
             );
     END
-
+GO
 CREATE OR ALTER PROCEDURE UpdateMember (
         @UserID INT,
         @FirstName VARCHAR(50) = NULL,  
@@ -84,6 +84,7 @@ CREATE OR ALTER PROCEDURE UpdateMember (
         @MembershipTypeID INT = NULL,   
         @SubscriptionStartDate DATE = NULL, 
         @SubscriptionEndDate DATE = NULL,   
+        @SessionsAvailable INT = NULL,
         @SubscriptionStatus VARCHAR(20) = NULL, 
         @TrainerID INT = NULL,
         @BranchID INT = NULL
@@ -115,7 +116,7 @@ CREATE OR ALTER PROCEDURE UpdateMember (
                 RETURN;
             END
             IF @SubscriptionStatus IS NOT NULL AND
-            @SubscriptionStatus NOT IN ('Active', 'Expired', 'Pending', 'Cancelled', 'OnHold')
+            @SubscriptionStatus NOT IN ('Active', 'Expired', 'Cancelled')
             BEGIN
                 RAISERROR('Invalid SubscriptionStatus provided', 16, 1);
                 RETURN;
@@ -136,7 +137,7 @@ CREATE OR ALTER PROCEDURE UpdateMember (
 
             IF @MembershipTypeID IS NOT NULL OR @SubscriptionStartDate IS NOT NULL OR 
             @SubscriptionEndDate IS NOT NULL OR @SubscriptionStatus IS NOT NULL OR
-            @TrainerID IS NOT NULL OR @BranchID IS NOT NULL
+            @TrainerID IS NOT NULL OR @BranchID IS NOT NULL OR @SessionsAvailable is not null
             BEGIN
                 UPDATE Member
                 SET MembershipTypeID = COALESCE(@MembershipTypeID, MembershipTypeID),
@@ -144,17 +145,13 @@ CREATE OR ALTER PROCEDURE UpdateMember (
                     SubscriptionEndDate = COALESCE(@SubscriptionEndDate, SubscriptionEndDate),
                     SubscriptionStatus = COALESCE(@SubscriptionStatus, SubscriptionStatus),
                     TrainerID = COALESCE(@TrainerID, TrainerID),
-                    BranchID = COALESCE(@BranchID, BranchID)
+                    BranchID = COALESCE(@BranchID, BranchID),
+                    SessionsAvailable= COALESCE(@SessionsAvailable, SessionsAvailable)
                 WHERE UserID = @UserID;
-                
-                IF @MembershipTypeID IS NOT NULL
-                BEGIN
-                    UPDATE Member
-                    SET SessionsAvailable = (SELECT Sessions FROM MembershipType WHERE MembershipTypeID = @MembershipTypeID)
-                    WHERE UserID = @UserID;
-                END
+            
             END
     END;
+GO
 CREATE OR ALTER PROCEDURE DeleteUser
         @UserID INT
     AS
@@ -168,6 +165,7 @@ CREATE OR ALTER PROCEDURE DeleteUser
     END;
 
 
+GO
 CREATE OR ALTER PROCEDURE ExtendSubscription
         @UserID INT,
         @Duration INT, 
@@ -193,13 +191,16 @@ CREATE OR ALTER PROCEDURE ExtendSubscription
         INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
         WHERE Member.UserID = @UserID;
         UPDATE Member
-        SET SubscriptionEndDate = DATEADD(MONTH, @Duration, SubscriptionEndDate)
+        SET 
+        SubscriptionEndDate = DATEADD(MONTH, @Duration, SubscriptionEndDate),
+        SessionsAvailable=SessionsAvailable+@SessionsAvailable
         WHERE UserID = @UserID;
 
     INSERT INTO Payment (Category, MemberID, PaymentMethod, PaymentDate , Amount, Status)
         VALUES ('Membership', @UserID, @PaymentMethod,GETDATE(),(@MonthlyPrice * @Duration), 'Completed');
     END;
-
+    
+GO
 CREATE OR ALTER PROCEDURE RenewSubscription
         @UserID INT,
         @Duration INT,
@@ -219,19 +220,21 @@ CREATE OR ALTER PROCEDURE RenewSubscription
         END
         
         DECLARE @MonthlyPrice DECIMAL(10,2);
-        DECLARE @SessionsAvailable INT;
-        SELECT @MonthlyPrice = MonthlyPrice, @SessionsAvailable = Sessions
+        DECLARE @Session INT;
+        SELECT @MonthlyPrice = MonthlyPrice, @Session = Sessions
         FROM MembershipType
         INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
         WHERE Member.UserID = @UserID;
         DECLARE @NewEndDate DATE = DATEADD(MONTH, @Duration, GETDATE());
         DECLARE @NEWSTARTDATE DATE= GETDATE();
-        EXEC UpdateMember 
-            @UserID = @UserID,
-            @MembershipTypeID = @MembershipTypeID, 
-            @SubscriptionStartDate=@NewStartDate,
-            @SubscriptionEndDate = @NewEndDate,  
-            @SubscriptionStatus = 'Active'; 
+        UPDATE Member
+        SET 
+		SubscriptionStartDate =@NEWSTARTDATE,
+        SubscriptionEndDate = @NewEndDate,
+        SessionsAvailable=SessionsAvailable+@Session,
+		SubscriptionStatus='Active',
+		MembershipTypeID=@MembershipTypeID
+        WHERE UserID = @UserID;
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, Amount, Status)
         VALUES (
@@ -242,7 +245,7 @@ CREATE OR ALTER PROCEDURE RenewSubscription
             'Completed'
         );
     END;
-
+GO
 CREATE OR ALTER PROCEDURE CancelSubscription
         @UserID INT
     AS
@@ -268,3 +271,73 @@ CREATE OR ALTER PROCEDURE CancelSubscription
         SET Status = 'Cancelled'
         WHERE UserID = @UserID;
     END
+GO
+CREATE OR ALTER PROCEDURE UpdateSubscriptionStatusAndSessions
+    AS
+    BEGIN
+        UPDATE Member
+        SET SubscriptionStatus = 'Expired'
+        WHERE SubscriptionEndDate < GETDATE() AND SubscriptionStatus = 'Active';
+
+        UPDATE Session
+        SET Status = 'Completed'
+        WHERE DateTime < GETDATE() AND Status = 'Scheduled';
+
+        UPDATE Session
+        SET Status = 'Full'
+        WHERE SessionID IN (
+            SELECT SessionID
+            FROM Booking
+            GROUP BY SessionID
+            HAVING COUNT(*) >= (SELECT MaxCapacity FROM Session WHERE SessionID = Session.SessionID)
+        );
+
+        UPDATE Booking
+        SET Status = 'Cancelled'
+        WHERE SessionID IN (SELECT SessionID FROM Session WHERE Status = 'Cancelled') 
+        AND Status = 'Confirmed';
+    END;
+GO
+CREATE OR ALTER PROCEDURE FreezeSubscription
+    @UserID INT,
+    @Duration INT
+    AS
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+        BEGIN
+            RAISERROR('Member does not exist.', 16, 1);
+            RETURN;
+        END
+        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Cancelled', 'Expired'))
+        BEGIN
+            RAISERROR('This subscription is already cancelled or expired.', 16, 1);
+            RETURN;
+        END
+        UPDATE Member
+        SET SubscriptionStatus = 'Frozen', SubscriptionEndDate = DATEADD(MONTH, @Duration, GETDATE())
+        WHERE UserID = @UserID;
+
+        UPDATE Booking
+        SET Status = 'Cancelled'
+        WHERE UserID = @UserID;
+    END;
+GO
+CREATE OR ALTER PROCEDURE UnfreezeSubscription
+    @UserID INT
+    AS
+    BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+        BEGIN
+            RAISERROR('Member does not exist.', 16, 1);
+            RETURN;
+        END
+    IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Frozen'))
+        BEGIN
+            RAISERROR('This subscription is not frozen.', 16, 1);
+            RETURN;
+
+    UPDATE Member
+    SET SubscriptionStatus = 'Active', SubscriptionEndDate = NULL
+    WHERE UserID = @UserID;
+	END
+END;
