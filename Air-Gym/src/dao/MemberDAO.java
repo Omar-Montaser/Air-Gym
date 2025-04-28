@@ -117,7 +117,6 @@ public class MemberDAO {
         
         try (Connection conn = SqlServerConnect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
             pstmt.setString(1, userId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -129,7 +128,7 @@ public class MemberDAO {
     // Helper method to map ResultSet to Member object
     private Member mapResultSetToMember(ResultSet rs) throws SQLException {
         return new Member(
-            rs.getString("user_id").substring(1), // Remove 'M' prefix
+            rs.getString("user_id").substring(1), // Remove 'M' prefix  
             rs.getString("first_name"),
             rs.getString("last_name"),
             rs.getString("password"),

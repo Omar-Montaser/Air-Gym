@@ -3,6 +3,17 @@ GO
 USE AirGym;
 GO
 
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    Password VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
+    Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
+    DateOfBirth DATE NOT NULL,
+    Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
+);
+
 CREATE TABLE Branch (
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
@@ -10,6 +21,9 @@ CREATE TABLE Branch (
     PhoneNumber VARCHAR(15) NOT NULL,
     OpeningDate DATE NOT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed'))
+    AdminID INT NULL, -- NEW COLUMN to reference Users (admins)
+    CONSTRAINT FK_Branch_Admin FOREIGN KEY (AdminID) REFERENCES Users(UserID) ON DELETE SET NULL
+);
 );
 
 CREATE TABLE MembershipType (
@@ -18,24 +32,13 @@ CREATE TABLE MembershipType (
     Description TEXT,
     AccessLevel INT NOT NULL,
     MonthlyPrice DECIMAL(10,2) NOT NULL,
-    NoOfSessions INT NOT NULL DEFAULT 0,
+    Sessions INT NOT NULL DEFAULT 0,
     PrivateTrainer BIT NOT NULL DEFAULT 0,
     FreezeDuration INT NOT NULL DEFAULT 0,
-    InBody BIT NOT NULL DEFAULT 0,
+    InBody INT NOT NULL,
     ColorHex VARCHAR(7) CHECK (ColorHex LIKE '#______')
 );
 
-CREATE TABLE Users (
-    UserID INT IDENTITY(1,1) PRIMARY KEY,
-    PasswordSalt CHAR(29) NOT NULL,
-    PasswordHash VARCHAR(255) NOT NULL,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    PhoneNumber VARCHAR(15) NOT NULL,
-    Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
-    DateOfBirth DATE NOT NULL,
-    Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
-);
 
 CREATE TABLE Trainer (
     UserID INT PRIMARY KEY,
@@ -52,10 +55,9 @@ CREATE TABLE Trainer (
 CREATE TABLE Member (
     UserID INT PRIMARY KEY,
     MembershipTypeID INT NULL, -- FK later
-    SubscriptionDuration INT NOT NULL,
     SubscriptionStartDate DATE NOT NULL,
     SubscriptionEndDate DATE NOT NULL,
-    UsedSessions INT NOT NULL DEFAULT 0,
+    SessionsAvailable INT NOT NULL DEFAULT 0,
     BranchID INT NULL, 
     TrainerID INT NULL,
     SubscriptionStatus VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Pending', 'Cancelled', 'OnHold')),
@@ -97,8 +99,7 @@ CREATE TABLE Payment (
     PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
     PaymentDate DATETIME DEFAULT GETDATE(),
     Amount DECIMAL(10,2) NOT NULL,
-    Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending', 'Failed', 'Refunded')),
-
+    -- Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending', 'Failed', 'Refunded')),
     CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
 );
 
@@ -107,7 +108,7 @@ CREATE TABLE Booking (
     UserID INT NOT NULL, 
     SessionID INT NOT NULL,
     PaymentID INT NULL,
-    Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled', 'NoShow', 'Pending')),
+    Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled')),
     BookingDate DATETIME DEFAULT GETDATE(),
 
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
