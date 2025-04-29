@@ -22,7 +22,7 @@
                     <children>
                         <ImageView fitHeight="120.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@assets/images/LOGO2.png" />
+                                <Image url="@assets/images/LOGO%202.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="40.0" />
@@ -44,7 +44,9 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
+            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -63,7 +65,7 @@
         </HBox>
         <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn prefWidth="76.66665649414062" text="Username" />
+                <TableColumn prefWidth="76.66665649414062" text="ID" />
                 <TableColumn prefWidth="74.66665649414062" text="Full Name" />
                 <TableColumn prefWidth="97.33334350585938" text="Phone Number" />
                 <TableColumn prefWidth="66.66668701171875" text="Birth Date" />

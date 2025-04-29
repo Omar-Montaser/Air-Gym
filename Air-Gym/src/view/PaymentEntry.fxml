@@ -21,7 +21,7 @@
                     <children>
                         <ImageView fitHeight="120.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@assets/images/LOGO2.png" />
+                                <Image url="@assets/images/LOGO%202.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="40.0" />
@@ -43,7 +43,9 @@
                 <Button id="menuButton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
+            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="907.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -53,14 +55,9 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Back">
+                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="550.0" right="10.0" top="15.0" />
-                    </HBox.margin>
-                </Button>
-                <Button layoutX="716.0" layoutY="25.0" mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
-                    <HBox.margin>
-                        <Insets left="10.0" right="10.0" top="15.0" />
                     </HBox.margin>
                 </Button>
             </children>
@@ -69,28 +66,38 @@
         <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
         <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
         <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Payment Entry" />
-        <VBox layoutX="215.0" layoutY="185.0" prefHeight="225.0" prefWidth="822.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+        <VBox layoutX="215.0" layoutY="185.0" prefHeight="247.0" prefWidth="822.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
             <children>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Payment" />
-                        <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Payment ID" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
                     </children>
                 </HBox>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="User" />
-                        <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter User ID" style="-fx-font-size: 12;">
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Member" />
+                        <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Member ID" style="-fx-font-size: 12;">
                             <HBox.margin>
                                 <Insets top="10.0" />
                             </HBox.margin>
                         </TextField>
                     </children>
                 </HBox>
+            <HBox prefHeight="40.0" prefWidth="394.0">
+               <children>
+                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Category" />
+                  <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Category" style="-fx-font-size: 12;">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Payment Date" />

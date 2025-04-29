@@ -39,12 +39,12 @@
                         <Insets top="2.0" />
                     </VBox.margin>
                 </Button>
-                <Button id="menuButton" layoutX="10.0" layoutY="132.0" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Members" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Members" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
-                <Button id="menuButton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
-                <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+            <Button id="menuButton" layoutX="10.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
@@ -65,14 +65,16 @@
         </HBox>
         <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn prefWidth="76.66667175292969" text="Session ID" />
-                <TableColumn prefWidth="91.33331298828125" text="Trainer ID" />
-                <TableColumn prefWidth="76.66665649414062" text="Branch ID" />
-                <TableColumn prefWidth="132.66665649414062" text="Session Type" />
-                <TableColumn prefWidth="105.33331298828125" text="Max Capacity" />
-                <TableColumn prefWidth="125.33331298828125" text="Date Time" />
-            <TableColumn prefWidth="134.0" text="Duration" />
-            <TableColumn prefWidth="138.66668701171875" text="Status" />
+                <TableColumn prefWidth="34.666656494140625" text="ID" />
+                <TableColumn prefWidth="60.66667175292969" text="Name" />
+                <TableColumn prefWidth="88.66668701171875" text="Description " />
+                <TableColumn prefWidth="56.6666259765625" text="Price" />
+                <TableColumn prefWidth="63.999969482421875" text="Duration" />
+                <TableColumn prefWidth="124.0" text="Number of Sessions" />
+                <TableColumn prefWidth="152.0" text="Number of Private Sessions" />
+                <TableColumn prefWidth="110.66668701171875" text="Freeze Duration" />
+                <TableColumn prefWidth="60.0" text="In Body" />
+                <TableColumn prefWidth="108.666748046875" text="Access Level" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

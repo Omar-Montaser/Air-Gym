@@ -2,10 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,7 +17,7 @@
                     <children>
                         <ImageView fitHeight="120.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@assets/images/LOGO2.png" />
+                                <Image url="@assets/images/LOGO%202.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="40.0" />
@@ -33,17 +29,19 @@
         </VBox>
         <VBox layoutX="-1.0" layoutY="113.0" prefHeight="487.0" prefWidth="197.0" style="-fx-background-color: #d3d3d3;">
             <children>
-                <Button id="menuButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="200.0" stylesheets="@assets/css/adminTemplate.css" text="Dashboard">
+                <Button id="menuButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="200.0" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Dashboard">
                     <VBox.margin>
                         <Insets top="2.0" />
                     </VBox.margin>
                 </Button>
-                <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Members" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Members" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+            <Button id="menuButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="200.0" stylesheets="@assets/css/adminTemplate.css" text="Membership Type" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
+            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="907.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -53,137 +51,12 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Back">
+                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="550.0" right="10.0" top="15.0" />
                     </HBox.margin>
                 </Button>
-                <Button layoutX="716.0" layoutY="25.0" mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
-                    <HBox.margin>
-                        <Insets left="10.0" right="10.0" top="15.0" />
-                    </HBox.margin>
-                </Button>
             </children>
         </HBox>
-        <Button layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
-        <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
-        <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
-        <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="275.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Member Entry" />
-        <VBox layoutX="667.0" layoutY="184.0" prefHeight="218.0" prefWidth="415.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
-            <children>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="ID" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </Text>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Join Date" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </Text>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Branch" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </Text>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership" />
-                        <ChoiceBox prefWidth="150.0">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </ChoiceBox>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Trainer" />
-                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Trainer ID" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-            </children>
-            <padding>
-                <Insets left="10.0" />
-            </padding>
-        </VBox>
-        <Label alignment="CENTER" layoutX="666.0" layoutY="135.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
-        <VBox layoutX="215.0" layoutY="185.0" prefHeight="219.0" prefWidth="415.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
-            <children>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="First Name" />
-                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter First Name" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Last Name" />
-                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Last Name" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Phone Number" />
-                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Number" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="5.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Birth Date" />
-                        <DatePicker>
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </DatePicker>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
-                        <ChoiceBox prefWidth="150.0">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </ChoiceBox>
-                    </children>
-                </HBox>
-            </children>
-            <padding>
-                <Insets left="10.0" />
-            </padding>
-        </VBox>
-        <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
     </children>
 </AnchorPane>

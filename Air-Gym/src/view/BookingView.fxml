@@ -43,10 +43,10 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
                 <Button id="menuButton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
-                <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
+            <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -65,14 +65,12 @@
         </HBox>
         <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn prefWidth="76.66667175292969" text="Session ID" />
-                <TableColumn prefWidth="91.33331298828125" text="Trainer ID" />
-                <TableColumn prefWidth="76.66665649414062" text="Branch ID" />
-                <TableColumn prefWidth="132.66665649414062" text="Session Type" />
-                <TableColumn prefWidth="105.33331298828125" text="Max Capacity" />
-                <TableColumn prefWidth="125.33331298828125" text="Date Time" />
-            <TableColumn prefWidth="134.0" text="Duration" />
-            <TableColumn prefWidth="138.66668701171875" text="Status" />
+                <TableColumn prefWidth="109.99995422363281" text="Booking ID" />
+                <TableColumn prefWidth="146.66665649414062" text="User ID" />
+                <TableColumn prefWidth="135.99993896484375" text="Session ID" />
+                <TableColumn prefWidth="144.6666259765625" text="Payment ID" />
+                <TableColumn prefWidth="156.66668701171875" text="Status" />
+                <TableColumn prefWidth="172.66668701171875" text="Booking Date" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
