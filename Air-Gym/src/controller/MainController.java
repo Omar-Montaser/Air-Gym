@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import view.MemberViewController;
 import dao.MemberDAO;
+import dao.UserDAO;
 import db.SqlServerConnect;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 import view.DashboardController;
 import view.LoginController;
 import javafx.stage.Stage;
+import model.accounts.User;
 
 public class MainController {
 
@@ -18,13 +20,16 @@ public class MainController {
     private Screen currentScreen;
 
     private MemberDAO memberDAO;
+    private UserDAO userDAO; 
 
     protected boolean isGuest;
+    private User currentUser;
 
     public MainController(Stage stage){
         try{
             Connection conn = SqlServerConnect.getConnection();
             memberDAO = new MemberDAO(conn);
+            userDAO = new UserDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(loginScene);
@@ -87,7 +92,17 @@ public class MainController {
             default: break;
         }
     } 
-    public void login()
+    public void login(String phoneNumber, String Password){
+        try{
+            String role = userDAO.validateLogin(phoneNumber, Password);
+            if(role=="Member"){
+                currentUser = memberDAO.getUserByPhoneNumber(phoneNumber);
+            }
+            else{
+                throw new Exception("Invalid phone number or password");
+            }
+        }
+    }
 
     private Scene dashboardScene;
     private DashboardController dashboardController;

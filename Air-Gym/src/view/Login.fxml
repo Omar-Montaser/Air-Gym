@@ -31,8 +31,8 @@
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="603.0" style="-fx-font-size: 30;" text="Login" />
             <HBox prefHeight="11.0" prefWidth="382.0">
                <children>
-                  <Label prefWidth="100.0" style="-fx-font-size: 18;" text="ID" />
-                  <TextField fx:id="UserID" prefHeight="0.0" prefWidth="173.0" />
+                  <Label prefHeight="27.0" prefWidth="149.0" style="-fx-font-size: 18;" text="Phone Number" />
+                  <TextField fx:id="UserID" prefHeight="0.0" prefWidth="173.0" style="-fx-font-weight: bold;" />
                </children>
                <VBox.margin>
                   <Insets top="30.0" />
@@ -43,8 +43,8 @@
             </HBox>
             <HBox prefHeight="2.0" prefWidth="382.0">
                <children>
-                  <Label prefWidth="100.0" style="-fx-font-size: 18;" text="Password" />
-                  <TextField fx:id="Password" prefHeight="7.0" prefWidth="173.0" />
+                  <Label prefHeight="27.0" prefWidth="149.0" style="-fx-font-size: 18;" text="Password" />
+                  <TextField fx:id="Password" prefHeight="7.0" prefWidth="173.0" style="-fx-font-weight: bold;" />
                </children>
                <padding>
                   <Insets left="30.0" />
@@ -55,9 +55,9 @@
                   <Insets left="120.0" />
                </padding>
             </Label>
-            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="432.0">
+            <HBox alignment="CENTER" prefHeight="53.0" prefWidth="382.0">
                <children>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#hLogin" prefHeight="0.0" prefWidth="174.0" styleClass="login-button" text="Login">
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#hLogin" prefHeight="42.0" prefWidth="174.0" styleClass="login-button" text="Login">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

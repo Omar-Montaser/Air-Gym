@@ -8,11 +8,29 @@ CREATE TABLE Users (
     Password VARCHAR(255) NOT NULL,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
-    PhoneNumber VARCHAR(15) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL UNIQUE,
     Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
     DateOfBirth DATE NOT NULL,
     Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
 );
+ALTER TABLE Users
+ADD CONSTRAINT CK_PhoneNumber_Egyptian
+CHECK (
+    -- Must be exactly 11 digits
+    LEN(REPLACE(REPLACE(REPLACE(REPLACE(PhoneNumber, '(', ''), ')', ''), '-', ''), ' ', '')) = 11
+    AND
+    -- Must start with 01
+    PhoneNumber LIKE '01%'
+    AND
+    -- Third digit must be 0, 1, 2, or 5
+    SUBSTRING(PhoneNumber, 3, 1) IN ('0', '1', '2', '5')
+    AND
+    -- Must contain only valid characters (numbers, spaces, dashes, parentheses)
+    PhoneNumber LIKE '%[0-9()- ]%'
+    AND
+    -- Must not contain letters
+    PhoneNumber NOT LIKE '%[A-Za-z]%'
+)
 
 CREATE TABLE Branch (
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
@@ -37,7 +55,6 @@ CREATE TABLE MembershipType (
     InBody INT NOT NULL,
     ColorHex VARCHAR(7) CHECK (ColorHex LIKE '#______')
 );
-
 
 CREATE TABLE Trainer (
     UserID INT PRIMARY KEY,

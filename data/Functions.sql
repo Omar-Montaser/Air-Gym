@@ -1,5 +1,16 @@
 Use AirGym;
 go
+CREATE OR ALTER FUNCTION GetMemberByPhoneNumber(@PhoneNumber VARCHAR(15))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT m.*, u.FirstName, u.LastName, u.PhoneNumber, u.Gender, u.DateOfBirth, u.Role
+    FROM Member m
+    INNER JOIN Users u ON m.UserID = u.UserID
+    WHERE u.PhoneNumber = @PhoneNumber
+);
+GO
 CREATE OR ALTER FUNCTION GetMemberDetails(@UserID INT)
 RETURNS TABLE
 AS

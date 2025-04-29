@@ -36,6 +36,12 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
+            IF EXISTS (SELECT 1 FROM Users WHERE PhoneNumber = @PhoneNumber)
+            BEGIN
+                RAISERROR('Phone number already exists.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
 
             INSERT INTO Users (Password, FirstName, LastName, PhoneNumber, Gender, DateOfBirth, Role)
             VALUES (@Password, @FirstName, @LastName, @PhoneNumber, @Gender, @DateOfBirth, 'Member');

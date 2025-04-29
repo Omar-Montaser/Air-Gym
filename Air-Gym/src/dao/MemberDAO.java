@@ -222,6 +222,38 @@ public class MemberDAO {
             rs.getDate("FreezeEndDate")
         );
     }
+    public Member getMemberByPhoneNumber(String phoneNumber){
+        String sql = "SELECT * FROM GetMemberByPhoneNumber(?)";        
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, phoneNumber);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Member(
+                        rs.getInt("UserID"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Password"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Gender"),
+                        rs.getDate("DateOfBirth"),
+                        rs.getInt("MembershipTypeID"),
+                        rs.getInt("BranchID"),
+                        rs.getInt("TrainerID"),
+                        rs.getDate("SubscriptionStartDate").toString(),
+                        rs.getDate("SubscriptionEndDate").toString(),
+                        rs.getInt("SessionsAvailable"),
+                        rs.getString("SubscriptionStatus"),
+                        rs.getInt("FreezesAvailable"),
+                        rs.getDate("FreezeEndDate")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 //     Get a member by ID
 //     public Member getMemberById(String userId) {
