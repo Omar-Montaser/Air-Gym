@@ -27,6 +27,8 @@
 
 .nav-button:hover {
     -fx-background-color: #00000066;
+    -fx-border-color: black;
+    -fx-border-width: 0px 0px 2px 0px;
 }
 #welcomeLabel {
     -fx-font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
@@ -88,11 +90,15 @@
     -fx-cursor: hand;
     -fx-padding: 6 12;
     -fx-background-radius: 6;
+    -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);;
+    -fx-border-width: 0px 0px 2px 0px;
 }
 
 .logout-button:hover {
-    -fx-background-color: red;
+    -fx-background-color: linear-gradient(to right, #0072ED, #00AEEF);
     -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px 0px 0px 0px;
 }
 .nav-panel {
     -fx-background-color: #7a7a7a;
@@ -160,3 +166,32 @@
 #cancelSessionBtn:pressed {
     -fx-background-color: linear-gradient(to right, #CC2424, #ED2D2D);
 }
+
+.field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: e0e0e0;
+}
+
+.field:hover {
+    -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);
+    -fx-border-width: 0px 0px 2px 0px;
+}
+.field: focused {
+    -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+.box {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: e0e0e0;
+}
+
+.box:hover {
+    -fx-border-color:  #7a7a7a;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+
+

@@ -155,7 +155,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="180.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="180.0" style="-fx-font-size: 20;" text="\$19.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
@@ -203,7 +203,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="183.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="183.0" style="-fx-font-size: 20;" text="\$24.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
@@ -251,7 +251,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="178.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="178.0" style="-fx-font-size: 20;" text="\$29.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
@@ -348,7 +348,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="180.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="180.0" style="-fx-font-size: 20;" text="\$19.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
@@ -396,7 +396,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="183.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="183.0" style="-fx-font-size: 20;" text="\$24.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
@@ -444,7 +444,7 @@
                               <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
                                  <children>
                                     <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="178.0" style="-fx-font-size: 20;" text="\$14.99/month" />
+                                    <Label prefHeight="24.0" prefWidth="178.0" style="-fx-font-size: 20;" text="\$29.99/month" />
                                  </children>
                               </HBox>
                               <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">

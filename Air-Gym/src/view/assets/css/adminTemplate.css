@@ -166,3 +166,7 @@
         -fx-text-fill: #333333;
         -fx-padding: 10 0 10 0;
 }
+
+.form-sh :hover{
+        -fx-background-color: linear-gradient(to right, #0072ED, #00AEEF);
+}

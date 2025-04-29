@@ -62,7 +62,7 @@
                   </Label>
                   <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                      <HBox.margin>
-                        <Insets left="550.0" top="30.0" />
+                        <Insets left="570.0" top="35.0" />
                      </HBox.margin>
                   </Button>
                </children>
@@ -106,22 +106,22 @@
                <children>
                   <ImageView fitHeight="222.0" fitWidth="421.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/images/EVENT%204.jpg" />
+                        <Image url="@assets/images/EVENT 4.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="221.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/images/EVENT%201.jpg" />
+                        <Image url="@assets/images/EVENT 1.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="419.0" fitWidth="487.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/images/EVENT%202.jpg" />
+                        <Image url="@assets/images/EVENT 2.jpg" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="419.0" fitWidth="521.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@assets/images/EVENT%203.jpg" />
+                        <Image url="@assets/images/EVENT 3.jpg" />
                      </image>
                   </ImageView>
                </children>
