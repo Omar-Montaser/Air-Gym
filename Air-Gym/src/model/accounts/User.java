@@ -1,8 +1,8 @@
 package model.accounts;
 
 public class User {
-    private final String USER_ID;
-    //TODO add AD, MEM and PT before each id when retrieved from database
+    private final int USER_ID;
+    private static int USER_ID_COUNTER;
     private String firstName;
     private String lastName;
     private String password;
@@ -11,8 +11,8 @@ public class User {
     private java.sql.Date dateOfBirth;
     private final String role;
 //=======================================Constructor===================================
-    public User(String USER_ID,  String firstName, String lastName, String password,String phoneNumber, String gender, java.sql.Date dateOfBirth,String role) {
-        this.USER_ID = USER_ID;
+    public User(int userId, String firstName, String lastName, String password,String phoneNumber, String gender, java.sql.Date dateOfBirth,String role) {
+        this.USER_ID = userId;
         this.password=password; 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,19 +21,15 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.role=role;
     }
-    public User(String USER_ID, String firstName, String lastName,String password, String phoneNumber, String gender, String role) {
-        this.USER_ID = USER_ID;
-        this.password=password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.gender = gender;
-        this.role = role;
-        this.dateOfBirth = null;
-    }
 //=======================================Get&Set=======================================
-    public String getUserId() {
+    public int getUserId() {
         return USER_ID;
+    }
+    public static int getUserIdCounter() {
+        return USER_ID_COUNTER;
+    }
+    public static void setUserIdCounter(int userIdCounter) {
+        USER_ID_COUNTER = userIdCounter;
     }
     public String getFirstName() {
         return firstName;

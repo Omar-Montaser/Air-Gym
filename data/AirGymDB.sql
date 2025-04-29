@@ -57,11 +57,12 @@ CREATE TABLE Member (
     MembershipTypeID INT NULL, -- FK later
     SubscriptionStartDate DATE NOT NULL,
     SubscriptionEndDate DATE NOT NULL,
+    FreezeEndDate DATE NULL,
     SessionsAvailable INT NOT NULL DEFAULT 0,
+    FreezesAvailable INT NOT NULL DEFAULT 0,
     BranchID INT NULL, 
     TrainerID INT NULL,
     SubscriptionStatus VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Cancelled', 'Frozen')),
-
     CONSTRAINT FK_Member_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Member_MembershipType FOREIGN KEY (MembershipTypeID) REFERENCES MembershipType(MembershipTypeID) ON DELETE SET NULL,
     CONSTRAINT FK_Member_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL

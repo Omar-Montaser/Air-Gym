@@ -1,7 +1,8 @@
 USE AirGym;
 GO
+USE AirGym;
+GO
 CREATE OR ALTER PROCEDURE AddNewMember
-
         @PaymentMethod VARCHAR(20),
         @Duration INT,
         @Password VARCHAR(12),
@@ -15,26 +16,33 @@ CREATE OR ALTER PROCEDURE AddNewMember
         @TrainerID INT
     AS
     BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
             IF NOT EXISTS (SELECT 1 FROM MembershipType WHERE MembershipTypeID = @MembershipTypeID)
             BEGIN
                 RAISERROR('Invalid MembershipTypeID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             
             IF NOT EXISTS (SELECT 1 FROM Branch WHERE BranchID = @BranchID)
             BEGIN
                 RAISERROR('Invalid BranchID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             
             IF @TrainerID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Trainer WHERE UserID = @TrainerID)
             BEGIN
                 RAISERROR('Invalid TrainerID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             IF @PaymentMethod NOT IN ('Cash', 'CreditCard', 'DebitCard', 'Online')
             BEGIN
                 RAISERROR('Invalid PaymentMethod provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
 
@@ -43,16 +51,17 @@ CREATE OR ALTER PROCEDURE AddNewMember
             
             DECLARE @UserID INT = SCOPE_IDENTITY();
             DECLARE @SessionsAvailable INT;
+            DECLARE @FreezesAvailable INT;
             DECLARE @MonthlyPrice DECIMAL(10,2);
             
             SELECT 
-                @SessionsAvailable = Sessions, 
+                @SessionsAvailable = Sessions, @FreezesAvailable =FreezeDuration,
                 @MonthlyPrice = MonthlyPrice 
             FROM MembershipType 
             WHERE MembershipTypeID = @MembershipTypeID;
 
             INSERT INTO Member (UserID, MembershipTypeID, SubscriptionStartDate, SubscriptionEndDate, 
-                            SessionsAvailable, BranchID, TrainerID, SubscriptionStatus)
+                            SessionsAvailable, BranchID, TrainerID, FreezesAvailable, SubscriptionStatus)
             VALUES (
                 @UserID, 
                 @MembershipTypeID, 
@@ -61,6 +70,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 @SessionsAvailable, 
                 @BranchID, 
                 @TrainerID, 
+                @FreezesAvailable,
                 'Active'
             );
 
@@ -72,7 +82,14 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 (@MonthlyPrice * @Duration),
                 'Completed'
             );
-    END
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
 GO
 CREATE OR ALTER PROCEDURE UpdateMember (
         @UserID INT,
@@ -87,13 +104,19 @@ CREATE OR ALTER PROCEDURE UpdateMember (
         @SessionsAvailable INT = NULL,
         @SubscriptionStatus VARCHAR(20) = NULL, 
         @TrainerID INT = NULL,
-        @BranchID INT = NULL
+        @BranchID INT = NULL,
+        @FreezesAvailable INT = NULL,
+        @FreezeEndDate DATE = NULL
     )
     AS
     BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
             IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
             BEGIN
                 RAISERROR('Member ID does not exist', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
 
@@ -101,24 +124,28 @@ CREATE OR ALTER PROCEDURE UpdateMember (
             NOT EXISTS (SELECT 1 FROM MembershipType WHERE MembershipTypeID = @MembershipTypeID)
             BEGIN
                 RAISERROR('Invalid MembershipTypeID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             IF @TrainerID IS NOT NULL AND 
             NOT EXISTS (SELECT 1 FROM Trainer WHERE UserID = @TrainerID)
             BEGIN
                 RAISERROR('Invalid TrainerID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             IF @BranchID IS NOT NULL AND 
             NOT EXISTS (SELECT 1 FROM Branch WHERE BranchID = @BranchID)
             BEGIN
                 RAISERROR('Invalid BranchID provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
             IF @SubscriptionStatus IS NOT NULL AND
             @SubscriptionStatus NOT IN ('Active', 'Expired', 'Cancelled')
             BEGIN
                 RAISERROR('Invalid SubscriptionStatus provided', 16, 1);
+                ROLLBACK TRANSACTION;
                 RETURN;
             END
 
@@ -137,7 +164,8 @@ CREATE OR ALTER PROCEDURE UpdateMember (
 
             IF @MembershipTypeID IS NOT NULL OR @SubscriptionStartDate IS NOT NULL OR 
             @SubscriptionEndDate IS NOT NULL OR @SubscriptionStatus IS NOT NULL OR
-            @TrainerID IS NOT NULL OR @BranchID IS NOT NULL OR @SessionsAvailable is not null
+            @TrainerID IS NOT NULL OR @BranchID IS NOT NULL OR @SessionsAvailable is not null OR
+            @FreezesAvailable IS NOT NULL OR @FreezeEndDate IS NOT NULL
             BEGIN
                 UPDATE Member
                 SET MembershipTypeID = COALESCE(@MembershipTypeID, MembershipTypeID),
@@ -146,22 +174,41 @@ CREATE OR ALTER PROCEDURE UpdateMember (
                     SubscriptionStatus = COALESCE(@SubscriptionStatus, SubscriptionStatus),
                     TrainerID = COALESCE(@TrainerID, TrainerID),
                     BranchID = COALESCE(@BranchID, BranchID),
-                    SessionsAvailable= COALESCE(@SessionsAvailable, SessionsAvailable)
+                    SessionsAvailable= COALESCE(@SessionsAvailable, SessionsAvailable),
+                    FreezesAvailable= COALESCE(@FreezesAvailable, FreezesAvailable) ,
+                    FreezeEndDate= COALESCE(@FreezeEndDate, FreezeEndDate)
                 WHERE UserID = @UserID;
-            
             END
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
 GO
 CREATE OR ALTER PROCEDURE DeleteUser
         @UserID INT
     AS
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM Users WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('User does not exist.', 16, 1);
-            RETURN;
-        END
-        DELETE FROM Users WHERE UserID = @UserID;
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Users WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('User does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            DELETE FROM Users WHERE UserID = @UserID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
 
 
@@ -172,32 +219,44 @@ CREATE OR ALTER PROCEDURE ExtendSubscription
         @PaymentMethod VARCHAR(20) 
     AS
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('Member does not exist.', 16, 1);
-            RETURN;
-        END
-        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus NOT IN ('Active'))
-        BEGIN
-            RAISERROR('This subscription is not active, cannot extend.', 16, 1);
-            RETURN;
-        END
-        DECLARE @MonthlyPrice DECIMAL(10,2);
-        DECLARE @SessionsAvailable INT;
-        SELECT 
-            @MonthlyPrice = MonthlyPrice, 
-            @SessionsAvailable = Sessions
-        FROM MembershipType
-        INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
-        WHERE Member.UserID = @UserID;
-        UPDATE Member
-        SET 
-        SubscriptionEndDate = DATEADD(MONTH, @Duration, SubscriptionEndDate),
-        SessionsAvailable=SessionsAvailable+@SessionsAvailable
-        WHERE UserID = @UserID;
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus NOT IN ('Active'))
+            BEGIN
+                RAISERROR('This subscription is not active, cannot extend.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            DECLARE @MonthlyPrice DECIMAL(10,2);
+            DECLARE @SessionsAvailable INT;
+            SELECT 
+                @MonthlyPrice = MonthlyPrice, 
+                @SessionsAvailable = Sessions
+            FROM MembershipType
+            INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
+            WHERE Member.UserID = @UserID;
+            UPDATE Member
+            SET 
+            SubscriptionEndDate = DATEADD(MONTH, @Duration, SubscriptionEndDate),
+            SessionsAvailable=SessionsAvailable+@SessionsAvailable
+            WHERE UserID = @UserID;
 
-    INSERT INTO Payment (Category, MemberID, PaymentMethod, PaymentDate , Amount, Status)
-        VALUES ('Membership', @UserID, @PaymentMethod,GETDATE(),(@MonthlyPrice * @Duration), 'Completed');
+            INSERT INTO Payment (Category, MemberID, PaymentMethod, PaymentDate, Amount, Status)
+            VALUES ('Membership', @UserID, @PaymentMethod, GETDATE(), (@MonthlyPrice * @Duration), 'Completed');
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
     
 GO
@@ -208,94 +267,128 @@ CREATE OR ALTER PROCEDURE RenewSubscription
         @PaymentMethod VARCHAR(20)
     AS
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('Member does not exist.', 16, 1);
-            RETURN;
-        END
-        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Active'))
-        BEGIN
-            RAISERROR('Subscription is already active', 16, 1);
-            RETURN;
-        END
-        
-        DECLARE @MonthlyPrice DECIMAL(10,2);
-        DECLARE @Session INT;
-        SELECT @MonthlyPrice = MonthlyPrice, @Session = Sessions
-        FROM MembershipType
-        INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
-        WHERE Member.UserID = @UserID;
-        DECLARE @NewEndDate DATE = DATEADD(MONTH, @Duration, GETDATE());
-        DECLARE @NEWSTARTDATE DATE= GETDATE();
-        UPDATE Member
-        SET 
-		SubscriptionStartDate =@NEWSTARTDATE,
-        SubscriptionEndDate = @NewEndDate,
-        SessionsAvailable=SessionsAvailable+@Session,
-		SubscriptionStatus='Active',
-		MembershipTypeID=@MembershipTypeID
-        WHERE UserID = @UserID;
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Active'))
+            BEGIN
+                RAISERROR('Subscription is already active', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            DECLARE @MonthlyPrice DECIMAL(10,2);
+            DECLARE @Session INT;
+            SELECT @MonthlyPrice = MonthlyPrice, @Session = Sessions
+            FROM MembershipType
+            INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
+            WHERE Member.UserID = @UserID;
+            DECLARE @NewEndDate DATE = DATEADD(MONTH, @Duration, GETDATE());
+            DECLARE @NEWSTARTDATE DATE= GETDATE();
+            UPDATE Member
+            SET 
+            SubscriptionStartDate =@NEWSTARTDATE,
+            SubscriptionEndDate = @NewEndDate,
+            SessionsAvailable=SessionsAvailable+@Session,
+            SubscriptionStatus='Active',
+            MembershipTypeID=@MembershipTypeID
+            WHERE UserID = @UserID;
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, Amount, Status)
-        VALUES (
-            'Membership', 
-            @UserID, 
-            @PaymentMethod, 
-            (@MonthlyPrice * @Duration),
-            'Completed'
-        );
+            VALUES (
+                'Membership', 
+                @UserID, 
+                @PaymentMethod, 
+                (@MonthlyPrice * @Duration),
+                'Completed'
+            );
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
 GO
 CREATE OR ALTER PROCEDURE CancelSubscription
         @UserID INT
     AS
     BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
 
-        IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('Member does not exist.', 16, 1);
-            RETURN;
-        END
+            IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Cancelled', 'Expired'))
+            BEGIN
+                RAISERROR('This subscription is already cancelled or expired.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
 
-        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Cancelled', 'Expired'))
-        BEGIN
-            RAISERROR('This subscription is already cancelled or expired.', 16, 1);
-            RETURN;
-        END
+            UPDATE Member
+            SET SubscriptionStatus = 'Cancelled',SubscriptionStartDate=GetDate()
+            WHERE UserID = @UserID;
 
-        UPDATE Member
-        SET SubscriptionStatus = 'Cancelled',SubscriptionStartDate=GetDate()
-        WHERE UserID = @UserID;
-
-        UPDATE Booking
-        SET Status = 'Cancelled'
-        WHERE UserID = @UserID;
+            UPDATE Booking
+            SET Status = 'Cancelled'
+            WHERE UserID = @UserID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END
 GO
-CREATE OR ALTER PROCEDURE UpdateSubscriptionStatusAndSessions
+CREATE OR ALTER PROCEDURE UpdateMemberStatus    
     AS
     BEGIN
-        UPDATE Member
-        SET SubscriptionStatus = 'Expired'
-        WHERE SubscriptionEndDate < GETDATE() AND SubscriptionStatus = 'Active';
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            UPDATE Member
+            SET SubscriptionStatus = 'Expired'
+            WHERE SubscriptionEndDate < GETDATE() AND SubscriptionStatus = 'Active';
+            Update Member
+            SET SubscriptionStatus = 'Active'
+            WHERE FreezeEndDate < GETDATE() AND SubscriptionStatus = 'Frozen';
+            UPDATE Session
+            SET Status = 'Completed'
+            WHERE DateTime < GETDATE() AND Status = 'Scheduled';
 
-        UPDATE Session
-        SET Status = 'Completed'
-        WHERE DateTime < GETDATE() AND Status = 'Scheduled';
+            UPDATE Session
+            SET Status = 'Full'
+            WHERE SessionID IN (
+                SELECT SessionID
+                FROM Booking
+                GROUP BY SessionID
+                HAVING COUNT(*) >= (SELECT MaxCapacity FROM Session WHERE SessionID = Session.SessionID)
+            );
 
-        UPDATE Session
-        SET Status = 'Full'
-        WHERE SessionID IN (
-            SELECT SessionID
-            FROM Booking
-            GROUP BY SessionID
-            HAVING COUNT(*) >= (SELECT MaxCapacity FROM Session WHERE SessionID = Session.SessionID)
-        );
-
-        UPDATE Booking
-        SET Status = 'Cancelled'
-        WHERE SessionID IN (SELECT SessionID FROM Session WHERE Status = 'Cancelled') 
-        AND Status = 'Confirmed';
+            UPDATE Booking
+            SET Status = 'Cancelled'
+            WHERE SessionID IN (SELECT SessionID FROM Session WHERE Status = 'Cancelled') 
+            AND Status = 'Confirmed';
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
 GO
 CREATE OR ALTER PROCEDURE FreezeSubscription
@@ -303,41 +396,83 @@ CREATE OR ALTER PROCEDURE FreezeSubscription
     @Duration INT
     AS
     BEGIN
-        IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('Member does not exist.', 16, 1);
-            RETURN;
-        END
-        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Cancelled', 'Expired'))
-        BEGIN
-            RAISERROR('This subscription is already cancelled or expired.', 16, 1);
-            RETURN;
-        END
-        UPDATE Member
-        SET SubscriptionStatus = 'Frozen', SubscriptionEndDate = DATEADD(MONTH, @Duration, GETDATE())
-        WHERE UserID = @UserID;
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Cancelled', 'Expired'))
+            BEGIN
+                RAISERROR('This subscription is already cancelled or expired.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            DECLARE @FreezesAvailable INT;
+            SELECT @FreezesAvailable = FreezesAvailable
+            FROM Member
+            WHERE UserID = @UserID;
+            
+            IF @FreezesAvailable < @Duration
+            BEGIN
+                RAISERROR('Not enough freezes available for the requested duration.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            UPDATE Member
+            SET FreezesAvailable = FreezesAvailable - @Duration,
+                FreezeEndDate = DATEADD(MONTH, @Duration, GETDATE())
+            WHERE UserID = @UserID;
+            UPDATE Member
+            SET SubscriptionEndDate= DATEADD(MONTH, @Duration, GETDATE())
+            WHERE UserID = @UserID;
+            UPDATE Member
+            SET SubscriptionStatus = 'Frozen', SubscriptionEndDate = DATEADD(MONTH, @Duration, GETDATE())
+            WHERE UserID = @UserID;
 
-        UPDATE Booking
-        SET Status = 'Cancelled'
-        WHERE UserID = @UserID;
+            UPDATE Booking
+            SET Status = 'Cancelled'
+            WHERE UserID = @UserID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
     END;
-GO
-CREATE OR ALTER PROCEDURE UnfreezeSubscription
-    @UserID INT
-    AS
-    BEGIN
-    IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        BEGIN
-            RAISERROR('Member does not exist.', 16, 1);
-            RETURN;
-        END
-    IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Frozen'))
-        BEGIN
-            RAISERROR('This subscription is not frozen.', 16, 1);
-            RETURN;
+-- GO
+-- CREATE OR ALTER PROCEDURE UnfreezeSubscription
+--     @UserID INT
+--     AS
+--     BEGIN
+--         BEGIN TRY
+--             BEGIN TRANSACTION;
+            
+--             IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+--             BEGIN
+--                 RAISERROR('Member does not exist.', 16, 1);
+--                 ROLLBACK TRANSACTION;
+--                 RETURN;
+--             END
+--             IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Frozen'))
+--             BEGIN
+--                 RAISERROR('This subscription is not frozen.', 16, 1);
+--                 ROLLBACK TRANSACTION;
+--                 RETURN;
+--             END
 
-    UPDATE Member
-    SET SubscriptionStatus = 'Active', SubscriptionEndDate = NULL
-    WHERE UserID = @UserID;
-	END
-END;
+--             UPDATE Member
+--             SET SubscriptionStatus = 'Active',
+--             WHERE UserID = @UserID;
+            
+--             COMMIT TRANSACTION;
+--         END TRY
+--         BEGIN CATCH
+--             ROLLBACK TRANSACTION;
+--             THROW;
+--         END CATCH
+--     END;

@@ -2,22 +2,22 @@ package model.accounts;
 
 
 public class Member extends User{
-    private java.sql.Date joinDate;
     private int membershipTypeId;
     private String subscriptionStartDate;
     private String subscriptionEndDate;
     private int sessionsAvailable;
+    private int freezeAvailable;
+    private java.sql.Date freezeEndDate;
     private int branchId;
     private Integer trainerId;
     private String subscriptionStatus;
+
 //=======================================Constructor===================================
-public Member(String userId, String firstName, String lastName,
-    String password, String phoneNumber, String gender, java.sql.Date dateOfBirth,
-    java.sql.Date joinDate, int membershipId, int branchId, Integer trainerId, 
-    String paymentMethod, String subscriptionStartDate, String subscriptionEndDate,
-    int sessionAvailable,String subscriptionStatus) {
-    super('M'+userId, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Member"); 
-    this.joinDate = joinDate;
+public Member(int userId, String firstName, String lastName,
+    String password, String phoneNumber, String gender, java.sql.Date dateOfBirth, int membershipId, int branchId, Integer trainerId, 
+    String subscriptionStartDate, String subscriptionEndDate,
+    int sessionAvailable, String subscriptionStatus, int freezeAvailable, java.sql.Date freezeEndDate) {
+    super(userId++, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Member"); 
     this.membershipTypeId = membershipId;
     this.branchId = branchId;
     this.trainerId = trainerId;
@@ -25,11 +25,10 @@ public Member(String userId, String firstName, String lastName,
     this.subscriptionStartDate = subscriptionStartDate;
     this.subscriptionEndDate = subscriptionEndDate;
     this.sessionsAvailable = sessionAvailable;
+    this.freezeAvailable = freezeAvailable;
+    this.freezeEndDate = freezeEndDate;
 }
 //=======================================Get&Set=======================================
-public java.sql.Date getJoinDate() {
-    return joinDate;
-}
 
 public int getMembershipId() {
     return membershipTypeId;
@@ -45,10 +44,6 @@ public Integer getTrainerId() {
 
 public String getSubscriptionStatus() {
     return subscriptionStatus;
-}
-
-public void setJoinDate(java.sql.Date joinDate) {
-    this.joinDate = joinDate;
 }
 
 public void setMembershipId(int membershipId) {
@@ -93,5 +88,17 @@ public int getSubscriptionDuration() {
     int endMonth = Integer.parseInt(end[1]);
     int duration = (endYear - startYear) * 12 + (endMonth - startMonth);
     return duration;
+}
+public int getFreezeAvailable() {
+    return freezeAvailable;
+}
+public java.sql.Date getFreezeEndDate() {
+    return freezeEndDate;
+}
+public void setFreezeAvailable(int freezeAvailable) {
+    this.freezeAvailable = freezeAvailable;
+}
+public void setFreezeEndDate(java.sql.Date freezeEndDate) {
+    this.freezeEndDate = freezeEndDate;
 }
 }

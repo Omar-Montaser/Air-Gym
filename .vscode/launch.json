@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "dao.Test",
+            "projectName": "Air-Gym_c10ee8c0"
+        },
+        {
+            "type": "java",
             "name": "SqlServerConnect",
             "request": "launch",
             "mainClass": "db.SqlServerConnect",
