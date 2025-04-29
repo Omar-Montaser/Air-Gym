@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,37 +12,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox layoutX="27.0" layoutY="197.0" prefHeight="389.0" prefWidth="550.0">
-            <children>
-                <Label id="welcomeLabel" prefHeight="53.0" prefWidth="313.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Your Booked Sessions:" />
-                <TableView prefHeight="240.0" prefWidth="628.0">
-                    <columns>
-                        <TableColumn prefWidth="109.14288711547852" text="Session" />
-                        <TableColumn prefWidth="157.71429443359375" text="Trainer" />
-                        <TableColumn prefWidth="120.57144165039062" text="Time" />
-                        <TableColumn prefWidth="140.00003051757812" text="Status" />
-                    </columns>
-                </TableView>
-                <HBox prefHeight="102.0" prefWidth="628.0">
-                    <children>
-                        <Button id="cancelSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel Session(s)">
-                            <HBox.margin>
-                                <Insets right="220.0" top="30.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Book a Session">
-                            <HBox.margin>
-                                <Insets top="30.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
-            </children>
-            <stylesheets>
-                <URL value="@assets/css/adminTemplate.css" />
-                <URL value="@assets/css/memberH1.css" />
-            </stylesheets>
-        </VBox>
         <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
             <children>
                 <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
@@ -128,5 +94,573 @@
                 </VBox>
             </content>
         </ScrollPane>
+      <ScrollPane layoutX="17.0" layoutY="227.0" prefHeight="301.0" prefWidth="584.0">
+         <content>
+            <VBox prefHeight="504.0" prefWidth="726.0" stylesheets="@assets/css/bookdisplay.css">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display" stylesheets="@assets/css/bookdisplay.css">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Yoga">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                              </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display1">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="HIIT">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display2">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Cycling">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display3">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Pilates">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display4">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Boxing">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="728.0" styleClass="book_display5">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Branch:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="114.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Start TIme:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="101.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Duration:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="81.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Status:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Trainer:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="148.0">
+                           <children>
+                              <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Session Type:">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label style="-fx-font-size: 16;" text="Zumba">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets left="5.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+            <Button id="cancelSessionBtn" layoutX="224.0" layoutY="545.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Back" />
+      <Label id="welcomeLabel" layoutX="17.0" layoutY="182.0" prefHeight="45.0" prefWidth="313.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Book Session:" />
     </children>
 </AnchorPane>
