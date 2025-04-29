@@ -22,8 +22,7 @@ CREATE TABLE Branch (
     OpeningDate DATE NOT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed'))
     AdminID INT NULL, -- NEW COLUMN to reference Users (admins)
-    CONSTRAINT FK_Branch_Admin FOREIGN KEY (AdminID) REFERENCES Users(UserID) ON DELETE SET NULL
-);
+    CONSTRAINT FK_Branch_Admin FOREIGN KEY (AdminID) REFERENCES Users(UserID) ON DELETE SET NULL)
 );
 
 CREATE TABLE MembershipType (
@@ -57,7 +56,7 @@ CREATE TABLE Member (
     MembershipTypeID INT NULL, -- FK later
     SubscriptionStartDate DATE NOT NULL,
     SubscriptionEndDate DATE NOT NULL,
-    FreezeEndDate DATE NULL,
+    FreezeEndDate DATE NULL ,
     SessionsAvailable INT NOT NULL DEFAULT 0,
     FreezesAvailable INT NOT NULL DEFAULT 0,
     BranchID INT NULL, 

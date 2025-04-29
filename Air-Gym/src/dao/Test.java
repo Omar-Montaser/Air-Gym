@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import db.SqlServerConnect;
 import model.accounts.Member;
@@ -15,12 +16,12 @@ public class Test {
         catch(SQLException e){
             e.printStackTrace();
         }
-        MemberDAO memberDAO = new MemberDAO();
-        int maxUserId = memberDAO.getMaxUserId(conn);
+        MemberDAO memberDAO = new MemberDAO(conn);
+        int maxUserId = memberDAO.getMaxUserId();
         // Create a new Member object with the necessary parameters
         Member member = new Member(
             maxUserId,                // userId (incremented from max)
-            "John",                       // firstName
+            "TEST23",                       // firstName
             "Doe",                        // lastName
             "password123",                // password
             "1234567890",                 // phoneNumber
@@ -36,9 +37,13 @@ public class Test {
             0,                            // freezeAvailable
             java.sql.Date.valueOf("1990-01-01") // freezeEndDate
         );
-        // memberDAO.createMember(conn, member, "Cash", 12);
-        // member.setFirstName("Jane");
+        memberDAO.createMember(member, "Cash",12);
+        member.setFirstName("Jane");
         // memberDAO.updateMember(conn, member);
+        // List<Member> members = memberDAO.getAllMembers();
+        // for (Member m : members) {
+        //     System.out.println(m.getFirstName());
+        // }
 
     }
 }

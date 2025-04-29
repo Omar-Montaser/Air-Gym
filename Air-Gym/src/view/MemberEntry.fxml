@@ -57,7 +57,7 @@
             </Text>
             <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                <HBox.margin>
-                  <Insets left="550.0" right="10.0" top="15.0" />
+                  <Insets left="530.0" right="10.0" top="15.0" />
                </HBox.margin>
             </Button>
          </children>

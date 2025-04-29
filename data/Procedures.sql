@@ -1,7 +1,5 @@
 USE AirGym;
 GO
-USE AirGym;
-GO
 CREATE OR ALTER PROCEDURE AddNewMember
         @PaymentMethod VARCHAR(20),
         @Duration INT,
@@ -12,8 +10,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
         @Gender VARCHAR(10),
         @DateOfBirth DATE,
         @MembershipTypeID INT,
-        @BranchID INT,
-        @TrainerID INT
+        @BranchID INT
     AS
     BEGIN
         BEGIN TRY
@@ -33,12 +30,6 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 RETURN;
             END
             
-            IF @TrainerID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Trainer WHERE UserID = @TrainerID)
-            BEGIN
-                RAISERROR('Invalid TrainerID provided', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
             IF @PaymentMethod NOT IN ('Cash', 'CreditCard', 'DebitCard', 'Online')
             BEGIN
                 RAISERROR('Invalid PaymentMethod provided', 16, 1);
@@ -53,12 +44,32 @@ CREATE OR ALTER PROCEDURE AddNewMember
             DECLARE @SessionsAvailable INT;
             DECLARE @FreezesAvailable INT;
             DECLARE @MonthlyPrice DECIMAL(10,2);
+            DECLARE @PrivateTrainer BIT;
+            DECLARE @TrainerID INT = NULL;
             
             SELECT 
-                @SessionsAvailable = Sessions, @FreezesAvailable =FreezeDuration,
-                @MonthlyPrice = MonthlyPrice 
+                @SessionsAvailable = Sessions, 
+                @FreezesAvailable = FreezeDuration,
+                @MonthlyPrice = MonthlyPrice,
+                @PrivateTrainer = PrivateTrainer
             FROM MembershipType 
             WHERE MembershipTypeID = @MembershipTypeID;
+            
+            -- Assign a random trainer if the membership type includes a private trainer
+            IF @PrivateTrainer = 1
+            BEGIN
+                SELECT TOP 1 @TrainerID = UserID
+                FROM Trainer
+                WHERE BranchID = @BranchID AND Status = 'Active'
+                ORDER BY NEWID();
+                
+                IF @TrainerID IS NULL
+                BEGIN
+                    RAISERROR('No active trainers available at the selected branch', 16, 1);
+                    ROLLBACK TRANSACTION;
+                    RETURN;
+                END
+            END
 
             INSERT INTO Member (UserID, MembershipTypeID, SubscriptionStartDate, SubscriptionEndDate, 
                             SessionsAvailable, BranchID, TrainerID, FreezesAvailable, SubscriptionStatus)

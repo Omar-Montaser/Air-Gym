@@ -3,6 +3,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AppLauncher",
+            "request": "launch",
+            "mainClass": "controller.AppLauncher",
+            "projectName": "Air-Gym_c10ee8c0",
+            "vmArgs": "--module-path \"C:/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
             "name": "Test",
             "request": "launch",
             "mainClass": "dao.Test",
@@ -14,14 +22,6 @@
             "request": "launch",
             "mainClass": "db.SqlServerConnect",
             "projectName": "Air-Gym_c10ee8c0"
-        },
-        {
-            "type": "java",
-            "name": "AppLauncher",
-            "request": "launch",
-            "mainClass": "core.AppLauncher",
-            "projectName": "Air-Gym_c10ee8c0",
-            "vmArgs": "--module-path \"C:/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",

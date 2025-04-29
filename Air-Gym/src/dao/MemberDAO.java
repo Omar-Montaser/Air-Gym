@@ -6,11 +6,14 @@ import java.util.List;
 import model.accounts.Member;
 
 public class MemberDAO {
-    public boolean createMember(Connection conn, Member member, String paymentMethod, int duration) {
-        String sql = "EXEC AddNewMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+    public MemberDAO(Connection conn){
+        this.conn = conn;
+    }
+    private Connection conn;
+    public boolean createMember(Member member, String paymentMethod, int duration) {
+        String sql = "EXEC AddNewMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            
-            // Set parameters for the stored procedure
+
             cstmt.setString(1, paymentMethod);
             cstmt.setInt(2, duration);
             cstmt.setString(3, member.getPassword());
@@ -21,7 +24,6 @@ public class MemberDAO {
             cstmt.setDate(8, member.getBirthDate());
             cstmt.setInt(9, member.getMembershipId());
             cstmt.setInt(10, member.getBranchId());
-            cstmt.setInt(11, member.getTrainerId());
 
             cstmt.execute();
             return true;
@@ -31,7 +33,7 @@ public class MemberDAO {
             return false;
         }
     }
-    public int getMaxUserId(Connection conn){
+    public int getMaxUserId(){
         String sql = "USE AirGym; SELECT MAX(UserID) FROM Users";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -46,7 +48,7 @@ public class MemberDAO {
             return 0;
         }
     }
-    public boolean updateMember(Connection conn, Member member){
+    public boolean updateMember(Member member){
     
         String sql = "EXEC UpdateMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
@@ -74,7 +76,7 @@ public class MemberDAO {
                 return false;
             }
         }
-    public boolean deleteMember(Connection conn, String userId) {
+    public boolean deleteMember(String userId) {
         String sql = "EXEC DeleteUser ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setString(1, userId);
@@ -85,8 +87,7 @@ public class MemberDAO {
             return false;
         }
     }
-    
-    public boolean extendSubscription(Connection conn, String userId, int duration, String paymentMethod) {
+    public boolean extendSubscription(String userId, int duration, String paymentMethod) {
         String sql = "EXEC ExtendSubscription ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setString(1, userId);
@@ -100,7 +101,7 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean renewSubscription(Connection conn, String userId,int duration, int membershipTypeId, String paymentMethod) {
+    public boolean renewSubscription(String userId,int duration, int membershipTypeId, String paymentMethod) {
         String sql = "EXEC RenewSubscription ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setString(1, userId);
@@ -115,7 +116,7 @@ public class MemberDAO {
             return false;
         }    
     }
-    public boolean cancelSubscription(Connection conn, String userId) {
+    public boolean cancelSubscription(String userId) {
         String sql = "EXEC CancelSubscription ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setString(1, userId);
@@ -126,7 +127,7 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean updateMemberStatus(Connection conn, String userId, String status) {
+    public boolean updateMemberStatus(String userId, String status) {
         String sql = "EXEC UpdateMemberStatus";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.execute();
@@ -135,9 +136,8 @@ public class MemberDAO {
             e.printStackTrace();
             return false;
         }
-    
     }
-    public boolean freezeSubscription(Connection conn, String userId, int duration) {
+    public boolean freezeSubscription(String userId, int duration) {
         String sql = "EXEC FreezeSubscription ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setString(1, userId);
@@ -150,7 +150,7 @@ public class MemberDAO {
             return false;
         }
     }
-    public Member getMemberById(Connection conn, int userId) {
+    public Member getMemberById(int userId) {
         String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
                      "m.MembershipTypeID, m.BranchID, m.TrainerID, m.SubscriptionStartDate, m.SubscriptionEndDate, " +
                      "m.SessionsAvailable, m.SubscriptionStatus, m.FreezesAvailable, m.FreezeEndDate " +
@@ -186,8 +186,11 @@ public class MemberDAO {
         }
         return null;
     }
-    public List<Member> getAllMembers(Connection conn) {
-        String sql = "SELECT * FROM Member";
+    public List<Member> getAllMembers() {
+        String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
+                     "m.MembershipTypeID, m.BranchID, m.TrainerID, m.SubscriptionStartDate, m.SubscriptionEndDate, " +
+                     "m.SessionsAvailable, m.SubscriptionStatus, m.FreezesAvailable, m.FreezeEndDate " +
+                     "FROM Users u JOIN Member m ON u.UserID = m.UserID";
         List<Member> members = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
