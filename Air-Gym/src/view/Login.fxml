@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
    <children>
       <ImageView fitHeight="611.0" fitWidth="1130.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,7 +32,7 @@
             <HBox prefHeight="11.0" prefWidth="382.0">
                <children>
                   <Label prefWidth="100.0" style="-fx-font-size: 18;" text="ID" />
-                  <TextField prefHeight="0.0" prefWidth="173.0" />
+                  <TextField fx:id="UserID" prefHeight="0.0" prefWidth="173.0" />
                </children>
                <VBox.margin>
                   <Insets top="30.0" />
@@ -45,7 +44,7 @@
             <HBox prefHeight="2.0" prefWidth="382.0">
                <children>
                   <Label prefWidth="100.0" style="-fx-font-size: 18;" text="Password" />
-                  <TextField prefHeight="7.0" prefWidth="173.0" />
+                  <TextField fx:id="Password" prefHeight="7.0" prefWidth="173.0" />
                </children>
                <padding>
                   <Insets left="30.0" />
@@ -58,7 +57,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="36.0" prefWidth="432.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="174.0" styleClass="login-button" text="Login">
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#hLogin" prefHeight="0.0" prefWidth="174.0" styleClass="login-button" text="Login">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

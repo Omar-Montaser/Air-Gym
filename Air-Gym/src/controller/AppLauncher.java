@@ -1,4 +1,4 @@
-package core;
+package controller;
 
 import controller.MainController;
 import javafx.application.Application;
