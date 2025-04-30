@@ -1,0 +1,82 @@
+.book_display {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+}
+.book_display: hover {
+    -fx-background-color: linear-gradient(to right, #090979, #00D4FF);
+
+}
+
+.book_display1 {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+
+}
+.book_display1: hover {
+    -fx-background-color: linear-gradient(to right, #570979, #FF00F2);
+
+}
+
+.book_display2 {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+}
+.book_display2: hover {
+    -fx-background-color: linear-gradient(to right, #097948, #00DDFF);
+
+}
+
+.book_display3 {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+}
+.book_display3: hover {
+    -fx-background-color: linear-gradient(to right, #4C7909, #FFF200);
+
+}
+
+.book_display4 {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+}
+.book_display4: hover {
+    -fx-background-color: linear-gradient(to right, #AB8B22, #FF0000);
+
+}
+
+.book_display5 {
+    -fx-background-color: linear-gradient(to right, #B5B1B1, #F0F0F0);
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: #1F1E1E;
+}
+.book_display5: hover {
+    -fx-background-color: linear-gradient(to right, #22AB96, #FF00F2);
+
+}
+
+.bookBtn {
+    -fx-background-color: #B0AEAE;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+
+.bookBtn:hover {
+    -fx-background-color:linear-gradient(to right, #292929, #4F4B4B);
+}
+
+.bookBtn:pressed {
+    -fx-background-color:linear-gradient(to right, #1c3a4e, #3a3351);
+}
+
