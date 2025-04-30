@@ -8,24 +8,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 2, 2);
     -fx-spacing: 10;
 }
-
-.basic-membership {
-    -fx-background-color: #757575; 
-}
-
-.standard-membership {
-    -fx-background-color: #8b597e; 
-}
-
-.premium-membership {
-    -fx-background-color: #cbba62; 
-}
-
-.vip-membership {
-    -fx-background-color: #557bc2; 
-}
-
-/* Optional hover effect */
 .membership-box:hover {
     -fx-cursor: hand;
     -fx-opacity: 0.95;
@@ -39,10 +21,30 @@
     -fx-font-style: italic;
     -fx-wrap-text: true;
 }
-
 .membership-title {
     -fx-font-size: 20px;
     -fx-font-style: italic;
     -fx-font-weight: bold;
     -fx-text-fill: white;
+}
+.membershipBtn {
+    -fx-background-color: #2C2C2E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+
+.membershipBtn:hover {
+    /* -fx-background-color: linear-gradient(to right, #0072ED, #00AEEF); */
+    -fx-background-color:linear-gradient(to right, #2b5876, #4e4376);  
+}
+
+.membershipBtn:pressed {
+    -fx-background-color:linear-gradient(to right, #1c3a4e, #3a3351);  
 }

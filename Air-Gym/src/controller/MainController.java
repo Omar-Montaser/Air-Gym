@@ -85,6 +85,7 @@ public class MainController {
                 break;
             case MEMBERSHIPS:
                 membershipsController.modifyScreen();
+                membershipsController.populateMembershipTypes();
                 stage.setScene(membershipsScene);
                 break;
             // case CHECKOUT:
@@ -124,11 +125,15 @@ public class MainController {
     public boolean isAdmin(){
         return isAdmin;
     }
+    public void setSelectedMembership(MembershipType membershipType){
+        this.selectedMembership = membershipType;
+    }
 
     protected boolean isGuest;
     protected boolean isAdmin;
     private User currentUser;
     private Member currentMember;
+    private MembershipType selectedMembership;
 
     private Stage stage;
     private Screen currentScreen;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -37,7 +38,7 @@
                   <Insets bottom="20.0" left="20.0" top="20.0" />
                </padding>
              </HBox>
-             <HBox fx:id="menuHBox" alignment="TOP_RIGHT" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
+             <HBox fx:id="menuHBox" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
                 <children>
                    <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
                       <HBox.margin>
@@ -66,68 +67,20 @@
              </HBox>
           </children>
        </VBox>
-      <ScrollPane layoutX="7.0" layoutY="187.0" prefHeight="405.0" prefWidth="1090.0" style="-fx-background-color: #e3e3e3;">
+      <ScrollPane fx:id="scrollPane" layoutX="120.0" layoutY="187.0" prefHeight="405.0" prefWidth="893.0" style="-fx-background-color: #e3e3e3;">
          <content>
-            <VBox prefHeight="583.0" prefWidth="1071.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
+            <VBox fx:id="membershipContainer" prefHeight="402.0" prefWidth="877.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
                <children>
-                  <HBox prefHeight="300.0" prefWidth="1079.0" style="-fx-background-color: #e3e3e3;">
+                  <HBox prefHeight="335.0" prefWidth="914.0" style="-fx-background-color: #e3e3e3;">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="222.0" prefWidth="229.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="basic-membership" />
-                           </styleClass>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="193.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Basic" />
-                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="193.0" style="-fx-font-size: 12;" text="Access to essential gym facilities with 8 sessions monthly — perfect for beginners." />
-                              <HBox prefHeight="13.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="15.0" prefWidth="186.0" style="-fx-font-size: 12;" text="Group Sessions" />
-                                    <Label prefHeight="27.0" prefWidth="97.0" style="-fx-font-size: 12;" text="8/month" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="19.0" prefWidth="251.0" style="-fx-font-size: 12;" text="PT" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="No" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="38.0" prefWidth="248.0" style="-fx-font-size: 12;" text="Freeze Duration" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="None" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="250.0" style="-fx-font-size: 12;" text="InBody" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="None" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
-                                 <children>
-                                    <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="205.0" style="-fx-font-size: 20;" text="\$14.99/month" />
-                                 </children>
-                              </HBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
-                                 <VBox.margin>
-                                    <Insets left="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
+                        <VBox prefHeight="72.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
                            <styleClass>
                               <String fx:value="membership-box" />
                               <String fx:value="standard-membership" />
                            </styleClass>
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Standard" />
-                              <Label alignment="CENTER" prefHeight="62.0" prefWidth="218.0" text="Enjoy gym access, group classes, 8 private sessions, and a 7-day freeze option." />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Standard" />
+                              <Label alignment="CENTER" prefHeight="74.0" prefWidth="221.0" text="Enjoy gym access, group classes, 8 private sessions, and a 7-day freeze option." />
                               <HBox prefHeight="13.0" prefWidth="201.0">
                                  <children>
                                     <Label prefHeight="15.0" prefWidth="229.0" style="-fx-text-fill: white;" text="Group Sessions" />
@@ -168,14 +121,14 @@
                               <Insets right="30.0" />
                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
+                        <VBox prefHeight="107.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
                            <styleClass>
                               <String fx:value="membership-box" />
                               <String fx:value="premium-membership" />
                            </styleClass>
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Premium" />
-                              <Label alignment="CENTER" prefHeight="58.0" prefWidth="216.0" text="Unlock full facility access, 6 private sessions, 4 InBody analysis, and flexible freezes." />
+                              <Label alignment="CENTER" prefHeight="63.0" prefWidth="216.0" text="Unlock full facility access, 6 private sessions, 4 InBody analysis, and flexible freezes." />
                               <HBox prefHeight="13.0" prefWidth="201.0">
                                  <children>
                                     <Label prefHeight="20.0" prefWidth="223.0" style="-fx-text-fill: white;" text="Group Sessions" />
@@ -216,14 +169,10 @@
                               <Insets right="30.0" />
                            </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="vip-membership" />
-                           </styleClass>
+                        <VBox prefHeight="200.0" prefWidth="254.0" styleClass="membership-box" stylesheets="@assets/css/membership.css">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="VIP" />
-                              <Label alignment="CENTER" prefHeight="53.0" prefWidth="218.0" text="Experience unlimited training, private coaching, VIP spa access, and premium perks." />
+                              <Label alignment="CENTER" prefHeight="59.0" prefWidth="218.0" text="Experience unlimited training, private coaching, VIP spa access, and premium perks." />
                               <HBox prefHeight="13.0" prefWidth="201.0">
                                  <children>
                                     <Label prefHeight="20.0" prefWidth="223.0" style="-fx-text-fill: white;" text="Group Sessions" />
@@ -260,201 +209,17 @@
                                  </VBox.margin>
                               </Button>
                            </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
                         </VBox>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="300.0" prefWidth="1079.0" style="-fx-background-color: #e3e3e3;">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="222.0" prefWidth="229.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="basic-membership" />
-                           </styleClass>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="193.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Basic" />
-                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="193.0" style="-fx-font-size: 12;" text="Access to essential gym facilities with 8 sessions monthly — perfect for beginners." />
-                              <HBox prefHeight="13.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="15.0" prefWidth="186.0" style="-fx-font-size: 12;" text="Group Sessions" />
-                                    <Label prefHeight="27.0" prefWidth="97.0" style="-fx-font-size: 12;" text="8/month" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="19.0" prefWidth="251.0" style="-fx-font-size: 12;" text="PT" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="No" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="38.0" prefWidth="248.0" style="-fx-font-size: 12;" text="Freeze Duration" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="None" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="18.0" prefWidth="250.0" style="-fx-font-size: 12;" text="InBody" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-font-size: 12;" text="None" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
-                                 <children>
-                                    <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="205.0" style="-fx-font-size: 20;" text="\$14.99/month" />
-                                 </children>
-                              </HBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
-                                 <VBox.margin>
-                                    <Insets left="10.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="standard-membership" />
-                           </styleClass>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Standard" />
-                              <Label alignment="CENTER" prefHeight="62.0" prefWidth="218.0" text="Enjoy gym access, group classes, 8 private sessions, and a 7-day freeze option." />
-                              <HBox prefHeight="13.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="15.0" prefWidth="229.0" style="-fx-text-fill: white;" text="Group Sessions" />
-                                    <Label prefHeight="39.0" prefWidth="118.0" style="-fx-text-fill: white;" text="Unlimited" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="15.0" prefWidth="352.0" style="-fx-text-fill: white;" text="PT" />
-                                    <Label prefHeight="38.0" prefWidth="172.0" style="-fx-text-fill: white;" text="No" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="31.0" prefWidth="288.0" style="-fx-text-fill: white;" text="Freeze Duration" />
-                                    <Label prefHeight="22.0" prefWidth="222.0" style="-fx-text-fill: white;" text="3 days/month" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="29.0" prefWidth="290.0" style="-fx-text-fill: white;" text="InBody" />
-                                    <Label prefHeight="23.0" prefWidth="134.0" style="-fx-text-fill: white;" text="None" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
-                                 <children>
-                                    <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="180.0" style="-fx-font-size: 20;" text="\$14.99/month" />
-                                 </children>
-                              </HBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
-                                 <VBox.margin>
-                                    <Insets left="25.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="premium-membership" />
-                           </styleClass>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="Premium" />
-                              <Label alignment="CENTER" prefHeight="58.0" prefWidth="216.0" text="Unlock full facility access, 6 private sessions, 4 InBody analysis, and flexible freezes." />
-                              <HBox prefHeight="13.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="20.0" prefWidth="223.0" style="-fx-text-fill: white;" text="Group Sessions" />
-                                    <Label prefHeight="39.0" prefWidth="118.0" style="-fx-text-fill: white;" text="Unlimited" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="25.0" prefWidth="331.0" style="-fx-text-fill: white;" text="PT" />
-                                    <Label prefHeight="45.0" prefWidth="228.0" style="-fx-text-fill: white;" text="Yes" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="41.0" prefWidth="293.0" style="-fx-text-fill: white;" text="Freeze Duration" />
-                                    <Label prefHeight="46.0" prefWidth="226.0" style="-fx-text-fill: white;" text="6 days/month" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="28.0" prefWidth="295.0" style="-fx-text-fill: white;" text="InBody" />
-                                    <Label prefHeight="19.0" prefWidth="178.0" style="-fx-text-fill: white;" text="3/month" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
-                                 <children>
-                                    <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="183.0" style="-fx-font-size: 20;" text="\$14.99/month" />
-                                 </children>
-                              </HBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
-                                 <VBox.margin>
-                                    <Insets left="25.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="254.0" stylesheets="@assets/css/membership.css">
-                           <styleClass>
-                              <String fx:value="membership-box" />
-                              <String fx:value="vip-membership" />
-                           </styleClass>
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="207.0" style="-fx-font-size: 30;" styleClass="membership-title" text="VIP" />
-                              <Label alignment="CENTER" prefHeight="53.0" prefWidth="218.0" text="Experience unlimited training, private coaching, VIP spa access, and premium perks." />
-                              <HBox prefHeight="13.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="20.0" prefWidth="223.0" style="-fx-text-fill: white;" text="Group Sessions" />
-                                    <Label prefHeight="39.0" prefWidth="118.0" style="-fx-text-fill: white;" text="Unlimited" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="25.0" prefWidth="331.0" style="-fx-text-fill: white;" text="PT" />
-                                    <Label prefHeight="45.0" prefWidth="228.0" style="-fx-text-fill: white;" text="Yes" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="41.0" prefWidth="293.0" style="-fx-text-fill: white;" text="Freeze Duration" />
-                                    <Label prefHeight="21.0" prefWidth="236.0" style="-fx-text-fill: white;" text="10 days/month" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="17.0" prefWidth="201.0">
-                                 <children>
-                                    <Label prefHeight="28.0" prefWidth="295.0" style="-fx-text-fill: white;" text="InBody" />
-                                    <Label prefHeight="32.0" prefWidth="187.0" style="-fx-text-fill: white;" text="Unlimited" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="193.0">
-                                 <children>
-                                    <Label prefHeight="24.0" prefWidth="146.0" style="-fx-font-size: 20;" text="Total" />
-                                    <Label prefHeight="24.0" prefWidth="178.0" style="-fx-font-size: 20;" text="\$14.99/month" />
-                                 </children>
-                              </HBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Get Membership">
-                                 <VBox.margin>
-                                    <Insets left="25.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </HBox>
                </children>
                <padding>
@@ -462,6 +227,10 @@
                </padding>
             </VBox>
          </content>
+         <stylesheets>
+            <URL value="@assets/css/membership.css" />
+            <URL value="@assets/css/memberH1.css" />
+         </stylesheets>
       </ScrollPane>
     </children>
  </AnchorPane>

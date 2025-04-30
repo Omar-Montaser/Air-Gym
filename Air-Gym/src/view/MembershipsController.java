@@ -3,21 +3,14 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+
 import model.gym.members.MembershipType;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class MembershipsController extends BaseController{
@@ -29,19 +22,55 @@ public class MembershipsController extends BaseController{
     private Button logoutButton;
     @FXML
     private HBox menuHBox;
+    @FXML
+    private VBox membershipContainer;
+    @FXML
+    private ScrollPane scrollPane;
 
 
     public void populateMembershipTypes(){
+        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            double deltaY = event.getDeltaY() * 3;
+            scrollPane.setVvalue(scrollPane.getVvalue() - deltaY / scrollPane.getContent().getBoundsInLocal().getHeight());
+            event.consume();
+        });
         List<MembershipType> membershipTypes = mainController.getAllMembershipTypes();
-        
+        membershipContainer.getChildren().clear();
+        for (MembershipType membershipType : membershipTypes)
+            System.out.println(membershipType.getName());
+        int totalMemberships = membershipTypes.size();
+        int membershipsPerRow = 3;
+        int rows = (int) Math.ceil((double) totalMemberships / membershipsPerRow);
+        if (rows>1) membershipContainer.setPrefHeight(membershipContainer.getPrefHeight()*(rows));
+        for (int row = 0; row < rows; row++) {
+            HBox membershipHBox = new HBox();
+            membershipHBox.setPrefHeight(335.0);
+            membershipHBox.setPrefWidth(914.0);
+            membershipHBox.setStyle("-fx-background-color: #e3e3e3;");
+            membershipHBox.setPadding(new javafx.geometry.Insets(0, 20.0, 0, 20.0));
+
+            int startIndex=row * membershipsPerRow;
+            int endIndex=Math.min(startIndex+membershipsPerRow,totalMemberships);
+
+            for (int i=startIndex; i<endIndex ;i++) {
+                MembershipType membershipType=membershipTypes.get(i);
+                VBox membershipBox=createMembershipTypeBox(membershipType);
+                
+                if (i<endIndex-1) HBox.setMargin(membershipBox, new javafx.geometry.Insets(0, 30.0, 0, 0));                
+                membershipHBox.getChildren().add(membershipBox);
+            }
+
+            membershipContainer.getChildren().add(membershipHBox);
+        }
+        System.out.println("Membership types populated");
     }
     public VBox createMembershipTypeBox(MembershipType membershipType){
         VBox membershipBox = new VBox();
-        membershipBox.getStyleClass().addAll("membership-box", membershipType.getName().toLowerCase() + "-membership");
+        membershipBox.getStyleClass().add("membership-box");
+        membershipBox.getStyleClass().add("memberH1");
         membershipBox.setPrefHeight(200.0);
         membershipBox.setPrefWidth(254.0);
         
-        // Title label
         Label titleLabel = new Label(membershipType.getName());
         titleLabel.setAlignment(Pos.CENTER);
         titleLabel.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
@@ -50,13 +79,11 @@ public class MembershipsController extends BaseController{
         titleLabel.setStyle("-fx-font-size: 30;");
         titleLabel.getStyleClass().add("membership-title");
         
-        // Description label
         Label descriptionLabel = new Label(membershipType.getDescription());
         descriptionLabel.setAlignment(Pos.CENTER);
-        descriptionLabel.setPrefHeight(50.0);
+        descriptionLabel.setPrefHeight(65.0);
         descriptionLabel.setPrefWidth(221.0);
         
-        // Group Sessions HBox
         HBox groupSessionsHBox = new HBox();
         groupSessionsHBox.setPrefHeight(13.0);
         groupSessionsHBox.setPrefWidth(201.0);
@@ -73,7 +100,6 @@ public class MembershipsController extends BaseController{
         
         groupSessionsHBox.getChildren().addAll(groupSessionsLabel, groupSessionsValueLabel);
         
-        // PT HBox
         HBox ptHBox = new HBox();
         ptHBox.setPrefHeight(17.0);
         ptHBox.setPrefWidth(201.0);
@@ -83,14 +109,13 @@ public class MembershipsController extends BaseController{
         ptLabel.setPrefWidth(352.0);
         ptLabel.setStyle("-fx-text-fill: white;");
         
-        Label ptValueLabel = new Label(membershipType.isPrivateTrainer() ? "Yes" : "No");
+        Label ptValueLabel = new Label(membershipType.hasPrivateTrainer() ? "Yes" : "No");
         ptValueLabel.setPrefHeight(38.0);
         ptValueLabel.setPrefWidth(172.0);
         ptValueLabel.setStyle("-fx-text-fill: white;");
         
         ptHBox.getChildren().addAll(ptLabel, ptValueLabel);
         
-        // Freeze Duration HBox
         HBox freezeHBox = new HBox();
         freezeHBox.setPrefHeight(17.0);
         freezeHBox.setPrefWidth(201.0);
@@ -107,24 +132,22 @@ public class MembershipsController extends BaseController{
         
         freezeHBox.getChildren().addAll(freezeLabel, freezeValueLabel);
         
-        // InBody HBox
         HBox inBodyHBox = new HBox();
         inBodyHBox.setPrefHeight(17.0);
         inBodyHBox.setPrefWidth(201.0);
         
         Label inBodyLabel = new Label("InBody");
         inBodyLabel.setPrefHeight(29.0);
-        inBodyLabel.setPrefWidth(290.0);
+        inBodyLabel.setPrefWidth(250.0);
         inBodyLabel.setStyle("-fx-text-fill: white;");
         
-        Label inBodyValueLabel = new Label(membershipType.getInBody() > 0 ? membershipType.getInBody() + "/month" : "None");
+        Label inBodyValueLabel = new Label((membershipType.getInBody()>0 )?(membershipType.getInBody()>29?"Unlimited": membershipType.getInBody() + "/month") : "None");
         inBodyValueLabel.setPrefHeight(23.0);
-        inBodyValueLabel.setPrefWidth(134.0);
+        inBodyValueLabel.setPrefWidth(130.0);
         inBodyValueLabel.setStyle("-fx-text-fill: white;");
         
         inBodyHBox.getChildren().addAll(inBodyLabel, inBodyValueLabel);
         
-        // Total Price HBox
         HBox totalHBox = new HBox();
         totalHBox.setAlignment(Pos.CENTER_RIGHT);
         totalHBox.setPrefHeight(47.0);
@@ -132,7 +155,7 @@ public class MembershipsController extends BaseController{
         
         Label totalLabel = new Label("Total");
         totalLabel.setPrefHeight(24.0);
-        totalLabel.setPrefWidth(146.0);
+        totalLabel.setPrefWidth(100.0);
         totalLabel.setStyle("-fx-font-size: 20;");
         
         Label priceLabel = new Label("$" + String.format("%.2f", membershipType.getMonthlyPrice()) + "/month");
@@ -142,15 +165,14 @@ public class MembershipsController extends BaseController{
         
         totalHBox.getChildren().addAll(totalLabel, priceLabel);
         
-        // Button
-        Button getMembershipButton = new Button("Get Membership");
-        getMembershipButton.setId("bookSessionBtn");
-        getMembershipButton.setPrefHeight(45.0);
-        getMembershipButton.setPrefWidth(170.0);
-        getMembershipButton.getStylesheets().add("@assets/css/memberH1.css");
-        VBox.setMargin(getMembershipButton, new javafx.geometry.Insets(0, 0, 0, 25.0));
-        
-        // Add all components to the VBox
+        Button membershipButton; 
+        if(mainController.isGuest())membershipButton = new Button("Get Membership");
+        else membershipButton= new Button("Renew Membership");
+        membershipButton.setPrefHeight(45.0);
+        membershipButton.setPrefWidth(170.0);
+        membershipButton.getStyleClass().add("membershipBtn");
+        VBox.setMargin(membershipButton, new javafx.geometry.Insets(0, 0, 0, 25.0));
+
         membershipBox.getChildren().addAll(
             titleLabel,
             descriptionLabel,
@@ -159,11 +181,21 @@ public class MembershipsController extends BaseController{
             freezeHBox,
             inBodyHBox,
             totalHBox,
-            getMembershipButton
+            membershipButton
         );
+
+        String colorStyle = "-fx-background-color: " + membershipType.getColorHex() + ";";
+        membershipBox.setStyle(colorStyle);
         
+        membershipButton.setOnAction(event -> {
+            try {
+                mainController.setSelectedMembership(membershipType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         return membershipBox;
-    }
+}
 
     public void modifyScreen(){
         if(mainController.isGuest()){

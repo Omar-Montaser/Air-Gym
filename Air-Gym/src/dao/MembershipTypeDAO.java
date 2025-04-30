@@ -17,7 +17,7 @@ public class MembershipTypeDAO {
     public List<MembershipType> getAllMembershipTypes(){
         List<MembershipType> membershipTypes = new ArrayList<>();
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM MembershipType");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM MembershipType ORDER BY AccessLevel");
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 membershipTypes.add(mapResultSetToMembershipType(rs));
@@ -31,12 +31,12 @@ public class MembershipTypeDAO {
 
     private MembershipType mapResultSetToMembershipType(ResultSet rs) throws SQLException{
         return new MembershipType(
-            rs.getInt("MembershipID"),
+            rs.getInt("MembershipTypeID"),
             rs.getString("Name"),
             rs.getString("Description"),
             rs.getString("AccessLevel"),
             rs.getDouble("MonthlyPrice"),
-            rs.getInt("NoOfSessions"),
+            rs.getInt("Sessions"),
             rs.getBoolean("PrivateTrainer"),
             rs.getInt("FreezeDuration"),
             rs.getInt("InBody"),

@@ -9,7 +9,6 @@
     -fx-padding: 6 12;
     -fx-background-radius: 6;
 }
-
 .logout-button:hover {
     -fx-background-color: red;
     -fx-text-fill: white;
