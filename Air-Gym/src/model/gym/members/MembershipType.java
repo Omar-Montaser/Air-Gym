@@ -75,7 +75,7 @@ public class MembershipType {
     public void setAccessLevel(int accessLevel) {
         this.accessLevel = accessLevel;
     }
-    public boolean getPrivateTrainer() {
+    public boolean isPrivateTrainer() {
         return privateTrainer;
     }
     public void setPrivateTrainer(boolean privateTrainer) {

@@ -1,4 +1,5 @@
 USE AirGym;
+--------------------------------Members--------------------------------
 GO
 CREATE OR ALTER PROCEDURE AddNewMember
         @PaymentMethod VARCHAR(20),
@@ -471,35 +472,3 @@ CREATE OR ALTER PROCEDURE FreezeSubscription
             THROW;
         END CATCH
     END;
--- GO
--- CREATE OR ALTER PROCEDURE UnfreezeSubscription
---     @UserID INT
---     AS
---     BEGIN
---         BEGIN TRY
---             BEGIN TRANSACTION;
-            
---             IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
---             BEGIN
---                 RAISERROR('Member does not exist.', 16, 1);
---                 ROLLBACK TRANSACTION;
---                 RETURN;
---             END
---             IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus IN ('Frozen'))
---             BEGIN
---                 RAISERROR('This subscription is not frozen.', 16, 1);
---                 ROLLBACK TRANSACTION;
---                 RETURN;
---             END
-
---             UPDATE Member
---             SET SubscriptionStatus = 'Active',
---             WHERE UserID = @UserID;
-            
---             COMMIT TRANSACTION;
---         END TRY
---         BEGIN CATCH
---             ROLLBACK TRANSACTION;
---             THROW;
---         END CATCH
---     END;

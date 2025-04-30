@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.sql.PreparedStatement;
 
 import model.accounts.User;
 

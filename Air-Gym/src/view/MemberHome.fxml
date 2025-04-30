@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeController">
     <children>
        <VBox layoutX="27.0" layoutY="197.0" prefHeight="389.0" prefWidth="550.0">
           <children>
@@ -28,12 +28,12 @@
              </TableView>
              <HBox prefHeight="102.0" prefWidth="628.0">
                 <children>
-                   <Button id="cancelSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel Session(s)">
+                   <Button id="cancelSessionBtn" fx:id="cancelSessionButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel Session(s)">
                       <HBox.margin>
                          <Insets right="220.0" top="30.0" />
                       </HBox.margin>
                    </Button>
-                   <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Book a Session">
+                   <Button id="bookSessionBtn" fx:id="boookSessionButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Book a Session">
                       <HBox.margin>
                          <Insets top="30.0" />
                       </HBox.margin>
@@ -60,7 +60,7 @@
                         <Insets left="20.0" top="40.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                  <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                      <HBox.margin>
                         <Insets left="550.0" top="30.0" />
                      </HBox.margin>
@@ -77,17 +77,17 @@
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                   <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                   <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                   <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
+                   <Button fx:id="membershipsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
+                  <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

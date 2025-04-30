@@ -1,36 +1,30 @@
 package controller;
 import java.sql.Connection;
+import java.util.List;
 
 import view.MemberViewController;
+import view.MembershipsController;
 import dao.MemberDAO;
+import dao.MembershipTypeDAO;
 import dao.UserDAO;
 import db.SqlServerConnect;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import view.DashboardController;
+import view.HomeController;
 import view.LoginController;
 import javafx.stage.Stage;
 import model.accounts.*;
+import model.gym.members.MembershipType;
 
 public class MainController {
-
-    private Stage stage;
-    private Screen currentScreen;
-
-    private MemberDAO memberDAO;
-    private UserDAO userDAO;
-
-    protected boolean isGuest;
-    protected boolean isAdmin;
-    private User currentUser;
-    private Member currentMember;
-
     public MainController(Stage stage){
         try{
             Connection conn = SqlServerConnect.getConnection();
             memberDAO = new MemberDAO(conn);
             userDAO = new UserDAO(conn);
+            membershipTypeDao = new MembershipTypeDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(loginScene);
@@ -65,6 +59,17 @@ public class MainController {
         // // homeController =(HomeController) homeLoader.getController();
         // // homeController.setMain(this);
 
+        // FXMLLoader bookingLoader = new FXMLLoader(getClass().getResource("../view/Booking.fxml"));
+        // bookingScene = new Scene(bookingLoader.load());
+        // bookingController =(BookingController) bookingLoader.getController();
+        // bookingController.setMain(this);
+
+        FXMLLoader membershipsLoader = new FXMLLoader(getClass().getResource("../view/Memberships.fxml"));
+        membershipsScene = new Scene(membershipsLoader.load());
+        membershipsController =(MembershipsController) membershipsLoader.getController();
+        membershipsController.setMain(this);
+
+
     }
     public void switchScene(Screen nextScreen){
         currentScreen = nextScreen;
@@ -75,12 +80,13 @@ public class MainController {
             case HOME:
                 stage.setScene(homeScene);
                 break;  
-            // case BOOKING:
-            //     stage.setScene(bookingScene);
-            //     break;
-            // case MEMBERSHIP_VIEW:
-            //     stage.setScene(membershipViewScene);
-            //     break;
+            case BOOKING:
+                stage.setScene(bookingScene);
+                break;
+            case MEMBERSHIPS:
+                membershipsController.modifyScreen();
+                stage.setScene(membershipsScene);
+                break;
             // case CHECKOUT:
             //     stage.setScene(checkoutScene);
             //     break;
@@ -106,12 +112,32 @@ public class MainController {
             return true;
         }
     }
+    public List<MembershipType> getAllMembershipTypes(){
+        return membershipTypeDao.getAllMembershipTypes();
+    }
     public boolean isGuest(){
         return isGuest;
+    }
+    public void setIsGuest(boolean isGuest){
+        this.isGuest = isGuest;
     }
     public boolean isAdmin(){
         return isAdmin;
     }
+
+    protected boolean isGuest;
+    protected boolean isAdmin;
+    private User currentUser;
+    private Member currentMember;
+
+    private Stage stage;
+    private Screen currentScreen;
+
+    private MemberDAO memberDAO;
+    private UserDAO userDAO;
+    private MembershipTypeDAO membershipTypeDao;
+
+
 
     private Scene dashboardScene;
     private DashboardController dashboardController;
@@ -120,5 +146,11 @@ public class MainController {
     private LoginController loginController;
 
     private Scene homeScene;
-    // private HomeController homeController;
+    private HomeController homeController;
+
+    private Scene bookingScene;
+    // private BookingController bookingController;
+
+    private Scene membershipsScene;
+    private MembershipsController membershipsController;
 }

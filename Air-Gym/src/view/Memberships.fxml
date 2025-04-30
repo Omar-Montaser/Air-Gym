@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MembershipsController">
     <children>
        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
           <children>
@@ -27,7 +27,7 @@
                          <Insets left="20.0" top="40.0" />
                       </HBox.margin>
                    </Label>
-                   <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                   <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                       <HBox.margin>
                          <Insets left="620.0" top="30.0" />
                       </HBox.margin>
@@ -37,14 +37,14 @@
                   <Insets bottom="20.0" left="20.0" top="20.0" />
                </padding>
              </HBox>
-             <HBox prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
+             <HBox fx:id="menuHBox" alignment="TOP_RIGHT" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
                 <children>
-                   <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                   <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                   <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                   <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
@@ -54,7 +54,7 @@
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
+                  <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

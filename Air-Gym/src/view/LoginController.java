@@ -4,7 +4,6 @@ import controller.Screen;
 import controller.Validation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class LoginController extends BaseController{
@@ -33,6 +32,7 @@ public class LoginController extends BaseController{
     }
     @FXML 
     private void handleGuestLogin(){
+        mainController.setIsGuest(true);
         mainController.switchScene(Screen.MEMBERSHIPS);
     }
 }
