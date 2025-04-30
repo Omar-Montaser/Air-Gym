@@ -2,13 +2,37 @@ package dao;
 
 import java.sql.*;
 
+import model.accounts.User;
+
 public class UserDAO {
     private Connection conn;
     
     public UserDAO(Connection conn) {
         this.conn = conn;
     }
-    
+    public User getUserByPhoneNumber(String phoneNumber){
+        String sql = "SELECT * FROM Users WHERE PhoneNumber = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, phoneNumber);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getInt("UserID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Password"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Gender"),
+                    rs.getDate("DateOfBirth"),
+                    rs.getString("Role")
+                );
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }   
     public String validateLogin(String phoneNumber, String password) {
         String sql = "SELECT Role FROM Users WHERE PhoneNumber = ? AND Password = ?";
         

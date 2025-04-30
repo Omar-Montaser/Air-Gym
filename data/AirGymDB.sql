@@ -1,11 +1,9 @@
 CREATE DATABASE AirGym;
-GO
 USE AirGym;
 GO
-
-CREATE TABLE Users (
+CREATE TABLE Users(
     UserID INT IDENTITY(1,1) PRIMARY KEY,
-    Password VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL UNIQUE CHECK (LEN(Password) >= 8),
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL UNIQUE,
@@ -16,31 +14,21 @@ CREATE TABLE Users (
 ALTER TABLE Users
 ADD CONSTRAINT CK_PhoneNumber_Egyptian
 CHECK (
-    -- Must be exactly 11 digits
     LEN(REPLACE(REPLACE(REPLACE(REPLACE(PhoneNumber, '(', ''), ')', ''), '-', ''), ' ', '')) = 11
-    AND
-    -- Must start with 01
-    PhoneNumber LIKE '01%'
-    AND
-    -- Third digit must be 0, 1, 2, or 5
-    SUBSTRING(PhoneNumber, 3, 1) IN ('0', '1', '2', '5')
-    AND
-    -- Must contain only valid characters (numbers, spaces, dashes, parentheses)
-    PhoneNumber LIKE '%[0-9()- ]%'
-    AND
-    -- Must not contain letters
-    PhoneNumber NOT LIKE '%[A-Za-z]%'
-)
+    AND PhoneNumber LIKE '01%'
+    AND SUBSTRING(PhoneNumber, 3, 1) IN ('0', '1', '2', '5')
+    AND PhoneNumber NOT LIKE '%[A-Za-z]%'
+);
 
-CREATE TABLE Branch (
+CREATE TABLE Branch(
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
     Location VARCHAR(255) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL,
     OpeningDate DATE NOT NULL,
-    Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed'))
-    AdminID INT NULL, -- NEW COLUMN to reference Users (admins)
-    CONSTRAINT FK_Branch_Admin FOREIGN KEY (AdminID) REFERENCES Users(UserID) ON DELETE SET NULL)
+    Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed')),
+    AdminID INT NULL,
+    CONSTRAINT FK_Branch_Admin FOREIGN KEY (AdminID) REFERENCES Users(UserID) ON DELETE SET NULL
 );
 
 CREATE TABLE MembershipType (
@@ -70,10 +58,10 @@ CREATE TABLE Trainer (
 
 CREATE TABLE Member (
     UserID INT PRIMARY KEY,
-    MembershipTypeID INT NULL, -- FK later
+    MembershipTypeID INT NULL,
     SubscriptionStartDate DATE NOT NULL,
     SubscriptionEndDate DATE NOT NULL,
-    FreezeEndDate DATE NULL ,
+    FreezeEndDate DATE NULL,
     SessionsAvailable INT NOT NULL DEFAULT 0,
     FreezesAvailable INT NOT NULL DEFAULT 0,
     BranchID INT NULL, 
@@ -91,7 +79,6 @@ CREATE TABLE Equipment (
     MaintenanceDate DATE,
     Status VARCHAR(20) NOT NULL DEFAULT 'Available' CHECK (Status IN ('Available', 'Maintenance', 'Retired')),
     BranchID INT NOT NULL,
-
     CONSTRAINT FK_Equipment_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE CASCADE
 );
 
@@ -104,7 +91,6 @@ CREATE TABLE Session (
     DateTime DATETIME NOT NULL,
     Duration INT NOT NULL CHECK (Duration > 0),
     Status VARCHAR(20) NOT NULL DEFAULT 'Scheduled' CHECK (Status IN ('Scheduled', 'Completed', 'Cancelled', 'Full')),
-
     CONSTRAINT FK_Session_Trainer FOREIGN KEY (TrainerID) REFERENCES Trainer(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Session_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE CASCADE
 );
@@ -116,7 +102,7 @@ CREATE TABLE Payment (
     PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
     PaymentDate DATETIME DEFAULT GETDATE(),
     Amount DECIMAL(10,2) NOT NULL,
-    -- Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending', 'Failed', 'Refunded')),
+    Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending')),
     CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
 );
 
@@ -127,7 +113,6 @@ CREATE TABLE Booking (
     PaymentID INT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled')),
     BookingDate DATETIME DEFAULT GETDATE(),
-
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Booking_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID) ON DELETE CASCADE
 );

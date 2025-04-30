@@ -1,5 +1,4 @@
 package controller;
-import java.lang.reflect.Member;
 import java.sql.Connection;
 
 import view.MemberViewController;
@@ -12,7 +11,7 @@ import javafx.scene.image.Image;
 import view.DashboardController;
 import view.LoginController;
 import javafx.stage.Stage;
-import model.accounts.User;
+import model.accounts.*;
 
 public class MainController {
 
@@ -20,10 +19,12 @@ public class MainController {
     private Screen currentScreen;
 
     private MemberDAO memberDAO;
-    private UserDAO userDAO; 
+    private UserDAO userDAO;
 
     protected boolean isGuest;
+    protected boolean isAdmin;
     private User currentUser;
+    private Member currentMember;
 
     public MainController(Stage stage){
         try{
@@ -92,16 +93,24 @@ public class MainController {
             default: break;
         }
     } 
-    public void login(String phoneNumber, String Password){
-        try{
-            String role = userDAO.validateLogin(phoneNumber, Password);
-            if(role=="Member"){
-                currentUser = memberDAO.getUserByPhoneNumber(phoneNumber);
-            }
-            else{
-                throw new Exception("Invalid phone number or password");
-            }
+    public boolean login(String phoneNumber, String password) throws Exception {
+        isGuest = false; isAdmin = false;
+        if (userDAO.getUserByPhoneNumber(phoneNumber)==null) return false;
+        else{
+            String role = userDAO.validateLogin(phoneNumber, password);
+            currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
+            if(role=="Member")
+                currentMember = memberDAO.getMemberByPhoneNumber(phoneNumber);
+            else if(role=="Admin")
+                isAdmin = true;
+            return true;
         }
+    }
+    public boolean isGuest(){
+        return isGuest;
+    }
+    public boolean isAdmin(){
+        return isAdmin;
     }
 
     private Scene dashboardScene;

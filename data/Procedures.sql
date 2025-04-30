@@ -78,7 +78,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
             END
 
             INSERT INTO Member (UserID, MembershipTypeID, SubscriptionStartDate, SubscriptionEndDate, 
-                            SessionsAvailable, BranchID, TrainerID, FreezesAvailable, SubscriptionStatus)
+                            SessionsAvailable, BranchID, TrainerID, FreezesAvailable, SubscriptionStatus, FreezeEndDate)
             VALUES (
                 @UserID, 
                 @MembershipTypeID, 
@@ -88,7 +88,8 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 @BranchID, 
                 @TrainerID, 
                 @FreezesAvailable,
-                'Active'
+                'Active',
+                GETDATE()
             );
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, Amount, Status)
@@ -363,6 +364,15 @@ CREATE OR ALTER PROCEDURE CancelSubscription
             SET Status = 'Cancelled'
             WHERE UserID = @UserID;
             
+            -- Only cancel payments made within the last week
+            UPDATE Payment
+            SET Status = 'Cancelled'
+            WHERE MemberID = @UserID 
+              AND Category = 'Membership'
+              AND DATEDIFF(DAY, PaymentDate, GETDATE()) <= 7; 
+            
+            -- For payments older than a week, they remain completed (no refund)
+            -- This ensures members can only get refunds for recent subscriptions
             COMMIT TRANSACTION;
         END TRY
         BEGIN CATCH

@@ -111,11 +111,11 @@
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Amount" />
-                        <ChoiceBox prefHeight="25.0" prefWidth="173.0">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </ChoiceBox>
+                  <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Amount" style="-fx-font-size: 12;">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
                     </children>
                 </HBox>
                 <HBox prefHeight="40.0" prefWidth="394.0">
