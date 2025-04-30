@@ -127,19 +127,19 @@
             </HBox>
             <HBox fillHeight="false" prefHeight="15.0" prefWidth="394.0">
                <children>
-                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Membership Status" />
+                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Subscription Status" />
                   <Label fx:id="subscriptionStatusLabel" prefHeight="36.0" prefWidth="200.0" styleClass="form-sh" text="Trainer " />
                </children>
             </HBox>
             <HBox fillHeight="false" prefHeight="15.0" prefWidth="394.0">
                <children>
-                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Membership Start Date" />
+                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Subscription Start Date" />
                   <Label fx:id="subscriptionStartDateLabel" prefHeight="36.0" prefWidth="200.0" styleClass="form-sh" text="Trainer " />
                </children>
             </HBox>
             <HBox fillHeight="false" prefHeight="15.0" prefWidth="394.0">
                <children>
-                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Membership End Date" />
+                  <Label prefHeight="44.0" prefWidth="400.0" styleClass="form-sh" text="Subscription End Date" />
                   <Label fx:id="subscriptionEndDateLabel" prefHeight="36.0" prefWidth="200.0" styleClass="form-sh" text="Trainer " />
                </children>
             </HBox>

@@ -20,7 +20,7 @@ public Member(
     Date dateOfBirth, int membershipId, int branchId, Integer trainerId, 
     Date subscriptionStartDate, Date subscriptionEndDate,
     int sessionAvailable, String subscriptionStatus, int freezeAvailable, Date freezeEndDate) {
-    super(userId++, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Member"); 
+    super(userId, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Member"); 
     this.membershipTypeId = membershipId;
     this.branchId = branchId;
     this.trainerId = trainerId;

@@ -5,7 +5,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
         @PaymentMethod VARCHAR(20),
         @PaymentAmount DECIMAL(10,2),
         @Duration INT, 
-        @Password VARCHAR(12),
+        @Password VARCHAR(255),
         @FirstName VARCHAR(50),
         @LastName VARCHAR(50),
         @PhoneNumber VARCHAR(20),

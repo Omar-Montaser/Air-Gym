@@ -16,9 +16,11 @@ public class ProfileController extends BaseController{
         membershipTypeLabel.setText(mainController.getMembershipName(member.getMembershipId()));
         branchLabel.setText(mainController.getBranchByID(member.getBranchId()).getName());
         subscriptionStatusLabel.setText(member.getSubscriptionStatus());
-        subscriptionStartDateLabel.setText(member.getMembershipStartDate());
+        subscriptionStartDateLabel.setText(member.getSubscriptionStartDate().toString());
         subscriptionEndDateLabel.setText(member.getSubscriptionEndDate().toString());
-        ptNameLabel.setText(mainController.getTrainerByID(member.getTrainerId()).getFirstName() + " " + mainController.getTrainerByID(member.getTrainerId()).getLastName());
+        ptNameLabel.setText(mainController.getTrainerByID(member.getTrainerId())==null ? "No Trainer" : 
+        mainController.getTrainerByID(member.getTrainerId()).getFirstName() + " " 
+        + mainController.getTrainerByID(member.getTrainerId()).getLastName());
     }
     @FXML
     private Button homeButton;

@@ -78,6 +78,11 @@ public class MainController {
         checkoutController =(CheckoutController) checkoutLoader.getController();
         checkoutController.setMain(this);
 
+        FXMLLoader profileLoader = new FXMLLoader(getClass().getResource("../view/ProfilePage.fxml"));
+        profileScene = new Scene(profileLoader.load());
+        profileController =(ProfileController) profileLoader.getController();
+        profileController.setMain(this);
+
     }
     public void switchScene(Screen nextScreen){
         currentScreen = nextScreen;
@@ -100,9 +105,10 @@ public class MainController {
                 checkoutController.modifyScreen();
                 stage.setScene(checkoutScene);
                 break;
-            // case PROFILE:
-            //     stage.setScene(profileScene);
-            //     break;
+            case PROFILE:
+                profileController.fillDetails(currentMember);
+                stage.setScene(profileScene);
+                break;
             // case CONTACT_US:
             //     stage.setScene(contactUsScene);
             //     break;
@@ -126,7 +132,7 @@ public class MainController {
     String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName){
         Branch branch = branchDAO.getBranchByName(branchName);
         Member member = new Member(
-            userDAO.getMaxUserId(),
+            userDAO.getMaxUserId()+1,
             firstName,
             lastName,
             password,
@@ -137,10 +143,10 @@ public class MainController {
             branch.getBranchID()
         );
         memberDAO.createMember(member,duration,paymentAmount);
-        currentMember = member;
+        currentMember = memberDAO.getMemberById(member.getUserId());
         currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
+        switchScene(Screen.PROFILE);
     }
-
     public List<MembershipType> getAllMembershipTypes(){
         return membershipTypeDao.getAllMembershipTypes();
     }

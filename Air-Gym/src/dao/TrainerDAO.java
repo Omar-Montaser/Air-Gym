@@ -14,7 +14,10 @@ public class TrainerDAO {
     }
     public Trainer getTrainerById(int id){
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Trainer WHERE id = ?");
+            String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
+                         "t.Specialization, t.ExperienceYears, t.Salary, t.BranchID, t.Status " +
+                         "FROM Users u JOIN Trainer t ON u.UserID = t.UserID WHERE u.UserID = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
