@@ -43,4 +43,18 @@ public class MembershipTypeDAO {
             rs.getString("ColorHex")
         );
     }
+    public String getMembershipTypeName(int membershipId){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT Name FROM MembershipType WHERE MembershipTypeID = ?");
+            stmt.setInt(1, membershipId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getString("Name");
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

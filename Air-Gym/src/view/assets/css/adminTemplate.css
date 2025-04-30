@@ -157,8 +157,8 @@
     -fx-border-width: 1;
 }
 .form-title {
-    -fx-font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
-    -fx-font-size: 30px;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    -fx-font-size: 20px;
     -fx-font-weight: 600;
     -fx-text-fill: #333333;
     -fx-padding: 10 0 10 0;

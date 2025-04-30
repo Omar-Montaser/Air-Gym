@@ -1,6 +1,8 @@
 .root {
-    -fx-font-family: "Poppins";
-    -fx-font-size: 14px;
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
+}
+.Label {
+    -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;
 }
 .top-container {
     -fx-background-color: #00000066;
@@ -183,7 +185,6 @@
     -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);
     -fx-border-width: 0px 0px 2px 0px;
 }
-
 .box {
     -fx-background-color: transparent;
     -fx-border-width: 0px 0px 2px 0px;
@@ -194,6 +195,5 @@
     -fx-border-color:  #7a7a7a;
     -fx-border-width: 0px 0px 2px 0px;
 }
-
 
 

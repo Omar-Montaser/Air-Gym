@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CheckoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" styleClass="root" stylesheets="@assets/css/memberH1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CheckoutController">
     <children>
         <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
             <children>
@@ -70,9 +70,9 @@
             </HBox>
             </children>
         </VBox>
-      <VBox fx:id="personalDetailsBox" layoutX="492.0" layoutY="206.0" prefHeight="374.0" prefWidth="422.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
+      <VBox fx:id="personalDetailsBox" layoutX="492.0" layoutY="206.0" prefHeight="374.0" prefWidth="524.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
          <children>
-            <Label alignment="CENTER" prefHeight="42.0" prefWidth="423.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details">
+            <Label alignment="CENTER" prefHeight="47.0" prefWidth="531.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details">
                <VBox.margin>
                   <Insets left="-10.0" />
                </VBox.margin>
@@ -87,25 +87,25 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="firstNameTextField" prefHeight="27.0" prefWidth="116.0" promptText="Enter First Name" style="-fx-font-size: 12;" styleClass="field">
+                  <TextField fx:id="firstNameTextField" prefHeight="26.0" prefWidth="153.0" promptText="Enter First Name" style="-fx-font-size: 12;" styleClass="field">
                      <HBox.margin>
-                        <Insets right="20.0" top="10.0" />
+                        <Insets right="20.0" top="5.0" />
                      </HBox.margin>
                      <stylesheets>
                         <URL value="@assets/css/membership.css" />
                         <URL value="@assets/css/memberHome.css" />
                      </stylesheets>
                   </TextField>
-                  <HBox prefHeight="40.0" prefWidth="201.0">
+                  <HBox prefHeight="36.0" prefWidth="231.0">
                      <children>
                         <Label prefHeight="40.0" prefWidth="61.0" styleClass="form-sh" text="Last Name">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="lastNameTextField" prefHeight="27.0" prefWidth="106.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                        <TextField fx:id="lastNameTextField" prefHeight="26.0" prefWidth="146.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="5.0" />
                            </HBox.margin>
                         </TextField>
                      </children>
@@ -265,10 +265,10 @@
             </HBox>
             <HBox prefHeight="15.0" prefWidth="421.0">
                <children>
-                  <Label prefHeight="38.0" prefWidth="138.0" styleClass="form-sh" text="Card Number" />
+                  <Label prefHeight="36.0" prefWidth="100.0" styleClass="form-sh" text="Card Number" />
                   <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Card Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="5.0" />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -278,10 +278,10 @@
             </HBox>
             <HBox prefHeight="4.0" prefWidth="421.0">
                <children>
-                  <Label prefHeight="38.0" prefWidth="139.0" styleClass="form-sh" text="Cardholder Name" />
+                  <Label prefHeight="36.0" prefWidth="99.0" styleClass="form-sh" text="Cardholder Name" />
                   <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Cardholder Name (Optional)" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="5.0" />
                      </HBox.margin>
                   </TextField>
                </children>

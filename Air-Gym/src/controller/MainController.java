@@ -5,10 +5,8 @@ import java.util.List;
 
 import view.MemberViewController;
 import view.MembershipsController;
-import dao.BranchDAO;
-import dao.MemberDAO;
-import dao.MembershipTypeDAO;
-import dao.UserDAO;
+import view.ProfileController;
+import dao.*;
 import db.SqlServerConnect;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +28,7 @@ public class MainController {
             userDAO = new UserDAO(conn);
             membershipTypeDao = new MembershipTypeDAO(conn);
             branchDAO = new BranchDAO(conn);
+            trainerDAO = new TrainerDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(loginScene);
@@ -142,10 +141,17 @@ public class MainController {
         currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
     }
 
-    
-    
     public List<MembershipType> getAllMembershipTypes(){
         return membershipTypeDao.getAllMembershipTypes();
+    }
+    public String getMembershipName(int membershipId){
+        return membershipTypeDao.getMembershipTypeName(membershipId);
+    }
+    public Trainer getTrainerByID(int trainerId){
+        return trainerDAO.getTrainerById(trainerId);
+    }
+    public Branch getBranchByID(int branchId){
+        return branchDAO.getBranchById(branchId);
     }
     public List<Branch> getAllBranches(){
         return branchDAO.getBranches();
@@ -179,7 +185,7 @@ public class MainController {
     private UserDAO userDAO;
     private MembershipTypeDAO membershipTypeDao;
     private BranchDAO branchDAO;
-
+    private TrainerDAO trainerDAO;
 
 
     private Scene dashboardScene;
