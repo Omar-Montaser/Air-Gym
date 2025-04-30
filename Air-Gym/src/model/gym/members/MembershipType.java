@@ -27,10 +27,10 @@ public class MembershipType {
             this.colorHex = colorHex;
     }
 //==================================================Get&Set=============================================
-    public int getMembershipID() {
+    public int getMembershipTypeID() {
         return membershipID;
     }
-    public void setMembershipID(int membershipID) {
+    public void setMembershipTypeID(int membershipID) {
         this.membershipID = membershipID;
     }
     public String getName() {

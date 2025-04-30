@@ -11,20 +11,21 @@ public class MemberDAO {
         this.conn = conn;
     }
     private Connection conn;
-    public boolean createMember(Member member, String paymentMethod, int duration) {
-        String sql = "EXEC AddNewMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+    public boolean createMember(Member member,int duration,double paymentAmount) {
+        String sql = "EXEC AddNewMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
 
-            cstmt.setString(1, paymentMethod);
-            cstmt.setInt(2, duration);
-            cstmt.setString(3, member.getPassword());
-            cstmt.setString(4, member.getFirstName());
-            cstmt.setString(5, member.getLastName());
-            cstmt.setString(6, member.getPhoneNumber());
-            cstmt.setString(7, member.getGender());
-            cstmt.setDate(8, member.getBirthDate());
-            cstmt.setInt(9, member.getMembershipId());
-            cstmt.setInt(10, member.getBranchId());
+            cstmt.setString(1, "CreditCard");
+            cstmt.setDouble(2, paymentAmount);
+            cstmt.setInt(3, duration);
+            cstmt.setString(4, member.getPassword());
+            cstmt.setString(5, member.getFirstName());
+            cstmt.setString(6, member.getLastName());
+            cstmt.setString(7, member.getPhoneNumber());
+            cstmt.setString(8, member.getGender());
+            cstmt.setDate(9, member.getBirthDate());
+            cstmt.setInt(10, member.getMembershipId());
+            cstmt.setInt(11, member.getBranchId());
 
             cstmt.execute();
             return true;
@@ -32,21 +33,6 @@ public class MemberDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        }
-    }
-    public int getMaxUserId(){
-        String sql = "USE AirGym; SELECT MAX(UserID) FROM Users";
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-                if (rs.next()) {  // Always call rs.next() first!
-                    return rs.getInt(1);
-                } else {
-                    return 0; // no rows
-                }
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-            return 0;
         }
     }
     public boolean updateMember(Member member){
@@ -61,8 +47,8 @@ public class MemberDAO {
             cstmt.setString(5, member.getGender());
             cstmt.setDate(6, member.getBirthDate());
             cstmt.setInt(7, member.getMembershipId());
-            cstmt.setString(8, member.getSubscriptionStartDate());
-            cstmt.setString(9, member.getSubscriptionEndDate());
+            cstmt.setDate(8, member.getSubscriptionStartDate());
+            cstmt.setDate(9, member.getSubscriptionEndDate());
             cstmt.setInt(10, member.getSessionsAvailable());
             cstmt.setString(11, member.getSubscriptionStatus());
             cstmt.setInt(12, member.getTrainerId());
@@ -173,8 +159,8 @@ public class MemberDAO {
                     rs.getInt("MembershipTypeID"),
                     rs.getInt("BranchID"),
                     rs.getInt("TrainerID"),
-                    rs.getDate("SubscriptionStartDate").toString(),
-                    rs.getDate("SubscriptionEndDate").toString(),
+                    rs.getDate("SubscriptionStartDate"),
+                    rs.getDate("SubscriptionEndDate"),
                     rs.getInt("SessionsAvailable"),
                     rs.getString("SubscriptionStatus"),
                     rs.getInt("FreezesAvailable"),
@@ -215,8 +201,8 @@ public class MemberDAO {
             rs.getInt("MembershipTypeID"),
             rs.getInt("BranchID"),
             rs.getInt("TrainerID"),
-            rs.getDate("SubscriptionStartDate").toString(),
-            rs.getDate("SubscriptionEndDate").toString(),
+            rs.getDate("SubscriptionStartDate"),
+            rs.getDate("SubscriptionEndDate"),
             rs.getInt("SessionsAvailable"),
             rs.getString("SubscriptionStatus"),
             rs.getInt("FreezesAvailable"),
@@ -241,8 +227,8 @@ public class MemberDAO {
                         rs.getInt("MembershipTypeID"),
                         rs.getInt("BranchID"),
                         rs.getInt("TrainerID"),
-                        rs.getDate("SubscriptionStartDate").toString(),
-                        rs.getDate("SubscriptionEndDate").toString(),
+                        rs.getDate("SubscriptionStartDate"),
+                        rs.getDate("SubscriptionEndDate"),
                         rs.getInt("SessionsAvailable"),
                         rs.getString("SubscriptionStatus"),
                         rs.getInt("FreezesAvailable"),

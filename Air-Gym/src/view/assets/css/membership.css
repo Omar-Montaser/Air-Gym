@@ -1,4 +1,8 @@
 /* Base style for all membership boxes */
+.root {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+}
 .membership-box {
     -fx-background-radius: 12px;
     -fx-padding: 15px;
@@ -26,6 +30,7 @@
     -fx-font-style: italic;
     -fx-font-weight: bold;
     -fx-text-fill: white;
+    
 }
 .membershipBtn {
     -fx-background-color: #2C2C2E;

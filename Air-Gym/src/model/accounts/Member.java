@@ -1,33 +1,45 @@
 package model.accounts;
 
+import java.sql.Date;
 
 public class Member extends User{
     private int membershipTypeId;
-    private String subscriptionStartDate;
-    private String subscriptionEndDate;
+    private Date subscriptionStartDate;
+    private Date subscriptionEndDate;
     private int sessionsAvailable;
     private int freezeAvailable;
-    private java.sql.Date freezeEndDate;
+    private Date freezeEndDate;
     private int branchId;
     private Integer trainerId;
     private String subscriptionStatus;
 
 //=======================================Constructor===================================
-public Member(int userId, String firstName, String lastName,
-    String password, String phoneNumber, String gender, java.sql.Date dateOfBirth, int membershipId, int branchId, Integer trainerId, 
-    String subscriptionStartDate, String subscriptionEndDate,
-    int sessionAvailable, String subscriptionStatus, int freezeAvailable, java.sql.Date freezeEndDate) {
+public Member(
+    int userId, String firstName, String lastName,
+    String password, String phoneNumber, String gender, 
+    Date dateOfBirth, int membershipId, int branchId, Integer trainerId, 
+    Date subscriptionStartDate, Date subscriptionEndDate,
+    int sessionAvailable, String subscriptionStatus, int freezeAvailable, Date freezeEndDate) {
     super(userId++, firstName, lastName,password, phoneNumber, gender, dateOfBirth, "Member"); 
     this.membershipTypeId = membershipId;
     this.branchId = branchId;
     this.trainerId = trainerId;
-    this.subscriptionStatus = subscriptionStatus;
+    this.subscriptionStatus = "Äctive";
     this.subscriptionStartDate = subscriptionStartDate;
     this.subscriptionEndDate = subscriptionEndDate;
     this.sessionsAvailable = sessionAvailable;
     this.freezeAvailable = freezeAvailable;
-    this.freezeEndDate = freezeEndDate;
+    this.freezeEndDate = subscriptionStartDate;
 }
+public Member(
+    int userId, String firstName, String lastName,
+    String password, String phoneNumber, String gender, 
+    Date dateOfBirth, int membershipTypeId, int branchId) {
+    super(userId, firstName, lastName, password, phoneNumber, gender, dateOfBirth, "Member");
+    this.membershipTypeId = membershipTypeId;
+    this.branchId = branchId;
+}
+
 //=======================================Get&Set=======================================
 
 public int getMembershipId() {
@@ -61,16 +73,16 @@ public void setTrainerId(Integer trainerId) {
 public void setSubscriptionStatus(String subscriptionStatus) {
     this.subscriptionStatus = subscriptionStatus;
 }
-public String getSubscriptionStartDate() {
+public Date getSubscriptionStartDate() {
     return subscriptionStartDate;
 }
-public void setSubscriptionStartDate(String subscriptionStartDate) {
+public void setSubscriptionStartDate(Date subscriptionStartDate) {
     this.subscriptionStartDate = subscriptionStartDate;
 }
-public String getSubscriptionEndDate() {
+public Date getSubscriptionEndDate() {
     return subscriptionEndDate;
 }
-public void setSubscriptionEndDate(String subscriptionEndDate) {
+public void setSubscriptionEndDate(Date subscriptionEndDate) {
     this.subscriptionEndDate = subscriptionEndDate;
 }
 public int getSessionsAvailable() {
@@ -78,16 +90,6 @@ public int getSessionsAvailable() {
 }
 public void setSessionsAvailable(int sessionAvailable) {
     this.sessionsAvailable = sessionAvailable;
-}
-public int getSubscriptionDuration() {
-    String[] start = subscriptionStartDate.split("-");
-    String[] end = subscriptionEndDate.split("-");
-    int startYear = Integer.parseInt(start[0]);
-    int startMonth = Integer.parseInt(start[1]);
-    int endYear = Integer.parseInt(end[0]);
-    int endMonth = Integer.parseInt(end[1]);
-    int duration = (endYear - startYear) * 12 + (endMonth - startMonth);
-    return duration;
 }
 public int getFreezeAvailable() {
     return freezeAvailable;

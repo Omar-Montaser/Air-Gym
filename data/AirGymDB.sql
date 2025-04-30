@@ -3,7 +3,7 @@ USE AirGym;
 GO
 CREATE TABLE Users(
     UserID INT IDENTITY(1,1) PRIMARY KEY,
-    Password VARCHAR(255) NOT NULL UNIQUE CHECK (LEN(Password) >= 8),
+    Password VARCHAR(255) NOT NULL CHECK (LEN(Password) >= 8),
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL UNIQUE,
@@ -106,6 +106,7 @@ CREATE TABLE Payment (
     CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
 );
 
+
 CREATE TABLE Booking (
     BookingID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT NOT NULL, 
@@ -116,3 +117,23 @@ CREATE TABLE Booking (
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Booking_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID) ON DELETE CASCADE
 );
+-----------------------------------------Updates---------------------------------
+ALTER TABLE Payment
+ALTER COLUMN Category VARCHAR(50) NOT NULL;
+
+ALTER TABLE Payment
+ADD CONSTRAINT CHK_Payment_Category CHECK (Category IN ('Membership', 'Session', 'Expense', 'Other'))
+
+ALTER TABLE Payment
+ALTER COLUMN Status VARCHAR(20) NOT NULL;
+
+ALTER TABLE Payment
+ADD CONSTRAINT DF_Payment_Status DEFAULT 'Completed' FOR Status;
+
+ALTER TABLE Payment
+ADD CONSTRAINT CHK_Payment_Status CHECK (Status IN ('Completed', 'Cancelled'));
+
+ALTER TABLE Branch
+DROP COLUMN PhoneNumber 
+ALTER TABLE Branch
+ADD CONSTRAINT uq_Branch_Name UNIQUE (Name);

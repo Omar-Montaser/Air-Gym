@@ -3,7 +3,8 @@ USE AirGym;
 GO
 CREATE OR ALTER PROCEDURE AddNewMember
         @PaymentMethod VARCHAR(20),
-        @Duration INT,
+        @PaymentAmount DECIMAL(10,2),
+        @Duration INT, 
         @Password VARCHAR(12),
         @FirstName VARCHAR(50),
         @LastName VARCHAR(50),
@@ -50,19 +51,15 @@ CREATE OR ALTER PROCEDURE AddNewMember
             DECLARE @UserID INT = SCOPE_IDENTITY();
             DECLARE @SessionsAvailable INT;
             DECLARE @FreezesAvailable INT;
-            DECLARE @MonthlyPrice DECIMAL(10,2);
             DECLARE @PrivateTrainer BIT;
             DECLARE @TrainerID INT = NULL;
             
             SELECT 
                 @SessionsAvailable = Sessions, 
                 @FreezesAvailable = FreezeDuration,
-                @MonthlyPrice = MonthlyPrice,
                 @PrivateTrainer = PrivateTrainer
             FROM MembershipType 
             WHERE MembershipTypeID = @MembershipTypeID;
-            
-            -- Assign a random trainer if the membership type includes a private trainer
             IF @PrivateTrainer = 1
             BEGIN
                 SELECT TOP 1 @TrainerID = UserID
@@ -98,7 +95,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 'Membership', 
                 @UserID, 
                 @PaymentMethod, 
-                (@MonthlyPrice * @Duration),
+                @PaymentAmount,
                 'Completed'
             );
             

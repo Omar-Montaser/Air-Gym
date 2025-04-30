@@ -1,3 +1,7 @@
+.root {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+}
 .top-container {
     -fx-background-color: #00000066;
 }
@@ -26,7 +30,6 @@
 
 .nav-button:hover {
     -fx-background-color: #00000066;
-    -fx-border-color: black;
     -fx-border-width: 0px 0px 2px 0px;
 }
 #welcomeLabel {
@@ -176,7 +179,7 @@
     -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);
     -fx-border-width: 0px 0px 2px 0px;
 }
-.field: focused {
+.field:focused {
     -fx-border-color: linear-gradient(to right, #0072ED, #00AEEF);
     -fx-border-width: 0px 0px 2px 0px;
 }

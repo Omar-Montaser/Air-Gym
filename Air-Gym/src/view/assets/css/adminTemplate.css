@@ -1,3 +1,7 @@
+.root {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 14px;
+}
 #menuButton {
     -fx-font-family: 'Roboto', 'Segoe UI', sans-serif;
     -fx-font-size: 12px;

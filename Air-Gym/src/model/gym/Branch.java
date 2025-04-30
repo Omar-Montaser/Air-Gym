@@ -6,17 +6,17 @@ public class Branch {
     private int branchID;
     private String name;
     private String location;
-    private String phoneNumber;
     private Date openingDate;
     private String status;
+    private String adminID;
 //================================================Constructor=============================================
-public Branch(int branchID, String name, String location, String phoneNumber, Date openingDate, String status) {
+public Branch(int branchID, String name, String location, Date openingDate, String status, String adminID) {
     this.branchID = branchID;
     this.name = name;
     this.location = location;
-    this.phoneNumber = phoneNumber;
     this.openingDate = openingDate;
     this.status = status;
+    this.adminID = adminID;
 }
 //==================================================Get&Set===============================================
     public int getBranchID() {
@@ -37,12 +37,6 @@ public Branch(int branchID, String name, String location, String phoneNumber, Da
     public void setLocation(String location) {
         this.location = location;
     }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
     public java.sql.Date getOpeningDate() {
         return openingDate;
     }
@@ -55,6 +49,10 @@ public Branch(int branchID, String name, String location, String phoneNumber, Da
     public void setStatus(String status) {
         this.status = status;
     }
-
-    
+    public String getAdminID() {
+        return adminID;
+    }
+    public void setAdminID(String adminID) {
+        this.adminID = adminID;
+    }
 }

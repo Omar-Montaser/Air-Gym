@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CheckoutController">
     <children>
         <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
             <children>
@@ -30,7 +31,7 @@
                                 <Insets left="20.0" top="40.0" />
                             </HBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                        <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                             <HBox.margin>
                                 <Insets left="620.0" top="30.0" />
                             </HBox.margin>
@@ -40,26 +41,36 @@
                         <Insets bottom="20.0" left="20.0" top="20.0" />
                     </padding>
                 </HBox>
-                <HBox prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
-                    <children>
-                        <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0; -fx-background-color: #00000066;" styleClass="nav-button" text="Memberships">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                </HBox>
+            <HBox fx:id="menuHBox" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
+               <children>
+                  <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0; -fx-background-color: #00000066;" styleClass="nav-button" text="Memberships">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
             </children>
         </VBox>
-      <VBox layoutX="85.0" layoutY="204.0" prefHeight="305.0" prefWidth="423.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
+      <VBox fx:id="personalDetailsBox" layoutX="492.0" layoutY="206.0" prefHeight="374.0" prefWidth="422.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
          <children>
             <Label alignment="CENTER" prefHeight="42.0" prefWidth="423.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details">
                <VBox.margin>
@@ -69,14 +80,14 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <HBox prefHeight="40.0" prefWidth="397.0" stylesheets="@assets/css/memberH1.css">
+            <HBox prefHeight="33.0" prefWidth="408.0" stylesheets="@assets/css/memberH1.css">
                <children>
-                  <Label prefHeight="40.0" prefWidth="73.0" styleClass="form-sh" text="First Name">
+                  <Label prefHeight="40.0" prefWidth="81.0" styleClass="form-sh" text="First Name">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="27.0" prefWidth="108.0" promptText="Enter First Name" style="-fx-font-size: 12;" styleClass="field">
+                  <TextField fx:id="firstNameTextField" prefHeight="27.0" prefWidth="116.0" promptText="Enter First Name" style="-fx-font-size: 12;" styleClass="field">
                      <HBox.margin>
                         <Insets right="20.0" top="10.0" />
                      </HBox.margin>
@@ -92,7 +103,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="27.0" prefWidth="126.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                        <TextField fx:id="lastNameTextField" prefHeight="27.0" prefWidth="106.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
@@ -101,59 +112,87 @@
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
+            <HBox prefHeight="20.0" prefWidth="408.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="104.0" styleClass="form-sh" text="Phone Number">
+                  <Label prefHeight="40.0" prefWidth="104.0" styleClass="form-sh" text="Create Password">
                      <padding>
                         <Insets left="40.0" />
                      </padding>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
                   </Label>
-                  <TextField prefHeight="27.0" prefWidth="156.0" promptText="Enter Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                  <TextField fx:id="passwordTextField" prefHeight="27.0" prefWidth="281.0" promptText="Enter Password" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" left="70.0" />
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 10; -fx-fill: grey;" text="*Password must be atleast 8 characters long">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="100.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="40.0" prefWidth="377.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="104.0" styleClass="form-sh" text="Phone Number">
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="phoneNumberTextField" prefHeight="27.0" prefWidth="213.0" promptText="Enter Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="106.0" styleClass="form-sh" text="Birth Date" />
-                  <DatePicker prefHeight="27.0" prefWidth="155.0" style="-fx-background-color: transparent;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                  <DatePicker fx:id="birthDatePicker" prefHeight="27.0" prefWidth="214.0" style="-fx-background-color: transparent;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                   </DatePicker>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" left="70.0" />
+                  <Insets bottom="5.0" left="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="107.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
-                  <ChoiceBox prefWidth="150.0" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                  <ChoiceBox fx:id="genderChoiceBox" prefHeight="27.0" prefWidth="213.0" style="-fx-background-color: white;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                   </ChoiceBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="20.0" left="70.0" />
+                  <Insets bottom="5.0" left="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
-                  <Label prefHeight="37.0" prefWidth="109.0" styleClass="form-sh" text="Branch" />
-                  <ChoiceBox prefWidth="150.0" styleClass="field" stylesheets="@assets/css/memberH1.css" />
+                  <Label prefHeight="37.0" prefWidth="107.0" styleClass="form-sh" text="Branch" />
+                  <ChoiceBox fx:id="branchChoiceBox" prefHeight="27.0" prefWidth="214.0" style="-fx-background-color: white;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></ChoiceBox>
                </children>
                <VBox.margin>
-                  <Insets left="70.0" />
+                  <Insets bottom="5.0" left="5.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -165,76 +204,106 @@
             <URL value="@assets/css/memberH1.css" />
          </stylesheets>
       </VBox>
-      <VBox layoutX="583.0" layoutY="204.0" prefHeight="322.0" prefWidth="438.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
+      <VBox layoutX="32.0" layoutY="207.0" prefHeight="326.0" prefWidth="435.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
          <children>
-            <Label alignment="CENTER" prefHeight="80.0" prefWidth="434.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Payment">
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="431.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Payment">
                <VBox.margin>
                   <Insets left="-10.0" />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="40.0" prefWidth="394.0">
+            <HBox prefHeight="0.0" prefWidth="421.0">
                <children>
-                  <Label prefHeight="37.0" prefWidth="137.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Method">
+                  <Label prefHeight="37.0" prefWidth="137.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership">
                      <HBox.margin>
                         <Insets />
-                     </HBox.margin></Label>
-                  <ChoiceBox prefHeight="27.0" prefWidth="206.0" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="membershipLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="148.0" style="-fx-font-weight: bold; -fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Basic" />
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="421.0">
+               <children>
+                  <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="79.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Duration">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="durationChoiceBox" prefHeight="27.0" prefWidth="153.0" style="-fx-background-color: white;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                   </ChoiceBox>
+                  <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="36.0" prefWidth="79.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Total" />
+                  <Label fx:id="totalPriceLabel" alignment="TOP_RIGHT" prefHeight="39.0" prefWidth="95.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="\$400.00">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="101.0" prefWidth="421.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="37.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/VisaLogo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="37.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/MCLogo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="39.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/ValuTeldaLogo.png" />
+                     </image>
+                  </ImageView>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
+            <HBox prefHeight="15.0" prefWidth="421.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="110.0" styleClass="form-sh" text="Card Details" />
-                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                  <Label prefHeight="38.0" prefWidth="138.0" styleClass="form-sh" text="Card Number" />
+                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Card Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                   </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="40.0" prefWidth="110.0" styleClass="form-sh" text="Name on Card" />
-                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <padding>
-                  <Insets bottom="15.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="18.0" prefWidth="405.0">
-               <children>
-                  <Label prefHeight="35.0" prefWidth="203.0" styleClass="form-sh" text="Expires">
-                     <padding>
-                        <Insets right="50.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label prefHeight="14.0" prefWidth="30.0" styleClass="form-sh" text="Pin">
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </Label>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="4.0" prefWidth="421.0">
+               <children>
+                  <Label prefHeight="38.0" prefWidth="139.0" styleClass="form-sh" text="Cardholder Name" />
+                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Cardholder Name (Optional)" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="421.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expires" wrappingWidth="216.05133056640625">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV/CVC" wrappingWidth="70.88397598266602">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="30.0" prefWidth="424.0">
                <children>
                   <TextField prefHeight="27.0" prefWidth="47.0" promptText="MM" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
@@ -246,13 +315,17 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField prefHeight="27.0" prefWidth="137.0" promptText="Enter Last Name" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                  <TextField prefHeight="27.0" prefWidth="110.0" promptText="Enter CVV/CVC" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
                      <HBox.margin>
-                        <Insets left="90.0" />
+                        <Insets left="100.0" />
                      </HBox.margin>
                   </TextField>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
+            <HBox prefHeight="100.0" prefWidth="421.0" />
          </children>
          <padding>
             <Insets left="10.0" />
@@ -262,7 +335,7 @@
             <URL value="@assets/css/memberH1.css" />
          </stylesheets>
       </VBox>
-      <Button id="cancelSessionBtn" layoutX="212.0" layoutY="541.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Back" />
-      <Button id="bookSessionBtn" layoutX="721.0" layoutY="541.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Checkout" />
+      <Button id="cancelSessionBtn" fx:id="cancelButton" layoutX="70.0" layoutY="543.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel" />
+      <Button id="bookSessionBtn" fx:id="checkoutButton" layoutX="254.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleCheckout" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Checkout" />
     </children>
 </AnchorPane>

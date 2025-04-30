@@ -12,24 +12,12 @@ import model.gym.members.MembershipType;
 
 import java.util.List;
 
+import controller.Screen;
+
 
 public class MembershipsController extends BaseController{
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button logoutButton;
-    @FXML
-    private HBox menuHBox;
-    @FXML
-    private VBox membershipContainer;
-    @FXML
-    private ScrollPane scrollPane;
-
-
     public void populateMembershipTypes(){
-        scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+        scrollPane.addEventFilter(ScrollEvent.SCROLL, event->{
             double deltaY = event.getDeltaY() * 3;
             scrollPane.setVvalue(scrollPane.getVvalue() - deltaY / scrollPane.getContent().getBoundsInLocal().getHeight());
             event.consume();
@@ -190,13 +178,13 @@ public class MembershipsController extends BaseController{
         membershipButton.setOnAction(event -> {
             try {
                 mainController.setSelectedMembership(membershipType);
+                mainController.switchScene(Screen.CHECKOUT);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
         return membershipBox;
 }
-
     public void modifyScreen(){
         if(mainController.isGuest()){
             homeButton.setVisible(false);
@@ -212,4 +200,16 @@ public class MembershipsController extends BaseController{
             menuHBox.setAlignment(Pos.TOP_LEFT);
         }
     }
+    @FXML
+    private Button homeButton;
+    @FXML
+    private Button profileButton;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private HBox menuHBox;
+    @FXML
+    private VBox membershipContainer;
+    @FXML
+    private ScrollPane scrollPane;
 }

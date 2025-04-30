@@ -1,9 +1,11 @@
 package controller;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 
 import view.MemberViewController;
 import view.MembershipsController;
+import dao.BranchDAO;
 import dao.MemberDAO;
 import dao.MembershipTypeDAO;
 import dao.UserDAO;
@@ -11,11 +13,13 @@ import db.SqlServerConnect;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import view.CheckoutController;
 import view.DashboardController;
 import view.HomeController;
 import view.LoginController;
 import javafx.stage.Stage;
 import model.accounts.*;
+import model.gym.Branch;
 import model.gym.members.MembershipType;
 
 public class MainController {
@@ -25,6 +29,7 @@ public class MainController {
             memberDAO = new MemberDAO(conn);
             userDAO = new UserDAO(conn);
             membershipTypeDao = new MembershipTypeDAO(conn);
+            branchDAO = new BranchDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(loginScene);
@@ -69,6 +74,10 @@ public class MainController {
         membershipsController =(MembershipsController) membershipsLoader.getController();
         membershipsController.setMain(this);
 
+        FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("../view/Checkout.fxml"));
+        checkoutScene = new Scene(checkoutLoader.load());
+        checkoutController =(CheckoutController) checkoutLoader.getController();
+        checkoutController.setMain(this);
 
     }
     public void switchScene(Screen nextScreen){
@@ -88,9 +97,10 @@ public class MainController {
                 membershipsController.populateMembershipTypes();
                 stage.setScene(membershipsScene);
                 break;
-            // case CHECKOUT:
-            //     stage.setScene(checkoutScene);
-            //     break;
+            case CHECKOUT:
+                checkoutController.modifyScreen();
+                stage.setScene(checkoutScene);
+                break;
             // case PROFILE:
             //     stage.setScene(profileScene);
             //     break;
@@ -113,8 +123,32 @@ public class MainController {
             return true;
         }
     }
+    public void guestCheckout(Double paymentAmount, String firstName, String lastName, String password,
+    String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName){
+        Branch branch = branchDAO.getBranchByName(branchName);
+        Member member = new Member(
+            userDAO.getMaxUserId(),
+            firstName,
+            lastName,
+            password,
+            phoneNumber,
+            gender,
+            dateOfBirth,
+            selectedMembership.getMembershipTypeID(),
+            branch.getBranchID()
+        );
+        memberDAO.createMember(member,duration,paymentAmount);
+        currentMember = member;
+        currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
+    }
+
+    
+    
     public List<MembershipType> getAllMembershipTypes(){
         return membershipTypeDao.getAllMembershipTypes();
+    }
+    public List<Branch> getAllBranches(){
+        return branchDAO.getBranches();
     }
     public boolean isGuest(){
         return isGuest;
@@ -127,6 +161,9 @@ public class MainController {
     }
     public void setSelectedMembership(MembershipType membershipType){
         this.selectedMembership = membershipType;
+    }
+    public MembershipType getSelectedMembership(){  
+        return selectedMembership;
     }
 
     protected boolean isGuest;
@@ -141,6 +178,7 @@ public class MainController {
     private MemberDAO memberDAO;
     private UserDAO userDAO;
     private MembershipTypeDAO membershipTypeDao;
+    private BranchDAO branchDAO;
 
 
 
@@ -158,4 +196,10 @@ public class MainController {
 
     private Scene membershipsScene;
     private MembershipsController membershipsController;
+
+    private Scene checkoutScene;
+    private CheckoutController checkoutController;
+
+    private Scene profileScene;
+    private ProfileController profileController;
 }
