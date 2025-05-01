@@ -210,10 +210,11 @@ public class MemberDAO {
         );
     }
     public Member getMemberByPhoneNumber(String phoneNumber){
+        System.out.println("Getting member by phone number: " + phoneNumber);
         String sql = "SELECT * FROM GetMemberByPhoneNumber(?)";        
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, phoneNumber);
-            
+            System.out.println("Executing query");
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Member(
@@ -234,7 +235,9 @@ public class MemberDAO {
                         rs.getInt("FreezesAvailable"),
                         rs.getDate("FreezeEndDate")
                     );
+                    
                 }
+                System.out.println("Member found");
             }
         } catch (SQLException e) {
             e.printStackTrace();

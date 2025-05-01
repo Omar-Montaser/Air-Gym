@@ -67,7 +67,7 @@
                 </HBox>
             </children>
         </VBox>
-      <Label id="welcomeLabel" layoutX="17.0" layoutY="191.0" prefHeight="36.0" prefWidth="128.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Book Session:" />
+      <Label id="welcomeLabel" layoutX="17.0" layoutY="205.0" prefHeight="36.0" prefWidth="128.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Book Session:" />
             <Button id="cancelSessionBtn" layoutX="411.0" layoutY="204.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" styleClass="delete-button" text="Cancel">
          <stylesheets>
             <URL value="@assets/css/memberHome.css" />
@@ -102,9 +102,9 @@
                 </VBox>
             </content>
         </ScrollPane>
-      <ScrollPane layoutX="5.0" layoutY="259.0" prefHeight="318.0" prefWidth="601.0" style="-fx-background-color: #e3e3e3;">
+      <ScrollPane layoutX="-1.0" layoutY="265.0" prefHeight="303.0" prefWidth="601.0" style="-fx-background-color: #e3e3e3;">
          <content>
-            <VBox prefHeight="444.0" prefWidth="585.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
+            <VBox prefHeight="680.0" prefWidth="585.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
                <children>
                   <HBox prefHeight="57.0" prefWidth="559.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayYoga" stylesheets="@assets/css/bookdisplay.css">
                      <children>
@@ -190,7 +190,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" text="Book">
+                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="75.0" style="-fx-font-size: 12;" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -204,16 +204,16 @@
                               </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayYoga" stylesheets="@assets/css/bookdisplay.css">
+                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayPilates" stylesheets="@assets/css/bookdisplay.css">
                      <children>
                         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="106.0">
                            <children>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/images/HIITLogo.png" />
+                                    <Image url="@assets/images/Pilates.png" />
                                  </image>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="HIIT" wrappingWidth="50.7599983215332">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="Pilates" wrappingWidth="70.7599983215332">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
@@ -298,13 +298,13 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayYoga" stylesheets="@assets/css/bookdisplay.css">
+                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayCycling" stylesheets="@assets/css/bookdisplay.css">
                      <children>
                         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="106.0">
                            <children>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/images/Yoga.png" />
+                                    <Image url="@assets/images/Cycling.png" />
                                  </image>
                               </ImageView>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="Cycling" wrappingWidth="74.7599983215332">
@@ -392,16 +392,207 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayYoga" stylesheets="@assets/css/bookdisplay.css">
+                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayBoxing" stylesheets="@assets/css/bookdisplay.css">
                      <children>
                         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="106.0">
                            <children>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/images/Yoga.png" />
+                                    <Image url="@assets/images/Boxing.png" />
                                  </image>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="Yoga" wrappingWidth="50.7599983215332">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="Boxing" wrappingWidth="73.61714553833008">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="81.0">
+                           <children>
+                              <Label prefHeight="0.0" prefWidth="79.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Trainer">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="50.0" prefWidth="83.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="87.0">
+                           <children>
+                              <Label prefHeight="10.0" prefWidth="86.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Branch">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="90.0">
+                           <children>
+                              <Label prefHeight="3.0" prefWidth="89.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Start TIme">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="91.0" prefWidth="78.0">
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="86.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Duration">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets right="15.0" top="20.0" />
+                           </HBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayHIIT" stylesheets="@assets/css/bookdisplay.css">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="106.0">
+                           <children>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/images/HIITLogo.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="HIIT" wrappingWidth="50.7599983215332">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="81.0">
+                           <children>
+                              <Label prefHeight="0.0" prefWidth="79.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Trainer">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="50.0" prefWidth="83.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="87.0">
+                           <children>
+                              <Label prefHeight="10.0" prefWidth="86.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Branch">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="90.0">
+                           <children>
+                              <Label prefHeight="3.0" prefWidth="89.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Start TIme">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="91.0" prefWidth="78.0">
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="86.0" style="-fx-font-size: 16; -fx-font-weight: bold;" styleClass="subheadings" text="Duration">
+                                 <VBox.margin>
+                                    <Insets top="2.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </VBox>
+                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                           <HBox.margin>
+                              <Insets right="15.0" top="20.0" />
+                           </HBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="57.0" prefWidth="577.0" spacing="10.0" style="-fx-background-radius: 20;" styleClass="book_displayZumba" stylesheets="@assets/css/bookdisplay.css">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="106.0">
+                           <children>
+                              <ImageView fitHeight="56.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/images/Zumba.png" />
+                                 </image>
+                              </ImageView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="form-title" text="Zumba" wrappingWidth="73.61714553833008">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>

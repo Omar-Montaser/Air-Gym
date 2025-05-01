@@ -5,9 +5,10 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT m.*, u.FirstName, u.LastName, u.PhoneNumber, u.Gender, u.DateOfBirth, u.Role
-    FROM Member m
-    INNER JOIN Users u ON m.UserID = u.UserID
+SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, 
+       m.MembershipTypeID, m.BranchID, m.TrainerID, m.SubscriptionStartDate, m.SubscriptionEndDate, 
+       m.SessionsAvailable, m.SubscriptionStatus, m.FreezesAvailable, m.FreezeEndDate 
+    FROM Users u JOIN Member m ON u.UserID = m.UserID 
     WHERE u.PhoneNumber = @PhoneNumber
 );
 GO

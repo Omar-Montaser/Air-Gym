@@ -22,10 +22,32 @@ public class ProfileController extends BaseController{
         ptNameLabel.setText(mainController.getTrainerByID(member.getTrainerId())==null ? "No Trainer" : 
         mainController.getTrainerByID(member.getTrainerId()).getFirstName() + " " 
         + mainController.getTrainerByID(member.getTrainerId()).getLastName());
+    // Print all member details for testing
+    System.out.println("Member Details:");
+    System.out.println("First Name: " + member.getFirstName());
+    System.out.println("Last Name: " + member.getLastName());
+    System.out.println("Phone Number: " + member.getPhoneNumber());
+    System.out.println("Birth Date: " + member.getBirthDate());
+    System.out.println("Gender: " + member.getGender());
+    System.out.println("Membership Type: " + mainController.getMembershipName(member.getMembershipId()));
+    System.out.println("Branch: " + mainController.getBranchByID(member.getBranchId()).getName());
+    System.out.println("Subscription Status: " + member.getSubscriptionStatus());
+    System.out.println("Subscription Start Date: " + member.getSubscriptionStartDate());
+    System.out.println("Subscription End Date: " + member.getSubscriptionEndDate());
+    
+    if (mainController.getTrainerByID(member.getTrainerId()) != null) {
+        System.out.println("Trainer: " + mainController.getTrainerByID(member.getTrainerId()).getFirstName() + 
+                           " " + mainController.getTrainerByID(member.getTrainerId()).getLastName());
+    } else {
+        System.out.println("Trainer: No Trainer");
+    }
+
+    System.out.println("User ID: " + member.getUserId());
     }
     @FXML
     private void handleExtendMembership(){
         try{
+        
         mainController.extendMembership(durationTextField.getText());
         fillDetails(mainController.getCurrentMember());
         }
@@ -37,7 +59,7 @@ public class ProfileController extends BaseController{
     private void handleFreezeMembership(){
         try{
         mainController.freezeSubscription(durationTextField.getText());
-        fillDetails(mainController.getCurrentMember());
+        
         }
         catch(Exception e){
             e.printStackTrace();

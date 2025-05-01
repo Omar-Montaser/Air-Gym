@@ -120,11 +120,21 @@ public class MainController {
         if (userDAO.getUserByPhoneNumber(phoneNumber)==null) return false;
         else{
             String role = userDAO.validateLogin(phoneNumber, password);
+            System.out.println("Role: " + role);
             currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
-            if(role=="Member")
+            System.out.println("Current User: " + currentUser.getUserId());
+            System.out.println("Calling getMemberByPhoneNumber");
+            if(role.equals("Member")) {
+                System.out.println("Inside Member role check");
                 currentMember = memberDAO.getMemberByPhoneNumber(phoneNumber);
-            else if(role=="Admin")
-                isAdmin = true;
+                System.out.println("After getMemberByPhoneNumber call");
+            }
+            
+            if (currentMember == null) {
+                System.out.println("NULL");
+            } else {
+                System.out.println("Current Member: " + currentMember.getFirstName());
+            }
             return true;
         }
     }

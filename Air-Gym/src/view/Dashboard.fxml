@@ -4,15 +4,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
-<<<<<<< Updated upstream
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-=======
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
->>>>>>> Stashed changes
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -73,7 +70,6 @@
                 </Button>
             </children>
         </HBox>
-<<<<<<< Updated upstream
         <Button layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
         <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
         <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
@@ -194,7 +190,6 @@
             </padding>
         </VBox>
         <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
-=======
       <AnchorPane layoutX="211.0" layoutY="64.0" prefHeight="522.0" prefWidth="873.0" styleClass="shadow" stylesheets="@assets/css/dashboard.css">
          <children>
             <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="845.0">
@@ -396,6 +391,5 @@
             </AnchorPane>
          </children>
       </AnchorPane>
->>>>>>> Stashed changes
     </children>
 </AnchorPane>
