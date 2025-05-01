@@ -74,10 +74,10 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean extendSubscription(String userId, int duration, String paymentMethod) {
+    public boolean extendSubscription(int userId, int duration, String paymentMethod) {
         String sql = "EXEC ExtendSubscription ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            cstmt.setString(1, userId);
+            cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setString(3, paymentMethod);
             
@@ -88,10 +88,10 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean renewSubscription(String userId,int duration, int membershipTypeId, String paymentMethod) {
+    public boolean renewSubscription(int userId,int duration, int membershipTypeId, String paymentMethod) {
         String sql = "EXEC RenewSubscription ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            cstmt.setString(1, userId);
+            cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setInt(3, membershipTypeId);
             cstmt.setString(4, paymentMethod);
@@ -103,10 +103,10 @@ public class MemberDAO {
             return false;
         }    
     }
-    public boolean cancelSubscription(String userId) {
+    public boolean cancelSubscription(int userId) {
         String sql = "EXEC CancelSubscription ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            cstmt.setString(1, userId);
+            cstmt.setInt(1, userId);
             cstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -114,7 +114,7 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean updateMemberStatus(String userId, String status) {
+    public boolean updateMemberStatus(int userId, String status) {
         String sql = "EXEC UpdateMemberStatus";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.execute();
@@ -124,10 +124,10 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean freezeSubscription(String userId, int duration) {
+    public boolean freezeSubscription(int userId, int duration) {
         String sql = "EXEC FreezeSubscription ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            cstmt.setString(1, userId);
+            cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             
             cstmt.execute();

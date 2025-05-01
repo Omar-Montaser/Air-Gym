@@ -26,7 +26,7 @@
                                 <Insets left="20.0" top="40.0" />
                             </HBox.margin>
                         </Label>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                             <HBox.margin>
                                 <Insets left="550.0" top="30.0" />
                             </HBox.margin>
@@ -94,7 +94,7 @@
                   <Label fx:id="genderLabel" prefHeight="44.0" prefWidth="260.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
                </children>
             </HBox>
-            <Button id="bookSessionBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-font-size: 12; -fx-background-color: #00000066;" stylesheets="@assets/css/memberH1.css" text="Edit Information">
+            <Button id="bookSessionBtn" fx:id="editButton" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-font-size: 12; -fx-background-color: #00000066;" stylesheets="@assets/css/memberH1.css" text="Edit Information">
                <VBox.margin>
                   <Insets bottom="10.0" left="130.0" right="10.0" top="20.0" />
                </VBox.margin>
@@ -145,16 +145,16 @@
             </HBox>
             <HBox prefHeight="40.0" prefWidth="400.0">
                <children>
-                  <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="186.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Extend Membership">
+                  <Button id="bookSessionBtn" fx:id="extendMembershipButton" mnemonicParsing="false" onAction="#handleExtendMembership" prefHeight="35.0" prefWidth="186.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Extend Subscription">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin></Button>
-                  <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="180.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Freeze Membership">
+                  <Button id="bookSessionBtn" fx:id="freezeMembershipButton" mnemonicParsing="false" onAction="#handleFreezeMembership" prefHeight="34.0" prefWidth="180.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Freeze Subscription">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField prefHeight="40.0" prefWidth="117.0" promptText="Enter Months" style="-fx-font-size: 12;" styleClass="field">
+                  <TextField fx:id="durationTextField" prefHeight="40.0" prefWidth="117.0" promptText="Enter Months" style="-fx-font-size: 12;" styleClass="field">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -164,7 +164,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="186.0" style="-fx-font-size: 12;" styleClass="delete-button" stylesheets="@assets/css/memberHome.css" text="Cancel Membership">
+            <Button fx:id="cancelMembershipButton" mnemonicParsing="false" onAction="#handleCancelMembership" prefHeight="35.0" prefWidth="186.0" style="-fx-font-size: 12;" styleClass="delete-button" stylesheets="@assets/css/memberHome.css" text="Cancel Subscription">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

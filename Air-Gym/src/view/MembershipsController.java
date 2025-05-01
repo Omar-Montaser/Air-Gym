@@ -201,6 +201,10 @@ public class MembershipsController extends BaseController{
         }
     }
     @FXML
+    private void handleLogout(){
+        mainController.logout();
+    }
+    @FXML
     private Button homeButton;
     @FXML
     private Button profileButton;

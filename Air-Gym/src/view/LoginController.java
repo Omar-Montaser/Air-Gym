@@ -35,4 +35,8 @@ public class LoginController extends BaseController{
         mainController.setIsGuest(true);
         mainController.switchScene(Screen.MEMBERSHIPS);
     }
+    public void clearFields(){
+        phoneNumber.setText("");
+        password.setText("");
+    }
 }

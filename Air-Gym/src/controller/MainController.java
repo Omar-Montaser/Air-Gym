@@ -60,8 +60,8 @@ public class MainController {
 
         FXMLLoader homeLoader = new FXMLLoader(getClass().getResource("../view/MemberHome.fxml"));
         homeScene = new Scene(homeLoader.load());
-        // // homeController =(HomeController) homeLoader.getController();
-        // // homeController.setMain(this);
+        homeController =(HomeController) homeLoader.getController();
+        homeController.setMain(this);
 
         // FXMLLoader bookingLoader = new FXMLLoader(getClass().getResource("../view/Booking.fxml"));
         // bookingScene = new Scene(bookingLoader.load());
@@ -128,6 +128,12 @@ public class MainController {
             return true;
         }
     }
+    public void logout(){
+        currentMember = null;
+        currentUser = null;
+        loginController.clearFields();
+        switchScene(Screen.LOGIN);
+    }
     public void guestCheckout(Double paymentAmount, String firstName, String lastName, String password,
     String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName){
         Branch branch = branchDAO.getBranchByName(branchName);
@@ -146,6 +152,21 @@ public class MainController {
         currentMember = memberDAO.getMemberById(member.getUserId());
         currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
         switchScene(Screen.PROFILE);
+    }
+    public void extendMembership(String duration){
+        memberDAO.extendSubscription(currentMember.getUserId(), Integer.parseInt(duration), "CreditCard");
+    }
+    public void freezeSubscription(String duration){
+        memberDAO.freezeSubscription(currentMember.getUserId(), Integer.parseInt(duration));
+    }
+    public void cancelSubscription(){
+        memberDAO.cancelSubscription(currentMember.getUserId());
+    }
+    
+    
+    
+    public Member getCurrentMember(){
+        return currentMember;
     }
     public List<MembershipType> getAllMembershipTypes(){
         return membershipTypeDao.getAllMembershipTypes();
