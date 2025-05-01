@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 import model.accounts.*;
 import model.gym.Branch;
 import model.gym.members.MembershipType;
+import view.BookingController;
+import view.ContactUsController;
+
 
 public class MainController {
     public MainController(Stage stage){
@@ -63,10 +66,10 @@ public class MainController {
         homeController =(HomeController) homeLoader.getController();
         homeController.setMain(this);
 
-        // FXMLLoader bookingLoader = new FXMLLoader(getClass().getResource("../view/Booking.fxml"));
-        // bookingScene = new Scene(bookingLoader.load());
-        // bookingController =(BookingController) bookingLoader.getController();
-        // bookingController.setMain(this);
+        FXMLLoader bookingLoader = new FXMLLoader(getClass().getResource("../view/BookSession.fxml"));
+        bookingScene = new Scene(bookingLoader.load());
+        bookingController =(BookingController) bookingLoader.getController();
+        bookingController.setMain(this);
 
         FXMLLoader membershipsLoader = new FXMLLoader(getClass().getResource("../view/Memberships.fxml"));
         membershipsScene = new Scene(membershipsLoader.load());
@@ -82,6 +85,11 @@ public class MainController {
         profileScene = new Scene(profileLoader.load());
         profileController =(ProfileController) profileLoader.getController();
         profileController.setMain(this);
+
+        FXMLLoader contactUsLoader = new FXMLLoader(getClass().getResource("../view/ContactUs.fxml"));
+        contactUsScene = new Scene(contactUsLoader.load());
+        contactUsController =(ContactUsController) contactUsLoader.getController();
+        contactUsController.setMain(this);
 
     }
     public void switchScene(Screen nextScreen){
@@ -109,12 +117,13 @@ public class MainController {
                 profileController.fillDetails(currentMember);
                 stage.setScene(profileScene);
                 break;
-            // case CONTACT_US:
-            //     stage.setScene(contactUsScene);
-            //     break;
+            case CONTACT_US:
+                stage.setScene(contactUsScene);
+                break;
             default: break;
         }
     } 
+//========================================LOGIN========================================
     public boolean login(String phoneNumber, String password) throws Exception {
         isGuest = false; isAdmin = false;
         if (userDAO.getUserByPhoneNumber(phoneNumber)==null) return false;
@@ -132,6 +141,7 @@ public class MainController {
         loginController.clearFields();
         switchScene(Screen.LOGIN);
     }
+//========================================MEMBER/GUEST LOGIC========================================
     public void guestCheckout(Double paymentAmount, String firstName, String lastName, String password,
     String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName){
         Branch branch = branchDAO.getBranchByName(branchName);
@@ -180,6 +190,7 @@ public class MainController {
         memberDAO.unfreezeSubscription(currentMember.getUserId());
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
+//========================================GET AND SET========================================
     public Member getCurrentMember(){
         return currentMember;
     }
@@ -188,7 +199,7 @@ public class MainController {
     }
     public String getMembershipName(int membershipId){
         return membershipTypeDao.getMembershipTypeName(membershipId);
-    }
+    } 
     public Trainer getTrainerByID(int trainerId){
         return trainerDAO.getTrainerById(trainerId);
     }
@@ -236,15 +247,14 @@ public class MainController {
     private boolean isExtending;
     private boolean isFreezing;
 
-    private Stage stage;
-    private Screen currentScreen;
-
     private MemberDAO memberDAO;
     private UserDAO userDAO;
     private MembershipTypeDAO membershipTypeDao;
     private BranchDAO branchDAO;
     private TrainerDAO trainerDAO;
-
+    
+    private Stage stage;
+    private Screen currentScreen;
 
     private Scene dashboardScene;
     private DashboardController dashboardController;
@@ -256,7 +266,7 @@ public class MainController {
     private HomeController homeController;
 
     private Scene bookingScene;
-    // private BookingController bookingController;
+    private BookingController bookingController;
 
     private Scene membershipsScene;
     private MembershipsController membershipsController;
@@ -266,4 +276,7 @@ public class MainController {
 
     private Scene profileScene;
     private ProfileController profileController;
+
+    private Scene contactUsScene;
+    private ContactUsController contactUsController;
 }

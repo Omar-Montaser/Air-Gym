@@ -99,7 +99,7 @@ CREATE TABLE Session (
 
 CREATE TABLE Payment (
     PaymentID INT IDENTITY(1,1) PRIMARY KEY,
-    Category VARCHAR(50) NOT NULL CHECK (Category IN ('Membership', 'Session', 'Other')),
+    Category VARCHAR(50) NOT NULL CHECK (Category IN ('Membership','Expense','Other')),
     MemberID INT NOT NULL, 
     PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
     PaymentDate DATETIME DEFAULT GETDATE(),

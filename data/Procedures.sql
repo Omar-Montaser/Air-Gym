@@ -369,13 +369,11 @@ CREATE OR ALTER PROCEDURE CancelSubscription
             SET Status = 'Cancelled'
             WHERE UserID = @UserID;
             
-            -- Only cancel payments made within the last week
             UPDATE Payment
             SET Status = 'Cancelled'
             WHERE MemberID = @UserID 
               AND Category = 'Membership'
               AND DATEDIFF(DAY, PaymentDate, GETDATE()) <= 7; 
-            -- For payments older than a week, they remain completed (no refund)
             COMMIT TRANSACTION;
         END TRY
         BEGIN CATCH
@@ -385,6 +383,7 @@ CREATE OR ALTER PROCEDURE CancelSubscription
     END
 GO
 CREATE OR ALTER PROCEDURE UpdateMemberStatus    
+--DOUBLE CHECKING
     AS
     BEGIN
         BEGIN TRY
@@ -393,26 +392,17 @@ CREATE OR ALTER PROCEDURE UpdateMemberStatus
             UPDATE Member
             SET SubscriptionStatus = 'Expired'
             WHERE SubscriptionEndDate < GETDATE() AND SubscriptionStatus = 'Active';
-            Update Member
+            
+            -- Unfreeze subscriptions that have reached their freeze end date
+            UPDATE Member
             SET SubscriptionStatus = 'Active'
             WHERE FreezeEndDate < GETDATE() AND SubscriptionStatus = 'Frozen';
+            
+            -- Mark completed sessions
             UPDATE Session
             SET Status = 'Completed'
             WHERE DateTime < GETDATE() AND Status = 'Scheduled';
 
-            UPDATE Session
-            SET Status = 'Full'
-            WHERE SessionID IN (
-                SELECT SessionID
-                FROM Booking
-                GROUP BY SessionID
-                HAVING COUNT(*) >= (SELECT MaxCapacity FROM Session WHERE SessionID = Session.SessionID)
-            );
-
-            UPDATE Booking
-            SET Status = 'Cancelled'
-            WHERE SessionID IN (SELECT SessionID FROM Session WHERE Status = 'Cancelled') 
-            AND Status = 'Confirmed';
             COMMIT TRANSACTION;
         END TRY
         BEGIN CATCH
@@ -513,3 +503,567 @@ CREATE OR ALTER PROCEDURE UnfreezeSubscription
         END CATCH
     END;
 GO
+CREATE OR ALTER PROCEDURE AddPayment
+        @MemberID INT,
+        @Category VARCHAR(50),
+        @PaymentMethod VARCHAR(20),
+        @Amount DECIMAL(10,2)
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @MemberID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            IF @Category NOT IN ('Membership','Expense','Other') OR
+            @PaymentMethod NOT IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')
+            BEGIN
+                RAISERROR('Invalid category or payment method.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            INSERT INTO Payment (Category, MemberID, PaymentMethod, PaymentDate, Amount, Status)
+            VALUES (@Category, @MemberID, @PaymentMethod, GETDATE(), @Amount, 'Completed');
+
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+END;
+GO
+CREATE OR ALTER PROCEDURE CancelPayment
+        @PaymentID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+
+            IF NOT EXISTS (SELECT 1 FROM Payment WHERE PaymentID = @PaymentID)
+            BEGIN
+                RAISERROR('Payment not found.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            IF EXISTS (
+                SELECT 1 FROM Payment 
+                WHERE PaymentID = @PaymentID 
+                AND DATEDIFF(DAY, PaymentDate, GETDATE()) > 7
+            )
+            BEGIN
+                RAISERROR('Only payments made within 7 days can be cancelled.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            UPDATE Payment SET Status = 'Cancelled' WHERE PaymentID = @PaymentID;
+
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+END;
+Go 
+CREATE OR ALTER PROCEDURE UpdateSessionStatus
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            --check which session is full
+            UPDATE Session
+            SET Status = 'Full'
+            WHERE SessionID IN (
+                SELECT s.SessionID
+                FROM Session s
+                JOIN (
+                    SELECT SessionID, COUNT(*) AS BookingCount
+                    FROM Booking
+                    WHERE Status = 'Confirmed'
+                    GROUP BY SessionID
+                ) b ON s.SessionID = b.SessionID
+                WHERE b.BookingCount >= s.MaxCapacity
+                AND s.Status = 'Scheduled'
+            );
+            --check which session went past deadline
+            UPDATE Session
+            SET Status = 'Completed'
+            WHERE Status = 'Scheduled'
+            AND DATEADD(MINUTE, Duration, DateTime) < GETDATE();
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO
+CREATE OR ALTER PROCEDURE AddSession
+        @TrainerID INT,
+        @BranchID INT,
+        @SessionType VARCHAR(20),
+        @MaxCapacity INT,
+        @DateTime DATETIME,
+        @Duration INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            -- Validate trainer exists
+            IF NOT EXISTS (SELECT 1 FROM Trainer WHERE UserID = @TrainerID)
+            BEGIN
+                RAISERROR('Trainer does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate branch exists
+            IF NOT EXISTS (SELECT 1 FROM Branch WHERE BranchID = @BranchID)
+            BEGIN
+                RAISERROR('Branch does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate session type
+            IF @SessionType NOT IN ('Yoga', 'HIIT', 'Cycling', 'Pilates', 'Boxing', 'Zumba')
+            BEGIN
+                RAISERROR('Invalid session type.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate capacity
+            IF @MaxCapacity <= 0
+            BEGIN
+                RAISERROR('Maximum capacity must be greater than zero.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate duration
+            IF @Duration <= 0
+            BEGIN
+                RAISERROR('Duration must be greater than zero.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            -- Validate date time
+            IF @DateTime < GETDATE()
+            BEGIN
+                RAISERROR('Session date and time must be in the future.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Check if trainer is already scheduled for another session at the same time
+            IF EXISTS (
+                SELECT 1 
+                FROM Session 
+                WHERE TrainerID = @TrainerID 
+                AND Status IN ('Scheduled', 'Full')
+                AND (
+                    (@DateTime BETWEEN DateTime AND DATEADD(MINUTE, Duration, DateTime))
+                    OR
+                    (DATEADD(MINUTE, @Duration, @DateTime) BETWEEN DateTime AND DATEADD(MINUTE, Duration, DateTime))
+                )
+            )
+            BEGIN
+                RAISERROR('Trainer is already scheduled for another session at this time.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            INSERT INTO Session (TrainerID, BranchID, SessionType, MaxCapacity, DateTime, Duration, Status)
+            VALUES (@TrainerID, @BranchID, @SessionType, @MaxCapacity, @DateTime, @Duration, 'Scheduled');
+
+            SELECT SCOPE_IDENTITY() AS SessionID;
+
+            EXEC UpdateSessionStatus;
+
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+END;
+GO
+CREATE OR ALTER PROCEDURE UpdateSession
+        @SessionID INT,
+        @TrainerID INT = NULL,
+        @BranchID INT = NULL,
+        @SessionType VARCHAR(20) = NULL,
+        @MaxCapacity INT = NULL,
+        @DateTime DATETIME = NULL,
+        @Duration INT = NULL,
+        @Status VARCHAR(20) = NULL
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID)
+            BEGIN
+                RAISERROR('Session does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            IF @TrainerID IS NOT NULL AND 
+            NOT EXISTS (SELECT 1 FROM Trainer WHERE UserID = @TrainerID)
+            BEGIN
+                RAISERROR('Trainer does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+        
+            IF @BranchID IS NOT NULL AND 
+            NOT EXISTS (SELECT 1 FROM Branch WHERE BranchID = @BranchID)
+            BEGIN
+                RAISERROR('Branch does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            IF @SessionType IS NOT NULL AND 
+            @SessionType NOT IN ('Yoga', 'HIIT', 'Cycling', 'Pilates', 'Boxing', 'Zumba')
+            BEGIN
+                RAISERROR('Invalid session type.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            IF @MaxCapacity IS NOT NULL AND @MaxCapacity <= 0
+            BEGIN
+                RAISERROR('Maximum capacity must be greater than zero.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            IF @Duration IS NOT NULL AND @Duration <= 0
+            BEGIN
+                RAISERROR('Duration must be greater than zero.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            IF @Status IS NOT NULL AND 
+            @Status NOT IN ('Scheduled', 'Completed', 'Cancelled', 'Full')
+            BEGIN
+                RAISERROR('Invalid session status.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            UPDATE Session
+            SET TrainerID = COALESCE(@TrainerID, TrainerID),
+                BranchID = COALESCE(@BranchID, BranchID),
+                SessionType = COALESCE(@SessionType, SessionType),
+                MaxCapacity = COALESCE(@MaxCapacity, MaxCapacity),
+                DateTime = COALESCE(@DateTime, DateTime),
+                Duration = COALESCE(@Duration, Duration),
+                Status = COALESCE(@Status, Status)
+            WHERE SessionID = @SessionID;
+            
+            EXEC UpdateSessionStatus;
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO
+CREATE OR ALTER PROCEDURE CancelSession
+    @SessionID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID)
+            BEGIN
+                RAISERROR('Session does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Booking WHERE SessionID = @SessionID)
+            BEGIN
+                UPDATE Session
+                SET Status = 'Cancelled'
+                WHERE SessionID = @SessionID;
+                
+                UPDATE Booking
+                SET Status = 'Cancelled'
+                WHERE SessionID = @SessionID;
+            END
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+END;
+GO
+CREATE OR ALTER PROCEDURE DeleteSession
+    @SessionID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+
+            IF NOT EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID)
+            BEGIN
+                RAISERROR('Session does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Booking WHERE SessionID = @SessionID)
+            BEGIN
+                RAISERROR('Session has bookings, cannot delete.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            DELETE FROM Session WHERE SessionID = @SessionID;
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+END;
+GO
+CREATE OR ALTER PROCEDURE UpdateSessionStatus
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            --check which session is full
+            UPDATE Session
+            SET Status = 'Full'
+            WHERE SessionID IN (
+                SELECT s.SessionID
+                FROM Session s
+                JOIN (
+                    SELECT SessionID, COUNT(*) AS BookingCount
+                    FROM Booking
+                    WHERE Status = 'Confirmed'
+                    GROUP BY SessionID
+                ) b ON s.SessionID = b.SessionID
+                WHERE b.BookingCount >= s.MaxCapacity
+                AND s.Status = 'Scheduled'
+            );
+            --check which session went past deadline
+            UPDATE Session
+            SET Status = 'Completed'
+            WHERE Status = 'Scheduled'
+            AND DATEADD(MINUTE, Duration, DateTime) < GETDATE();
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO
+CREATE OR ALTER PROCEDURE UpdateBookingStatus
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            UPDATE Booking
+            SET Status = 'Cancelled'
+            FROM Booking b
+            JOIN Session s ON b.SessionID = s.SessionID
+            WHERE s.Status = 'Cancelled'
+            AND b.Status = 'Confirmed';
+
+            -- Delete bookings for completed sessions
+            DELETE b
+            FROM Booking b
+            JOIN Session s ON b.SessionID = s.SessionID
+            WHERE s.Status = 'Completed'
+            AND b.Status = 'Confirmed';
+
+            -- Update sessions that are marked as Full but have available capacity
+            UPDATE s
+            SET s.Status = 'Scheduled'
+            FROM Session s
+            WHERE s.Status = 'Full'
+            AND (SELECT COUNT(*) FROM Booking b WHERE b.SessionID = s.SessionID AND b.Status = 'Confirmed') < s.MaxCapacity;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO
+CREATE OR ALTER PROCEDURE CreateBooking
+        @UserID INT,
+        @SessionID INT,
+        @PaymentID INT = NULL
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            -- Validate member exists
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate session exists
+            IF NOT EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID)
+            BEGIN
+                RAISERROR('Session does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            IF EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID AND Status IN ('Cancelled', 'Full', 'Completed'))
+            BEGIN
+                RAISERROR('Session is not available for booking.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Booking WHERE UserID = @UserID AND SessionID = @SessionID AND Status = 'Confirmed')
+            BEGIN
+                RAISERROR('User already has a booking for this session.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Validate payment if provided
+            IF @PaymentID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Payment WHERE PaymentID = @PaymentID AND MemberID = @UserID)
+            BEGIN
+                RAISERROR('Invalid payment ID.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            -- Insert the booking
+            INSERT INTO Booking (UserID, SessionID, PaymentID, Status, BookingDate)
+            VALUES (@UserID, @SessionID, @PaymentID, 'Confirmed', GETDATE());
+            
+            -- Check if session is now full
+            DECLARE @CurrentBookings INT;
+            DECLARE @MaxCapacity INT;
+            
+            SELECT @MaxCapacity = MaxCapacity 
+            FROM Session 
+            WHERE SessionID = @SessionID;
+            
+            SELECT @CurrentBookings = COUNT(*) 
+            FROM Booking 
+            WHERE SessionID = @SessionID AND Status = 'Confirmed';
+            
+            IF @CurrentBookings >= @MaxCapacity
+            BEGIN
+                UPDATE Session
+                SET Status = 'Full'
+                WHERE SessionID = @SessionID;
+            END
+            
+            -- Return the new booking ID
+            SELECT SCOPE_IDENTITY() AS BookingID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO
+CREATE OR ALTER PROCEDURE CancelBooking
+    @BookingID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;  
+
+            IF NOT EXISTS (SELECT 1 FROM Booking WHERE BookingID = @BookingID)
+            BEGIN
+                RAISERROR('Booking does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            UPDATE Booking
+            SET Status = 'Cancelled'
+            WHERE BookingID = @BookingID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+
+
+GO
+CREATE OR ALTER PROCEDURE DeleteBooking
+        @BookingID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Booking WHERE BookingID = @BookingID)
+            BEGIN
+                RAISERROR('Booking does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            
+            DECLARE @SessionID INT;
+            SELECT TOP 1 @SessionID = SessionID FROM Booking WHERE BookingID = @BookingID;
+            
+            DELETE FROM Booking WHERE BookingID = @BookingID;
+            
+            IF EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID AND Status = 'Full')
+            BEGIN
+                UPDATE Session
+                SET Status = 'Scheduled'
+                WHERE SessionID = @SessionID;
+            END
+
+            IF EXISTS (
+                SELECT 1 FROM Session s
+                WHERE s.SessionID = @SessionID AND s.Status = 'Full'
+                AND (SELECT COUNT(*) FROM Booking b WHERE b.SessionID = @SessionID AND b.Status = 'Confirmed') < s.MaxCapacity
+            )
+            BEGIN
+                UPDATE Session
+                SET Status = 'Scheduled'
+                WHERE SessionID = @SessionID;
+            END
+
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
