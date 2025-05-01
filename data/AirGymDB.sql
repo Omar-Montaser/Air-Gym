@@ -69,7 +69,9 @@ CREATE TABLE Member (
     SubscriptionStatus VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Cancelled', 'Frozen')),
     CONSTRAINT FK_Member_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Member_MembershipType FOREIGN KEY (MembershipTypeID) REFERENCES MembershipType(MembershipTypeID) ON DELETE SET NULL,
-    CONSTRAINT FK_Member_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL
+    CONSTRAINT FK_Member_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL,
+    CONSTRAINT CK_Subscription_Duration CHECK (DATEDIFF(day, SubscriptionStartDate, SubscriptionEndDate) <= 365),
+    CONSTRAINT CK_Subscription_Dates CHECK (SubscriptionStartDate <= SubscriptionEndDate)
 );
 
 CREATE TABLE Equipment (
@@ -131,7 +133,7 @@ ALTER TABLE Payment
 ADD CONSTRAINT DF_Payment_Status DEFAULT 'Completed' FOR Status;
 
 ALTER TABLE Payment
-ADD CONSTRAINT CHK_Payment_Status CHECK (Status IN ('Completed', 'Cancelled'));
+ADD CONSTRAINT CHK_Payment_Status CHECK (Status IN ('Completed','Cancelled'));
 
 ALTER TABLE Branch
 DROP COLUMN PhoneNumber 

@@ -120,21 +120,9 @@ public class MainController {
         if (userDAO.getUserByPhoneNumber(phoneNumber)==null) return false;
         else{
             String role = userDAO.validateLogin(phoneNumber, password);
-            System.out.println("Role: " + role);
             currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
-            System.out.println("Current User: " + currentUser.getUserId());
-            System.out.println("Calling getMemberByPhoneNumber");
-            if(role.equals("Member")) {
-                System.out.println("Inside Member role check");
+            if(role.equals("Member"))
                 currentMember = memberDAO.getMemberByPhoneNumber(phoneNumber);
-                System.out.println("After getMemberByPhoneNumber call");
-            }
-            
-            if (currentMember == null) {
-                System.out.println("NULL");
-            } else {
-                System.out.println("Current Member: " + currentMember.getFirstName());
-            }
             return true;
         }
     }
@@ -161,20 +149,37 @@ public class MainController {
         memberDAO.createMember(member,duration,paymentAmount);
         currentMember = memberDAO.getMemberById(member.getUserId());
         currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
-        switchScene(Screen.PROFILE);
     }
-    public void extendMembership(String duration){
-        memberDAO.extendSubscription(currentMember.getUserId(), Integer.parseInt(duration), "CreditCard");
+    public void extendSubscription(int duration,double paymentAmount){        
+        memberDAO.extendSubscription(currentMember.getUserId(), duration, "CreditCard", paymentAmount);
+        currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    public void freezeSubscription(String duration){
-        memberDAO.freezeSubscription(currentMember.getUserId(), Integer.parseInt(duration));
+    public void freezeSubscription(int duration){
+        System.out.println("Freezing");
+        memberDAO.freezeSubscription(currentMember.getUserId(),duration);
+        currentMember = memberDAO.getMemberById(currentMember.getUserId());
+        System.out.println("Member found with ID: " + currentMember.getUserId());
+        System.out.println("Name: " + currentMember.getFirstName() + " " + currentMember.getLastName());
+        System.out.println("Phone: " + currentMember.getPhoneNumber());
+        System.out.println("Membership Type: " + currentMember.getMembershipId());
+        System.out.println("Subscription Status: " + currentMember.getSubscriptionStatus());
+        System.out.println("Subscription End Date: " + currentMember.getSubscriptionEndDate());
+        System.out.println("Sessions Available: " + currentMember.getSessionsAvailable());
+        System.out.println("Freezes Available: " + currentMember.getFreezeAvailable());
+
+    }
+    public void renewSubscription(int duration,double paymentAmount){
+        memberDAO.renewSubscription(currentMember.getUserId(), duration, selectedMembership.getMembershipTypeID(), "CreditCard", paymentAmount);
+        currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
     public void cancelSubscription(){
         memberDAO.cancelSubscription(currentMember.getUserId());
+        currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    
-    
-    
+    public void unfreezeSubscription(){
+        memberDAO.unfreezeSubscription(currentMember.getUserId());
+        currentMember = memberDAO.getMemberById(currentMember.getUserId());
+    }
     public Member getCurrentMember(){
         return currentMember;
     }
@@ -208,12 +213,28 @@ public class MainController {
     public MembershipType getSelectedMembership(){  
         return selectedMembership;
     }
-
+    public boolean isFreezing(){
+        return isFreezing;
+    }
+    public void setIsFreezing(boolean isFreezing){
+        this.isFreezing = isFreezing;
+    }
+    public boolean isExtending(){
+        return isExtending;
+    }
+    public void setIsExtending(boolean isExtending){
+        this.isExtending = isExtending;
+    }
+    public void setSelectedMembership(){
+        if(!isGuest)selectedMembership=membershipTypeDao.getMembershipTypeById(currentMember.getMembershipId());
+    }
     protected boolean isGuest;
     protected boolean isAdmin;
     private User currentUser;
     private Member currentMember;
     private MembershipType selectedMembership;
+    private boolean isExtending;
+    private boolean isFreezing;
 
     private Stage stage;
     private Screen currentScreen;

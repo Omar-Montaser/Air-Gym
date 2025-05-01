@@ -56,7 +56,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
             
             SELECT 
                 @SessionsAvailable = Sessions, 
-                @FreezesAvailable = FreezeDuration,
+                @FreezesAvailable = FreezeDuration * @Duration,
                 @PrivateTrainer = PrivateTrainer
             FROM MembershipType 
             WHERE MembershipTypeID = @MembershipTypeID;
@@ -87,7 +87,7 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 @TrainerID, 
                 @FreezesAvailable,
                 'Active',
-                GETDATE()
+                DATEADD(DAY, -1, GETDATE())
             );
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, Amount, Status)
@@ -232,7 +232,8 @@ GO
 CREATE OR ALTER PROCEDURE ExtendSubscription
         @UserID INT,
         @Duration INT, 
-        @PaymentMethod VARCHAR(20) 
+        @PaymentMethod VARCHAR(20),
+        @PaymentAmount DECIMAL(10,2)
     AS
     BEGIN
         BEGIN TRY
@@ -250,22 +251,23 @@ CREATE OR ALTER PROCEDURE ExtendSubscription
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
-            DECLARE @MonthlyPrice DECIMAL(10,2);
             DECLARE @SessionsAvailable INT;
+            DECLARE @FreezeDuration INT;
             SELECT 
-                @MonthlyPrice = MonthlyPrice, 
-                @SessionsAvailable = Sessions
+                @SessionsAvailable = Sessions,
+                @FreezeDuration = FreezeDuration
             FROM MembershipType
             INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
             WHERE Member.UserID = @UserID;
             UPDATE Member
             SET 
             SubscriptionEndDate = DATEADD(MONTH, @Duration, SubscriptionEndDate),
-            SessionsAvailable=SessionsAvailable+@SessionsAvailable
+            SessionsAvailable=SessionsAvailable+@SessionsAvailable,
+            FreezesAvailable=FreezesAvailable+(@FreezeDuration * @Duration)
             WHERE UserID = @UserID;
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, PaymentDate, Amount, Status)
-            VALUES ('Membership', @UserID, @PaymentMethod, GETDATE(), (@MonthlyPrice * @Duration), 'Completed');
+            VALUES ('Membership', @UserID, @PaymentMethod, GETDATE(), @PaymentAmount, 'Completed');
             
             COMMIT TRANSACTION;
         END TRY
@@ -280,7 +282,8 @@ CREATE OR ALTER PROCEDURE RenewSubscription
         @UserID INT,
         @Duration INT,
         @MembershipTypeID INT,
-        @PaymentMethod VARCHAR(20)
+        @PaymentMethod VARCHAR(20),
+        @PaymentAmount DECIMAL(10,2)
     AS
     BEGIN
         BEGIN TRY
@@ -299,12 +302,14 @@ CREATE OR ALTER PROCEDURE RenewSubscription
                 RETURN;
             END
             
-            DECLARE @MonthlyPrice DECIMAL(10,2);
             DECLARE @Session INT;
-            SELECT @MonthlyPrice = MonthlyPrice, @Session = Sessions
+            DECLARE @FreezeDuration INT;
+            
+            SELECT 
+                @Session = Sessions,
+                @FreezeDuration = FreezeDuration
             FROM MembershipType
-            INNER JOIN Member ON MembershipType.MembershipTypeID = Member.MembershipTypeID
-            WHERE Member.UserID = @UserID;
+            WHERE MembershipTypeID = @MembershipTypeID;
             DECLARE @NewEndDate DATE = DATEADD(MONTH, @Duration, GETDATE());
             DECLARE @NEWSTARTDATE DATE= GETDATE();
             UPDATE Member
@@ -313,7 +318,9 @@ CREATE OR ALTER PROCEDURE RenewSubscription
             SubscriptionEndDate = @NewEndDate,
             SessionsAvailable=SessionsAvailable+@Session,
             SubscriptionStatus='Active',
-            MembershipTypeID=@MembershipTypeID
+            MembershipTypeID=@MembershipTypeID,
+            FreezesAvailable=@FreezeDuration * @Duration,
+            FreezeEndDate=DATEADD(DAY, -1, GETDATE())
             WHERE UserID = @UserID;
 
             INSERT INTO Payment (Category, MemberID, PaymentMethod, Amount, Status)
@@ -321,7 +328,7 @@ CREATE OR ALTER PROCEDURE RenewSubscription
                 'Membership', 
                 @UserID, 
                 @PaymentMethod, 
-                (@MonthlyPrice * @Duration),
+                @PaymentAmount,
                 'Completed'
             );
             
@@ -368,9 +375,7 @@ CREATE OR ALTER PROCEDURE CancelSubscription
             WHERE MemberID = @UserID 
               AND Category = 'Membership'
               AND DATEDIFF(DAY, PaymentDate, GETDATE()) <= 7; 
-            
             -- For payments older than a week, they remain completed (no refund)
-            -- This ensures members can only get refunds for recent subscriptions
             COMMIT TRANSACTION;
         END TRY
         BEGIN CATCH
@@ -449,13 +454,9 @@ CREATE OR ALTER PROCEDURE FreezeSubscription
             END
             UPDATE Member
             SET FreezesAvailable = FreezesAvailable - @Duration,
-                FreezeEndDate = DATEADD(MONTH, @Duration, GETDATE())
-            WHERE UserID = @UserID;
-            UPDATE Member
-            SET SubscriptionEndDate= DATEADD(MONTH, @Duration, GETDATE())
-            WHERE UserID = @UserID;
-            UPDATE Member
-            SET SubscriptionStatus = 'Frozen', SubscriptionEndDate = DATEADD(MONTH, @Duration, GETDATE())
+                FreezeEndDate = DATEADD(DAY, @Duration, GETDATE()),
+                SubscriptionEndDate = DATEADD(DAY, @Duration, SubscriptionEndDate),
+                SubscriptionStatus = 'Frozen'
             WHERE UserID = @UserID;
 
             UPDATE Booking
@@ -469,3 +470,46 @@ CREATE OR ALTER PROCEDURE FreezeSubscription
             THROW;
         END CATCH
     END;
+GO
+CREATE OR ALTER PROCEDURE UnfreezeSubscription
+    @UserID INT
+    AS
+    BEGIN
+        BEGIN TRY
+            BEGIN TRANSACTION;
+            
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            BEGIN
+                RAISERROR('Member does not exist.', 16, 1);
+                ROLLBACK TRANSACTION;   
+                RETURN;
+            END
+            IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus NOT IN ('Frozen'))
+            BEGIN
+                RAISERROR('This subscription is not frozen, cannot unfreeze.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+            DECLARE @RemainingDays INT;
+            SELECT @RemainingDays = DATEDIFF(DAY, GETDATE(), FreezeEndDate)
+            FROM Member
+            WHERE UserID = @UserID;
+            
+            IF @RemainingDays < 0
+                SET @RemainingDays = 0;
+                
+            UPDATE Member
+            SET FreezesAvailable = FreezesAvailable + @RemainingDays,
+                FreezeEndDate = DATEADD(DAY, -1, GETDATE()),
+                SubscriptionStatus = 'Active',
+                SubscriptionEndDate = DATEADD(DAY, -(@RemainingDays), SubscriptionEndDate)
+            WHERE UserID = @UserID;
+            
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRANSACTION;
+            THROW;
+        END CATCH
+    END;
+GO

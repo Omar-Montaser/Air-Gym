@@ -1,7 +1,7 @@
 package view;
 
 import model.accounts.Member;
-
+import controller.Screen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,34 +22,14 @@ public class ProfileController extends BaseController{
         ptNameLabel.setText(mainController.getTrainerByID(member.getTrainerId())==null ? "No Trainer" : 
         mainController.getTrainerByID(member.getTrainerId()).getFirstName() + " " 
         + mainController.getTrainerByID(member.getTrainerId()).getLastName());
-    // Print all member details for testing
-    System.out.println("Member Details:");
-    System.out.println("First Name: " + member.getFirstName());
-    System.out.println("Last Name: " + member.getLastName());
-    System.out.println("Phone Number: " + member.getPhoneNumber());
-    System.out.println("Birth Date: " + member.getBirthDate());
-    System.out.println("Gender: " + member.getGender());
-    System.out.println("Membership Type: " + mainController.getMembershipName(member.getMembershipId()));
-    System.out.println("Branch: " + mainController.getBranchByID(member.getBranchId()).getName());
-    System.out.println("Subscription Status: " + member.getSubscriptionStatus());
-    System.out.println("Subscription Start Date: " + member.getSubscriptionStartDate());
-    System.out.println("Subscription End Date: " + member.getSubscriptionEndDate());
-    
-    if (mainController.getTrainerByID(member.getTrainerId()) != null) {
-        System.out.println("Trainer: " + mainController.getTrainerByID(member.getTrainerId()).getFirstName() + 
-                           " " + mainController.getTrainerByID(member.getTrainerId()).getLastName());
-    } else {
-        System.out.println("Trainer: No Trainer");
-    }
-
-    System.out.println("User ID: " + member.getUserId());
     }
     @FXML
     private void handleExtendMembership(){
         try{
-        
-        mainController.extendMembership(durationTextField.getText());
-        fillDetails(mainController.getCurrentMember());
+        mainController.setIsExtending(true);
+        mainController.setIsFreezing(false);
+        mainController.setSelectedMembership();
+        mainController.switchScene(Screen.CHECKOUT);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -58,13 +38,22 @@ public class ProfileController extends BaseController{
     @FXML
     private void handleFreezeMembership(){
         try{
-        mainController.freezeSubscription(durationTextField.getText());
+        mainController.setIsExtending(false);
+        mainController.setIsFreezing(true);
+        mainController.setSelectedMembership();
+        mainController.switchScene(Screen.CHECKOUT);
+        // mainController.freezeSubscription(durationTextField.getText());
         
         }
         catch(Exception e){
             e.printStackTrace();
             //errorlabel handle
         }
+    }
+    @FXML
+    private void handleUnfreezeMembership(){
+        mainController.unfreezeSubscription();
+        fillDetails(mainController.getCurrentMember());
     }
     @FXML
     private void handleCancelMembership(){
@@ -80,6 +69,18 @@ public class ProfileController extends BaseController{
     private void handleLogout(){
         mainController.logout();
     }
+    @FXML
+    public void handleHome(){
+        mainController.switchScene(Screen.HOME);
+    }
+    @FXML
+    public void handleMemberships(){
+        mainController.switchScene(Screen.MEMBERSHIPS);
+    }
+    // @FXML
+    // public void handleContactUs(){
+    //     mainController.switchScene(Screen.CONTACT_US);
+    // }
     @FXML
     private Button homeButton;
     @FXML

@@ -21,6 +21,10 @@ public class HomeController extends BaseController{
     private void handleLogout(){
         mainController.logout();
     }
+    // @FXML
+    // private void handleBookSession(){
+    //     mainController.switchScene(Screen.BOOK_SESSION);
+    // }
     @FXML
     private Button homeButton;
     @FXML

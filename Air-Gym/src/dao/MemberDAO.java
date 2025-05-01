@@ -74,13 +74,13 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean extendSubscription(int userId, int duration, String paymentMethod) {
-        String sql = "EXEC ExtendSubscription ?, ?, ?";
+    public boolean extendSubscription(int userId, int duration, String paymentMethod, double paymentAmount) {
+        String sql = "EXEC ExtendSubscription ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setString(3, paymentMethod);
-            
+            cstmt.setDouble(4, paymentAmount);
             cstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -88,14 +88,14 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean renewSubscription(int userId,int duration, int membershipTypeId, String paymentMethod) {
-        String sql = "EXEC RenewSubscription ?, ?, ?, ?";
+    public boolean renewSubscription(int userId,int duration, int membershipTypeId, String paymentMethod, double paymentAmount) {
+        String sql = "EXEC RenewSubscription ?, ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setInt(3, membershipTypeId);
             cstmt.setString(4, paymentMethod);
-            
+            cstmt.setDouble(5, paymentAmount);
             cstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -129,7 +129,6 @@ public class MemberDAO {
         try (CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
-            
             cstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -137,6 +136,19 @@ public class MemberDAO {
             return false;
         }
     }
+    public boolean unfreezeSubscription(int userId) {
+        String sql = "EXEC UnfreezeSubscription ?";
+        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+            cstmt.setInt(1, userId);
+            cstmt.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+
     public Member getMemberById(int userId) {
         String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
                      "m.MembershipTypeID, m.BranchID, m.TrainerID, m.SubscriptionStartDate, m.SubscriptionEndDate, " +

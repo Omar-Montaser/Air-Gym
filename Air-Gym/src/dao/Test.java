@@ -44,9 +44,11 @@ public class Test {
         // for (Member m : members) {
         //     System.out.println(m.getFirstName());
         // }
-        Member member = memberDAO.getMemberByPhoneNumber("01055667788");
-        System.out.println(member.getFirstName());
-        System.out.println(member.getLastName());
-
+        // Member member = memberDAO.getMemberByPhoneNumber("01055667788");
+        // System.out.println(member.getFirstName());
+        // System.out.println(member.getLastName());
+        Member member = memberDAO.getMemberById(56);
+        memberDAO.freezeSubscription(member.getUserId(),1);
+        
     }
 }

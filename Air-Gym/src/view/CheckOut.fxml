@@ -15,45 +15,45 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" styleClass="root" stylesheets="@assets/css/memberH1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CheckoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3; -fx-background-color: f1f1f1;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CheckoutController">
     <children>
-        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
+        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0">
             <children>
-                <HBox prefHeight="75.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
-                    <children>
-                        <ImageView fitHeight="97.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@assets/images/LOGO.png" />
-                            </image>
-                        </ImageView>
-                        <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
-                            <HBox.margin>
-                                <Insets left="20.0" top="40.0" />
-                            </HBox.margin>
-                        </Label>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
-                            <HBox.margin>
-                                <Insets left="620.0" top="30.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" top="20.0" />
-                    </padding>
-                </HBox>
+            <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
+               <children>
+                  <ImageView fitHeight="97.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/LOGO.png" />
+                     </image>
+                  </ImageView>
+                  <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" top="40.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                     <HBox.margin>
+                        <Insets left="570.0" top="35.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" top="20.0" />
+               </padding>
+            </HBox>
             <HBox fx:id="menuHBox" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
                <children>
-                  <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                  <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                  <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0; -fx-background-color: #00000066;" styleClass="nav-button" text="Memberships">
+                  <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleMemberships" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -70,7 +70,7 @@
             </HBox>
             </children>
         </VBox>
-      <VBox fx:id="personalDetailsBox" layoutX="492.0" layoutY="206.0" prefHeight="374.0" prefWidth="524.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
+      <VBox fx:id="personalDetailsBox" layoutX="538.0" layoutY="194.0" prefHeight="374.0" prefWidth="524.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
          <children>
             <Label alignment="CENTER" prefHeight="47.0" prefWidth="531.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details">
                <VBox.margin>
@@ -204,26 +204,24 @@
             <URL value="@assets/css/memberH1.css" />
          </stylesheets>
       </VBox>
-      <VBox layoutX="32.0" layoutY="207.0" prefHeight="326.0" prefWidth="435.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
+      <VBox layoutX="86.0" layoutY="195.0" prefHeight="291.0" prefWidth="435.0" style="-fx-border-width: 2px 2px 2px 2px;" styleClass="box">
          <children>
-            <Label alignment="CENTER" prefHeight="26.0" prefWidth="431.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Payment">
+            <Label fx:id="paymentLabel" alignment="CENTER" prefHeight="26.0" prefWidth="431.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Payment">
                <VBox.margin>
                   <Insets left="-10.0" />
                </VBox.margin>
             </Label>
             <HBox prefHeight="0.0" prefWidth="421.0">
                <children>
-                  <Label prefHeight="37.0" prefWidth="137.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership">
+                  <Label fx:id="membershipLabel" alignment="CENTER" prefHeight="19.0" prefWidth="422.0" style="-fx-font-weight: bold; -fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Basic">
                      <HBox.margin>
                         <Insets />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="membershipLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="148.0" style="-fx-font-weight: bold; -fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Basic" />
+                     </HBox.margin></Label>
                </children>
             </HBox>
             <HBox prefHeight="0.0" prefWidth="421.0">
                <children>
-                  <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="79.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Duration">
+                  <Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="103.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Duration">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -233,99 +231,106 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                   </ChoiceBox>
-                  <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" prefHeight="36.0" prefWidth="79.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Total" />
-                  <Label fx:id="totalPriceLabel" alignment="TOP_RIGHT" prefHeight="39.0" prefWidth="95.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="\$400.00">
-                     <HBox.margin>
+               </children>
+            </HBox>
+            <VBox fx:id="checkoutBox" prefHeight="218.0" prefWidth="421.0">
+               <children>
+                  <HBox prefHeight="13.0" prefWidth="421.0">
+                     <children>
+                        <Label alignment="TOP_LEFT" contentDisplay="RIGHT" prefHeight="39.0" prefWidth="102.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Total" />
+                        <Label fx:id="totalPriceLabel" alignment="TOP_LEFT" prefHeight="5.0" prefWidth="187.0" style="-fx-font-size: 14;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="\$400.00">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="101.0" prefWidth="421.0" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="37.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/VisaLogo.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="37.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/MCLogo.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="39.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/ValuTeldaLogo.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
                         <Insets />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="101.0" prefWidth="421.0" spacing="10.0">
-               <children>
-                  <ImageView fitHeight="37.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/images/VisaLogo.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="37.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/images/MCLogo.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="39.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/images/ValuTeldaLogo.png" />
-                     </image>
-                  </ImageView>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="15.0" prefWidth="421.0">
-               <children>
-                  <Label prefHeight="36.0" prefWidth="100.0" styleClass="form-sh" text="Card Number" />
-                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Card Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="4.0" prefWidth="421.0">
-               <children>
-                  <Label prefHeight="36.0" prefWidth="99.0" styleClass="form-sh" text="Cardholder Name" />
-                  <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Cardholder Name (Optional)" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="0.0" prefWidth="421.0">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expires" wrappingWidth="216.05133056640625">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV/CVC" wrappingWidth="70.88397598266602">
-                     <HBox.margin>
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="15.0" prefWidth="421.0">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="100.0" styleClass="form-sh" text="Card Number" />
+                        <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Card Number" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
                         <Insets />
-                     </HBox.margin>
-                  </Text>
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="4.0" prefWidth="421.0">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="99.0" styleClass="form-sh" text="Cardholder Name" />
+                        <TextField prefHeight="27.0" prefWidth="257.0" promptText="Enter Cardholder Name (Optional)" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="0.0" prefWidth="421.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expires" wrappingWidth="216.05133056640625">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV/CVC" wrappingWidth="70.88397598266602">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="30.0" prefWidth="424.0">
+                     <children>
+                        <TextField prefHeight="27.0" prefWidth="47.0" promptText="MM" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField prefHeight="27.0" prefWidth="59.0" promptText="YYYY" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField prefHeight="27.0" prefWidth="110.0" promptText="Enter CVV/CVC" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="30.0" prefWidth="424.0">
-               <children>
-                  <TextField prefHeight="27.0" prefWidth="47.0" promptText="MM" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField prefHeight="27.0" prefWidth="59.0" promptText="YYYY" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField prefHeight="27.0" prefWidth="110.0" promptText="Enter CVV/CVC" style="-fx-font-size: 12;" styleClass="field" stylesheets="@assets/css/memberH1.css">
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="421.0" />
+            </VBox>
          </children>
          <padding>
             <Insets left="10.0" />
@@ -335,7 +340,7 @@
             <URL value="@assets/css/memberH1.css" />
          </stylesheets>
       </VBox>
-      <Button id="cancelSessionBtn" fx:id="cancelButton" layoutX="70.0" layoutY="543.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel" />
-      <Button id="bookSessionBtn" fx:id="checkoutButton" layoutX="254.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleCheckout" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Checkout" />
+      <Button id="cancelSessionBtn" fx:id="cancelButton" layoutX="86.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberHome.css" text="Cancel" />
+      <Button id="bookSessionBtn" fx:id="checkoutButton" layoutX="350.0" layoutY="543.0" mnemonicParsing="false" onAction="#handleCheckout" prefHeight="45.0" prefWidth="170.0" stylesheets="@assets/css/memberH1.css" text="Checkout" />
     </children>
 </AnchorPane>

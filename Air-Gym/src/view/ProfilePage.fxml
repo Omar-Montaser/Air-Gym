@@ -9,63 +9,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" styleClass="root" stylesheets="@assets/css/memberH1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileController">
     <children>
-        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
-            <children>
-                <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
-                    <children>
-                        <ImageView fitHeight="97.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@assets/images/LOGO.png" />
-                            </image>
-                        </ImageView>
-                        <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
-                            <HBox.margin>
-                                <Insets left="20.0" top="40.0" />
-                            </HBox.margin>
-                        </Label>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
-                            <HBox.margin>
-                                <Insets left="550.0" top="30.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" top="20.0" />
-                    </padding>
-                </HBox>
-                <HBox prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
-                    <children>
-                        <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0; -fx-background-color: #00000066;" styleClass="nav-button" text="Profile">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="membershipsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                </HBox>
-            </children>
-        </VBox>
-      <Label alignment="CENTER" layoutX="29.0" layoutY="201.0" prefHeight="29.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
-      <VBox layoutX="30.0" layoutY="250.0" prefHeight="210.0" prefWidth="419.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+      <Label alignment="CENTER" layoutX="34.0" layoutY="201.0" prefHeight="29.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
+      <VBox layoutX="35.0" layoutY="250.0" prefHeight="169.0" prefWidth="419.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
          <children>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
@@ -93,18 +40,13 @@
                   <Label fx:id="genderLabel" prefHeight="44.0" prefWidth="260.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
                </children>
             </HBox>
-            <Button id="bookSessionBtn" fx:id="editButton" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-font-size: 12; -fx-background-color: #00000066;" stylesheets="@assets/css/memberH1.css" text="Edit Information">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="130.0" right="10.0" top="20.0" />
-               </VBox.margin>
-            </Button>
          </children>
          <padding>
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" layoutX="502.0" layoutY="199.0" prefHeight="0.0" prefWidth="540.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
-      <VBox layoutX="501.0" layoutY="247.0" prefHeight="338.0" prefWidth="540.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+      <Label alignment="CENTER" layoutX="488.0" layoutY="199.0" prefHeight="47.0" prefWidth="585.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center; -fx-font-weight: bold;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
+      <VBox layoutX="487.0" layoutY="247.0" prefHeight="338.0" prefWidth="585.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
          <children>
             <HBox fillHeight="false" prefHeight="15.0" prefWidth="394.0">
                <children>
@@ -144,15 +86,16 @@
             </HBox>
             <HBox prefHeight="40.0" prefWidth="400.0">
                <children>
-                  <Button id="bookSessionBtn" fx:id="extendMembershipButton" mnemonicParsing="false" onAction="#handleExtendMembership" prefHeight="35.0" prefWidth="186.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Extend Subscription">
+                  <Button id="bookSessionBtn" fx:id="extendMembershipButton" mnemonicParsing="false" onAction="#handleExtendMembership" prefHeight="34.0" prefWidth="179.0" style="-fx-font-size: 12; -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;;" stylesheets="@assets/css/memberH1.css" text="Extend Subscription">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="10.0" />
                      </HBox.margin></Button>
-                  <Button id="bookSessionBtn" fx:id="freezeMembershipButton" mnemonicParsing="false" onAction="#handleFreezeMembership" prefHeight="34.0" prefWidth="180.0" style="-fx-font-size: 12;" stylesheets="@assets/css/memberH1.css" text="Freeze Subscription">
+                  <Button id="bookSessionBtn" fx:id="freezeMembershipButton" mnemonicParsing="false" onAction="#handleFreezeMembership" prefHeight="34.0" prefWidth="171.0" style="-fx-font-size: 12; -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;;" stylesheets="@assets/css/memberH1.css" text="Freeze Subscription">
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
+                  <Button id="bookSessionBtn" fx:id="freezeMembershipButton1" mnemonicParsing="false" onAction="#handleUnfreezeMembership" prefHeight="34.0" prefWidth="180.0" style="-fx-font-size: 12; -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;;" stylesheets="@assets/css/memberH1.css" text="UnFreeze Subscription" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -167,6 +110,59 @@
          <padding>
             <Insets left="10.0" />
          </padding>
+      </VBox>
+      <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0">
+         <children>
+            <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
+               <children>
+                  <ImageView fitHeight="97.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/images/LOGO.png" />
+                     </image>
+                  </ImageView>
+                  <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" top="40.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                     <HBox.margin>
+                        <Insets left="570.0" top="35.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" top="20.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
+               <children>
+                  <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0; -fx-background-color: #00000066;" styleClass="nav-button" text="Profile">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleMemberships" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
       </VBox>
     </children>
 </AnchorPane>

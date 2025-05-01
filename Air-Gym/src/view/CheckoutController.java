@@ -16,13 +16,32 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class CheckoutController extends BaseController{
+    double totalPrice;
+    int months;
+    int days;
     public void modifyScreen(){
+        paymentLabel.setText("Payment");
+        checkoutButton.setText("Checkout");
         if(mainController.isGuest()){
             homeButton.setVisible(false);
             profileButton.setVisible(false);
             logoutButton.setVisible(false);
             menuHBox.setAlignment(Pos.TOP_RIGHT);
             personalDetailsBox.setVisible(true);
+            membershipLabel.setText("Buy "+mainController.getSelectedMembership().getName()+" Membership");
+        
+            branchChoiceBox.getItems().clear();
+            mainController.getAllBranches().forEach(branch -> {
+                branchChoiceBox.getItems().add(branch.getName());
+            });
+    
+            if (!branchChoiceBox.getItems().isEmpty()) branchChoiceBox.setValue(branchChoiceBox.getItems().get(0));
+            
+            genderChoiceBox.getItems().clear();
+            genderChoiceBox.getItems().addAll("Male", "Female");
+            if (!genderChoiceBox.getItems().isEmpty()) {
+                genderChoiceBox.setValue(genderChoiceBox.getItems().get(0));
+            }
         }
         else{
             homeButton.setVisible(true);
@@ -30,32 +49,55 @@ public class CheckoutController extends BaseController{
             logoutButton.setVisible(true);
             menuHBox.setAlignment(Pos.TOP_LEFT);
             personalDetailsBox.setVisible(false);
+            checkoutBox.setVisible(true);
+            if(mainController.isExtending())
+                membershipLabel.setText("Extend Current Membership");
+            else if(mainController.isFreezing()){
+                checkoutBox.setVisible(false);
+                membershipLabel.setText("Freeze Current Membership");
+                paymentLabel.setText("Freeze");
+                checkoutButton.setText("Freeze");
+            }
+            else{
+                membershipLabel.setText("Renew with "+mainController.getSelectedMembership().getName()+" Membership");
+            }
         }
-
-        branchChoiceBox.getItems().clear();
-        mainController.getAllBranches().forEach(branch -> {
-            branchChoiceBox.getItems().add(branch.getName());
-        });
-
-        if (!branchChoiceBox.getItems().isEmpty()) branchChoiceBox.setValue(branchChoiceBox.getItems().get(0));
         
-        genderChoiceBox.getItems().clear();
-        genderChoiceBox.getItems().addAll("Male", "Female");
-        if (!genderChoiceBox.getItems().isEmpty()) {
-            genderChoiceBox.setValue(genderChoiceBox.getItems().get(0));
+        if(mainController.isFreezing()){
+            durationChoiceBox.getItems().clear();
+            durationChoiceBox.getItems().addAll("7 days", "14 days", "30 days");
+            if (!durationChoiceBox.getItems().isEmpty())
+                durationChoiceBox.setValue(durationChoiceBox.getItems().get(0));
+            durationChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (durationChoiceBox.getValue() != null) {
+                    days = 7;
+                    switch (durationChoiceBox.getValue()) {
+                        case "7 days":
+                            days = 7;
+                            break;
+                        case "14 days":
+                            days = 14;
+                            break;
+                        case "30 days":
+                            days = 30;
+                            break;
+                    }
+                }
+            });
         }
-
+        else{
         durationChoiceBox.getItems().clear();
-        durationChoiceBox.getItems().addAll("1 Month", "3 Months (5% off)", "6 Months (10% off)", "12 Months (15% off)");
+        if(mainController.isFreezing())
+            durationChoiceBox.getItems().addAll("1 Month", "2 Months", "3 Months");
+        else
+            durationChoiceBox.getItems().addAll("1 Month", "3 Months (5% off)", "6 Months (10% off)", "12 Months (15% off)");
         if (!durationChoiceBox.getItems().isEmpty())
             durationChoiceBox.setValue(durationChoiceBox.getItems().get(0));
         durationChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             updateTotalPrice();
         });
-        updateTotalPrice();
+        }
     }
-    double totalPrice;
-    int months;
     private void updateTotalPrice() {
         if (durationChoiceBox.getValue() != null) {
             months = 1;
@@ -93,14 +135,52 @@ public class CheckoutController extends BaseController{
             java.sql.Date.valueOf(birthDatePicker.getValue()),months, branchChoiceBox.getValue());
             mainController.switchScene(Screen.PROFILE);
         }
-        else{
-            // mainController.checkout(mainController.getCurrentMember(), null, 0);
+        else {
+            if(mainController.isExtending()){
+                mainController.extendSubscription(months,totalPrice);
+                mainController.switchScene(Screen.PROFILE);
+            }
+            else if(mainController.isFreezing()){
+                mainController.freezeSubscription(days);
+                mainController.switchScene(Screen.PROFILE);
+            }
+            else{
+                mainController.renewSubscription(months,totalPrice);
+                mainController.switchScene(Screen.PROFILE);
+            }
         }
     }
     @FXML
     private void handleLogout(){
         mainController.logout();
     }
+    @FXML
+    private void handleHome(){
+        mainController.switchScene(Screen.HOME);
+    }
+    @FXML
+    private void handleMemberships(){
+        mainController.switchScene(Screen.MEMBERSHIPS);
+    }
+    // @FXML
+    // private void handleContactUs(){
+    //     mainController.switchScene(Screen.CONTACT_US);
+    // }
+    @FXML
+    private void handleCancel(){
+        if(mainController.isExtending()||mainController.isFreezing())
+            mainController.switchScene(Screen.PROFILE);
+        else
+            mainController.switchScene(Screen.MEMBERSHIPS);
+    }
+    @FXML
+    private void handleProfile(){
+        mainController.switchScene(Screen.PROFILE);
+    }
+    @FXML
+    private Label paymentLabel; 
+    @FXML
+    private VBox checkoutBox;
     @FXML
     private Button homeButton;
     @FXML

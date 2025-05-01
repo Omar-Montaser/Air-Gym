@@ -24,7 +24,7 @@ public Member(
     this.membershipTypeId = membershipId;
     this.branchId = branchId;
     this.trainerId = trainerId;
-    this.subscriptionStatus = "Äctive";
+    this.subscriptionStatus = subscriptionStatus;
     this.subscriptionStartDate = subscriptionStartDate;
     this.subscriptionEndDate = subscriptionEndDate;
     this.sessionsAvailable = sessionAvailable;

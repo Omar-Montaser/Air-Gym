@@ -29,20 +29,6 @@ public class MembershipTypeDAO {
         return membershipTypes;
     }
 
-    private MembershipType mapResultSetToMembershipType(ResultSet rs) throws SQLException{
-        return new MembershipType(
-            rs.getInt("MembershipTypeID"),
-            rs.getString("Name"),
-            rs.getString("Description"),
-            rs.getString("AccessLevel"),
-            rs.getDouble("MonthlyPrice"),
-            rs.getInt("Sessions"),
-            rs.getBoolean("PrivateTrainer"),
-            rs.getInt("FreezeDuration"),
-            rs.getInt("InBody"),
-            rs.getString("ColorHex")
-        );
-    }
     public String getMembershipTypeName(int membershipId){
         try{
             PreparedStatement stmt = conn.prepareStatement("SELECT Name FROM MembershipType WHERE MembershipTypeID = ?");
@@ -56,5 +42,33 @@ public class MembershipTypeDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    public MembershipType getMembershipTypeById(int membershipId){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM MembershipType WHERE MembershipTypeID = ?");
+            stmt.setInt(1, membershipId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return mapResultSetToMembershipType(rs);
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private MembershipType mapResultSetToMembershipType(ResultSet rs) throws SQLException{
+        return new MembershipType(
+            rs.getInt("MembershipTypeID"),
+            rs.getString("Name"),
+            rs.getString("Description"),
+            rs.getString("AccessLevel"),
+            rs.getDouble("MonthlyPrice"),
+            rs.getInt("Sessions"),
+            rs.getBoolean("PrivateTrainer"),
+            rs.getInt("FreezeDuration"),
+            rs.getInt("InBody"),
+            rs.getString("ColorHex")
+        );
     }
 }

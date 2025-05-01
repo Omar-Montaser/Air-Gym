@@ -178,6 +178,8 @@ public class MembershipsController extends BaseController{
         membershipButton.setOnAction(event -> {
             try {
                 mainController.setSelectedMembership(membershipType);
+                mainController.setIsFreezing(false);
+                mainController.setIsExtending(false);
                 mainController.switchScene(Screen.CHECKOUT);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -199,6 +201,14 @@ public class MembershipsController extends BaseController{
             logoutButton.setVisible(true);
             menuHBox.setAlignment(Pos.TOP_LEFT);
         }
+    }
+    @FXML
+    private void handleHome(){
+        mainController.switchScene(Screen.HOME);
+    }
+    @FXML
+    private void handleProfile(){
+        mainController.switchScene(Screen.PROFILE);
     }
     @FXML
     private void handleLogout(){

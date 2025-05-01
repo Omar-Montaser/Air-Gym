@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
+        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0">
             <children>
                 <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
                     <children>
@@ -67,7 +67,7 @@
                 </HBox>
             </children>
         </VBox>
-      <Label id="welcomeLabel" layoutX="17.0" layoutY="205.0" prefHeight="36.0" prefWidth="128.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 18;" stylesheets="@assets/css/memberH1.css" text="Book Session:" />
+      <Label id="welcomeLabel" layoutX="21.0" layoutY="203.0" prefHeight="52.0" prefWidth="197.0" style="-fx-text-fill: #2E2E30; -fx-font-size: 25; -fx-font-family: 'Montserrat', 'Segoe UI', sans-serif;;" stylesheets="@assets/css/memberH1.css" text="Book a Session" />
             <Button id="cancelSessionBtn" layoutX="411.0" layoutY="204.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" styleClass="delete-button" text="Cancel">
          <stylesheets>
             <URL value="@assets/css/memberHome.css" />

@@ -16,36 +16,14 @@
     <children>
        <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
           <children>
-             <HBox prefHeight="75.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
-                <children>
-                   <ImageView fitHeight="97.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                         <Image url="@assets/images/LOGO.png" />
-                      </image>
-                   </ImageView>
-                   <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
-                      <HBox.margin>
-                         <Insets left="20.0" top="40.0" />
-                      </HBox.margin>
-                   </Label>
-                   <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
-                      <HBox.margin>
-                         <Insets left="620.0" top="30.0" />
-                      </HBox.margin>
-                   </Button>
-                </children>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" top="20.0" />
-               </padding>
-             </HBox>
              <HBox fx:id="menuHBox" prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
                 <children>
-                   <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                   <Button fx:id="homeButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
                    </Button>
-                   <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                   <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                       <HBox.margin>
                          <Insets bottom="10.0" right="10.0" top="10.0" />
                       </HBox.margin>
@@ -232,5 +210,27 @@
             <URL value="@assets/css/memberH1.css" />
          </stylesheets>
       </ScrollPane>
+      <HBox prefHeight="88.0" prefWidth="1100.0" style="-fx-background-color: #2E2E30;" stylesheets="@assets/css/memberH1.css">
+         <children>
+            <ImageView fitHeight="97.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/images/LOGO.png" />
+               </image>
+            </ImageView>
+            <Label style="-fx-font-size: 25; -fx-font-family: serof; -fx-font-weight: bold;" text="Air Gym &amp; Spa" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="20.0" top="40.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+               <HBox.margin>
+                  <Insets left="570.0" top="35.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" top="20.0" />
+         </padding>
+      </HBox>
     </children>
  </AnchorPane>
