@@ -8,6 +8,8 @@ import view.MembershipsController;
 import view.ProfileController;
 import dao.*;
 import db.SqlServerConnect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -92,6 +94,8 @@ public class MainController {
         contactUsScene = new Scene(contactUsLoader.load());
         contactUsController =(ContactUsController) contactUsLoader.getController();
         contactUsController.setMain(this);
+
+        ObservableList<Booking> testData = FXCollections.observableArrayList();
     }
     public void switchScene(Screen nextScreen){
         currentScreen = nextScreen;
@@ -162,6 +166,7 @@ public class MainController {
         memberDAO.createMember(member,duration,paymentAmount);
         currentMember = memberDAO.getMemberById(member.getUserId());
         currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
+        isGuest=false;
     }
     public void extendSubscription(int duration,double paymentAmount){        
         memberDAO.extendSubscription(currentMember.getUserId(), duration, "CreditCard", paymentAmount);

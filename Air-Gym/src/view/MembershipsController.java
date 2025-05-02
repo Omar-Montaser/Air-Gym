@@ -155,7 +155,7 @@ public class MembershipsController extends BaseController{
         
         Button membershipButton; 
         if(mainController.isGuest())membershipButton = new Button("Get Membership");
-        else membershipButton= new Button("Renew Membership");
+        else membershipButton= new Button("Renew");
         membershipButton.setPrefHeight(45.0);
         membershipButton.setPrefWidth(170.0);
         membershipButton.getStyleClass().add("membershipBtn");

@@ -84,7 +84,9 @@
 .table-row-cell {
     -fx-background-color: #f8f8f8;
     -fx-border-color: transparent;
-    -fx-padding: 4px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 0 0 0; /* Add the same left padding to cells */
+    -fx-cell-size: 30px;
 }
 
 .table-row-cell:odd {

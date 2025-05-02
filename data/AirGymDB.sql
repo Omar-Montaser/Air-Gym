@@ -8,7 +8,7 @@ CREATE TABLE Users(
     LastName VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL UNIQUE,
     Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
-    DateOfBirth DATE NOT NULL,
+    DateOfBirth DATE NOT CHECK (DateOfBirth <= DATEADD(YEAR, -16, GETDATE())),
     Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
 );
 ALTER TABLE Users

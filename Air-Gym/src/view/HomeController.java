@@ -11,72 +11,70 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.gym.members.Booking;
 import model.gym.members.Session;
 
 public class HomeController extends BaseController{
         static ObservableList<Booking> bookingList = FXCollections.observableArrayList();
-    
+
         public void fillBookingsTable() {
+            try {
+                Session.setCellValueFactory(new PropertyValueFactory<>("sessionName"));
+                Trainer.setCellValueFactory(new PropertyValueFactory<>("trainerName"));
+                Branch.setCellValueFactory(new PropertyValueFactory<>("branchName"));
+                When.setCellValueFactory(new PropertyValueFactory<>("sessionDate"));
+                Duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+                Status.setCellValueFactory(new PropertyValueFactory<>("sessionStatus"));
+
+                String leftPadding = "-fx-alignment: CENTER;";
+                Session.setStyle(leftPadding);
+                Trainer.setStyle(leftPadding);
+                Branch.setStyle(leftPadding);
+                When.setStyle(leftPadding);
+                Duration.setStyle(leftPadding);
+                Status.setStyle(leftPadding);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            // Get all bookings for the current member
             List<Booking> bookings = mainController.getAllMemberBookings();
+            
+            // Debug logging for bookings
+            if (bookings != null && !bookings.isEmpty()) {
+                for (Booking booking : bookings) {
+                    System.out.println("Booking ID: " + booking.getBookingID());
+                    System.out.println("User ID: " + booking.getUserID());
+                    System.out.println("Session ID: " + booking.getSessionID());
+                    System.out.println("Booking Status: " + booking.getStatus());
+                    System.out.println("Booking Date: " + booking.getBookingDate());
+                    System.out.println("Session Name: " + booking.getSessionName());
+                    System.out.println("Session Date: " + booking.getSessionDate());
+                    System.out.println("Duration: " + booking.getDuration() + " minutes");
+                    System.out.println("Session Status: " + booking.getSessionStatus());
+                    System.out.println("Trainer Name: " + booking.getTrainerName());
+                    System.out.println("Branch Name: " + booking.getBranchName());
+                    System.out.println("--------------------------------------------------");
+                }
+            } else {
+                System.out.println("No confirmed bookings found for user ID: ");
+            }
+
+            // Clear previous items and set placeholder if needed
             bookingList.clear();
-    
+            
+            // Add bookings to the table or show placeholder
             if (bookings == null || bookings.isEmpty()) {
                 bookingsTable.setPlaceholder(new Label("No bookings found"));
-                return;
+            } else {
+                bookingList.addAll(bookings);
+                System.out.println("Added " + bookings.size() + " bookings to the table");
             }
-    
-            bookingList.addAll(bookings);
-    
-            TableColumn<Booking, String> sessionColumn = new TableColumn<>("Session");
-            sessionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
-                mainController.getSessionByID(cellData.getValue().getSessionID()).getSessionType()
-            ));
-    
-            TableColumn<Booking, String> trainerColumn = new TableColumn<>("Trainer");
-            trainerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
-                mainController.getSessionByID(cellData.getValue().getSessionID()).getTrainerName()
-            ));
-    
-            TableColumn<Booking, String> branchColumn = new TableColumn<>("Branch");
-            branchColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
-                mainController.getSessionByID(cellData.getValue().getSessionID()).getBranchName()
-            ));
-    
-            TableColumn<Booking, String> whenColumn = new TableColumn<>("When");
-            whenColumn.setCellValueFactory(cellData -> {
-                Timestamp dateTime = mainController.getSessionByID(cellData.getValue().getSessionID()).getDateTime();
-                String formattedDate = (dateTime != null)
-                    ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(dateTime)
-                    : "";
-                return new SimpleStringProperty(formattedDate);
-            });
-    
-            TableColumn<Booking, String> durationColumn = new TableColumn<>("Duration (mins)");
-            durationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
-                String.valueOf(mainController.getSessionByID(cellData.getValue().getSessionID()).getDuration())
-            ));
-    
-            TableColumn<Booking, String> statusColumn = new TableColumn<>("Status");
-            statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
-                mainController.getSessionByID(cellData.getValue().getSessionID()).getStatus()
-            ));
-            sessionColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-            trainerColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-            branchColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-            whenColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-            durationColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-            statusColumn.setStyle("-fx-alignment: CENTER; -fx-padding: 8px;");
-    
-            bookingsTable.getColumns().setAll(
-                sessionColumn, trainerColumn, branchColumn, whenColumn, durationColumn, statusColumn
-            );
-    
+
             bookingsTable.setItems(bookingList);
     }
     
@@ -88,16 +86,10 @@ public class HomeController extends BaseController{
     @FXML
     private void handleCancelSession() {
     Booking selectedBooking = bookingsTable.getSelectionModel().getSelectedItem();
-    if (selectedBooking != null) {
-        Session session = mainController.getSessionByID(selectedBooking.getSessionID());
             mainController.cancelBooking(selectedBooking.getBookingID());
-            System.out.println("its NOT null");
             fillBookingsTable();
             return;
-        }
-    System.out.println("its null");
     }
-
     @FXML 
     private void handleProfile(){
         mainController.switchScene(Screen.PROFILE);
@@ -131,4 +123,16 @@ public class HomeController extends BaseController{
     private Button cancelSessionButton;
     @FXML
     private TableView<Booking> bookingsTable;
+    @FXML
+    private TableColumn<Booking, String> Session;
+    @FXML
+    private TableColumn<Booking, String> Trainer;
+    @FXML
+    private TableColumn<Booking, String> Branch;
+    @FXML
+    private TableColumn<Booking, Timestamp> When;
+    @FXML
+    private TableColumn<Booking,Integer> Duration;
+    @FXML
+    private TableColumn<Booking, String> Status;
 }

@@ -15,18 +15,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeController">
     <children>
-       <VBox layoutX="12.0" layoutY="197.0" prefHeight="389.0" prefWidth="586.0" stylesheets="@assets/css/adminTemplate.css">
+       <VBox layoutX="12.0" layoutY="197.0" prefHeight="389.0" prefWidth="562.0">
           <children>
              <Label id="welcomeLabel" prefHeight="53.0" prefWidth="313.0" style="-fx-font-size: 18;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Your Booked Sessions:" />
-             <TableView fx:id="bookingsTable" prefHeight="238.0" prefWidth="489.0">
+             <TableView fx:id="bookingsTable" fixedCellSize="30.0" prefHeight="249.0" prefWidth="562.0" stylesheets="@assets/css/adminTemplate.css">
                <columns>
-                 <TableColumn text="Session" />
-                 <TableColumn prefWidth="72.57147979736328" text="Trainer" />
-                  <TableColumn prefWidth="118.28570556640625" text="Branch" />
-                   <TableColumn prefWidth="140.5714111328125" text="When" />
-                   <TableColumn prefWidth="91.99996948242188" text="Duration (mins)" />
-                  <TableColumn prefWidth="72.0" text="Status" />
+                 <TableColumn fx:id="Session" prefWidth="85.71429061889648" text="Session" />
+                 <TableColumn fx:id="Trainer" prefWidth="67.42859649658203" text="Trainer" />
+                  <TableColumn fx:id="Branch" prefWidth="118.28570556640625" text="Branch" />
+                   <TableColumn fx:id="When" prefWidth="140.5714111328125" text="When" />
+                   <TableColumn fx:id="Duration" prefWidth="91.99996948242188" text="Duration" />
+                  <TableColumn fx:id="Status" prefWidth="60.5714111328125" text="Status" />
                </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
              </TableView>
              <HBox prefHeight="102.0" prefWidth="628.0">
                 <children>

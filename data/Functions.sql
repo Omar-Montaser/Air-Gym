@@ -244,9 +244,28 @@ CREATE OR ALTER FUNCTION GetEarliestSessionByType(@SessionType VARCHAR(20))
     );
 Go 
 CREATE OR ALTER FUNCTION GetAllMemberBookings(@UserID INT)
-    RETURNS TABLE
-    AS
-    RETURN
-    (
-        SELECT * FROM Booking WHERE UserID = @UserID and Status = 'Confirmed'
-    );
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        b.BookingID,
+        b.UserID,
+        b.SessionID,
+        b.Status AS BookingStatus,
+        b.BookingDate,
+        s.SessionType,
+        s.DateTime,
+        s.Duration,
+        s.Status AS SessionStatus,
+        tUser.FirstName + ' ' + tUser.LastName AS TrainerName,
+        br.Name AS BranchName
+    FROM Booking b
+    JOIN Session s ON s.SessionID = b.SessionID
+    JOIN Trainer t ON t.UserID = s.TrainerID
+    JOIN Users tUser ON tUser.UserID = t.UserID
+    JOIN Branch br ON br.BranchID = s.BranchID
+    WHERE b.UserID = @UserID AND b.Status = 'Confirmed'
+);
+--GetAllBookings
+--

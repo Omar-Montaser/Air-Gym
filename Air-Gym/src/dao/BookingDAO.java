@@ -22,12 +22,19 @@ public class BookingDAO {
             ResultSet rs = cstmt.executeQuery();
             List<Booking> bookings = new ArrayList<>();
             while (rs.next()) {
-                bookings.add(new 
-                Booking(rs.getInt("BookingID"),
-                 rs.getInt("UserID"), 
-                 rs.getInt("SessionID"), 
-                 rs.getString("Status"), 
-                 rs.getTimestamp("BookingDate")));
+                bookings.add(new Booking(
+                    rs.getInt("BookingID"),
+                    rs.getInt("UserID"),
+                    rs.getInt("SessionID"),
+                    rs.getString("BookingStatus"),
+                    rs.getTimestamp("BookingDate"),
+                    rs.getString("SessionType"),
+                    rs.getTimestamp("DateTime"),
+                    rs.getInt("Duration"),
+                    rs.getString("SessionStatus"),
+                    rs.getString("TrainerName"),
+                    rs.getString("BranchName")
+                ));
             }
             return bookings;
         } catch (SQLException e) {
@@ -35,6 +42,7 @@ public class BookingDAO {
             return null;
         }
     }
+    
 
     public int createBooking(int userId, int sessionId) {
         String sql = "EXEC CreateBooking ?, ?";

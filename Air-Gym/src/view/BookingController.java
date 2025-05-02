@@ -71,12 +71,6 @@ public class BookingController extends BaseController{
         });
     }
 
-
-
-
-
-
-
     @FXML
     private void handleLogout(){
         mainController.logout();
