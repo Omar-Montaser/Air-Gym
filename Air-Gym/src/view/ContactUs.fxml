@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ContactUsController">
     <children>
         <VBox layoutY="-9.0" prefHeight="194.0" prefWidth="1100.0" styleClass="top-container" stylesheets="@assets/css/memberH1.css">
             <children>
@@ -26,7 +26,7 @@
                                 <Insets left="20.0" top="40.0" />
                             </HBox.margin>
                         </Label>
-                        <Button fx:id="handleLogout" mnemonicParsing="false" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
+                        <Button mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="128.0" style="-fx-font-size: 18;" styleClass="logout-button" text="Logout">
                             <HBox.margin>
                                 <Insets left="570.0" top="35.0" />
                             </HBox.margin>
@@ -38,17 +38,17 @@
                 </HBox>
                 <HBox prefHeight="85.0" prefWidth="1100.0" styleClass="nav-panel" stylesheets="@assets/css/memberH1.css">
                     <children>
-                        <Button fx:id="handleHome" maxWidth="300.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
+                        <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleHome" prefHeight="98.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Home">
                             <HBox.margin>
                                 <Insets bottom="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="handleProfile" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                        <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                             <HBox.margin>
                                 <Insets bottom="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="handleMemberships" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
+                        <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleMemberships" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Memberships">
                             <HBox.margin>
                                 <Insets bottom="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
@@ -65,49 +65,46 @@
                 </HBox>
             </children>
         </VBox>
-      <ImageView fitHeight="428.0" fitWidth="744.0" layoutX="-2.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/images/branch%20gym.jpg" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="741.0" layoutY="184.0" prefHeight="423.0" prefWidth="363.0" style="-fx-background-color: #2E2E30;">
-         <children>
-            <Label id="welcomeLabel" alignment="CENTER" layoutX="18.0" layoutY="-10.0" prefHeight="160.0" prefWidth="306.0" style="-fx-text-fill: white; -fx-font-size: 30;" stylesheets="@assets/css/memberH1.css" text="Contact Us" textFill="WHITE" />
-            <FontAwesomeIcon fill="WHITE" glyphName="PHONE" layoutX="50.0" layoutY="112.0" size="29" text="" />
-            <FontAwesomeIcon fill="WHITE" glyphName="ENVELOPE" layoutX="200.0" layoutY="110.0" size="25" text="" />
-            <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="349.0" layoutY="113.0" size="32" text="" />
-            <Label layoutX="27.0" layoutY="188.0" text="+20 1268748365" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="27.0" layoutY="230.0" text="+20 1104740376" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <AnchorPane layoutX="153.0" layoutY="122.0" prefHeight="235.0" prefWidth="5.0" style="-fx-background-color: white;" />
-            <Label layoutX="172.0" layoutY="187.0" text="airgym@gmail.com" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="172.0" layoutY="228.0" text="airgym@hotmail.com" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="171.0" layoutY="271.0" text="ahmed12@gmail.com" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="27.0" layoutY="274.0" text="+20 1124682387" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+        <ImageView fitHeight="428.0" fitWidth="744.0" layoutX="-2.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/images/branch%20gym.jpg" />
+            </image>
+        </ImageView>
+        <AnchorPane layoutX="741.0" layoutY="184.0" prefHeight="423.0" prefWidth="363.0" style="-fx-background-color: #2E2E30;">
+            <children>
+                <Label id="welcomeLabel" alignment="CENTER" layoutX="18.0" layoutY="-10.0" prefHeight="160.0" prefWidth="306.0" style="-fx-text-fill: white; -fx-font-size: 30;" stylesheets="@assets/css/memberH1.css" text="Contact Us" textFill="WHITE" />
+                <Label layoutX="27.0" layoutY="188.0" text="+20 1268748365" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="27.0" layoutY="230.0" text="+20 1104740376" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <AnchorPane layoutX="153.0" layoutY="122.0" prefHeight="235.0" prefWidth="5.0" style="-fx-background-color: white;" />
+                <Label layoutX="172.0" layoutY="187.0" text="airgym@gmail.com" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="172.0" layoutY="228.0" text="airgym@hotmail.com" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="171.0" layoutY="271.0" text="ahmed12@gmail.com" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="27.0" layoutY="274.0" text="+20 1124682387" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

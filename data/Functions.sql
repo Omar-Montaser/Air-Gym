@@ -104,110 +104,149 @@ RETURN
 );
 go
 CREATE OR ALTER FUNCTION GetFrozenMembers()
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT 
-        u.UserID, u.FirstName, u.LastName, u.PhoneNumber, m.SubscriptionEndDate
-    FROM 
-        Member m
-    INNER JOIN 
-        Users u ON m.UserID = u.UserID
-    WHERE 
-        m.SubscriptionStatus = 'Frozen'
-);
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT 
+            u.UserID, u.FirstName, u.LastName, u.PhoneNumber, m.SubscriptionEndDate
+        FROM 
+            Member m
+        INNER JOIN 
+            Users u ON m.UserID = u.UserID
+        WHERE 
+            m.SubscriptionStatus = 'Frozen'
+    );
 go
 CREATE OR ALTER FUNCTION GetMembershipTypePrice(@MembershipTypeID INT)
-RETURNS DECIMAL(10,2)
-AS
-BEGIN
-    DECLARE @Price DECIMAL(10,2);
-    SELECT @Price = MonthlyPrice
-    FROM MembershipType
-    WHERE MembershipTypeID = @MembershipTypeID;
-    RETURN @Price;
-END
+    RETURNS DECIMAL(10,2)
+    AS
+    BEGIN
+        DECLARE @Price DECIMAL(10,2);
+        SELECT @Price = MonthlyPrice
+        FROM MembershipType
+        WHERE MembershipTypeID = @MembershipTypeID;
+        RETURN @Price;
+    END
 go
 CREATE OR ALTER FUNCTION GetMembershipTypeByName (@Name VARCHAR(100))
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT MembershipTypeID, Name, MonthlyPrice, Sessions
-    FROM MembershipType
-    WHERE Name = @Name
-);
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT MembershipTypeID, Name, MonthlyPrice, Sessions
+        FROM MembershipType
+        WHERE Name = @Name
+    );
 go
 CREATE OR ALTER FUNCTION IsGuest (@UserID INT)
-RETURNS BIT
-AS
-BEGIN
-    DECLARE @Result BIT;
+    RETURNS BIT
+    AS
+    BEGIN
+        DECLARE @Result BIT;
 
-    IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
-        SET @Result = 0; 
-    ELSE
-        SET @Result = 1;
+        IF EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+            SET @Result = 0; 
+        ELSE
+            SET @Result = 1;
 
-    RETURN @Result;
-END;
+        RETURN @Result;
+    END;
 go
 CREATE OR ALTER FUNCTION GetExpiredMembers()
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT 
-        u.UserID, u.FirstName, u.LastName, u.PhoneNumber, m.SubscriptionEndDate
-    FROM 
-        Member m
-    INNER JOIN 
-        Users u ON m.UserID = u.UserID
-    WHERE 
-        m.SubscriptionEndDate < GETDATE()
-        AND m.SubscriptionStatus = 'Expired'
-);
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT 
+            u.UserID, u.FirstName, u.LastName, u.PhoneNumber, m.SubscriptionEndDate
+        FROM 
+            Member m
+        INNER JOIN 
+            Users u ON m.UserID = u.UserID
+        WHERE 
+            m.SubscriptionEndDate < GETDATE()
+            AND m.SubscriptionStatus = 'Expired'
+    );
 go
 CREATE OR ALTER FUNCTION GetMembersByBranch(@BranchID INT)
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT 
-        u.UserID, u.FirstName, u.LastName, u.PhoneNumber, 
-        m.SubscriptionStartDate, m.SubscriptionEndDate, m.SubscriptionStatus,
-        mt.Name AS MembershipType
-    FROM 
-        Member m
-    INNER JOIN 
-        Users u ON m.UserID = u.UserID
-    INNER JOIN
-        MembershipType mt ON m.MembershipTypeID = mt.MembershipTypeID
-    WHERE 
-        m.BranchID = @BranchID
-);
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT 
+            u.UserID, u.FirstName, u.LastName, u.PhoneNumber, 
+            m.SubscriptionStartDate, m.SubscriptionEndDate, m.SubscriptionStatus,
+            mt.Name AS MembershipType
+        FROM 
+            Member m
+        INNER JOIN 
+            Users u ON m.UserID = u.UserID
+        INNER JOIN
+            MembershipType mt ON m.MembershipTypeID = mt.MembershipTypeID
+        WHERE 
+            m.BranchID = @BranchID
+    );
+    go
+    CREATE OR ALTER FUNCTION GetSessionBookingDetails(@UserID INT)
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT 
+            sb.BookingID, 
+            s.SessionType,
+            s.DateTime,
+            s.Duration,
+            t.FirstName + ' ' + t.LastName AS TrainerName,
+            b.Name
+        FROM 
+            Booking sb
+        INNER JOIN 
+            Session s ON sb.SessionID = s.SessionID
+        INNER JOIN
+            Users t ON s.TrainerID = t.UserID
+        INNER JOIN
+            Branch b ON s.BranchID = b.BranchID
+        WHERE 
+            sb.UserID = @UserID
+    );
+
 go
-CREATE OR ALTER FUNCTION GetSessionBookingDetails(@UserID INT)
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT 
-        sb.BookingID, 
-        s.SessionType,
-        s.DateTime,
-        s.Duration,
-        t.FirstName + ' ' + t.LastName AS TrainerName,
-        b.Name
-    FROM 
-        Booking sb
-    INNER JOIN 
-        Session s ON sb.SessionID = s.SessionID
-    INNER JOIN
-        Users t ON s.TrainerID = t.UserID
-    INNER JOIN
-        Branch b ON s.BranchID = b.BranchID
-    WHERE 
-        sb.UserID = @UserID
-);
+CREATE OR ALTER FUNCTION GetEarliestSessionByType(@SessionType VARCHAR(20))
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT TOP 1
+            s.SessionID,
+            s.TrainerID,
+            s.BranchID,
+            s.SessionType,
+            s.MaxCapacity,
+            s.DateTime,
+            s.Duration,
+            s.Status,
+            u.FirstName + ' ' + u.LastName AS TrainerName,
+            b.Name AS BranchName
+        FROM 
+            Session s
+        INNER JOIN
+            Users u ON s.TrainerID = u.UserID
+        INNER JOIN
+            Branch b ON s.BranchID = b.BranchID
+        WHERE 
+            s.SessionType = @SessionType
+            AND s.Status NOT IN ('Full', 'Completed', 'Cancelled')
+            AND s.DateTime > GETDATE()
+        ORDER BY
+            s.DateTime ASC
+    );
+Go 
+CREATE OR ALTER FUNCTION GetAllMemberBookings(@UserID INT)
+    RETURNS TABLE
+    AS
+    RETURN
+    (
+        SELECT * FROM Booking WHERE UserID = @UserID and Status = 'Confirmed'
+    );

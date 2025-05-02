@@ -45,7 +45,7 @@
                                 <Insets bottom="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfiile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
+                        <Button maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile">
                             <HBox.margin>
                                 <Insets bottom="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
@@ -102,7 +102,7 @@
                 </VBox>
             </content>
         </ScrollPane>
-      <ScrollPane layoutX="-1.0" layoutY="266.0" prefHeight="329.0" prefWidth="601.0" style="-fx-background-color: #e3e3e3;">
+      <ScrollPane layoutX="-1.0" layoutY="269.0" prefHeight="329.0" prefWidth="601.0" style="-fx-background-color: #e3e3e3;">
          <content>
             <VBox prefHeight="680.0" prefWidth="585.0" spacing="20.0" style="-fx-background-color: #e3e3e3;">
                <children>
@@ -163,7 +163,7 @@
                                     <Insets top="2.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="yogaStartTime" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                              <Label fx:id="yogaDate" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -190,7 +190,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                              <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="75.0" style="-fx-font-size: 12;" text="Book">
+                              <Button id="bookSessionBtn" fx:id="yogaBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="75.0" style="-fx-font-size: 12;" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -261,7 +261,7 @@
                                     <Insets top="2.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="pilatesStartTime" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                              <Label fx:id="pilatesDate" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -288,7 +288,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                        <Button id="bookSessionBtn" fx:id="pilatesBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -355,7 +355,7 @@
                                     <Insets top="2.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="cyclingStartTime" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                              <Label fx:id="cyclingDate" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -382,7 +382,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                        <Button id="bookSessionBtn" fx:id="cyclingBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -479,7 +479,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                        <Button id="bookSessionBtn" fx:id="hiitBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -546,7 +546,7 @@
                                     <Insets top="2.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="hiitStartTime" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                              <Label fx:id="boxingDate" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="99.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -573,7 +573,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                        <Button id="bookSessionBtn" fx:id="boxingBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>
@@ -657,7 +657,7 @@
                                     <Insets top="2.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
+                              <Label fx:id="zumbaDuration" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="93.0" style="-fx-font-size: 12;" text="Ahmed Mahmoud eks" wrapText="true">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -667,7 +667,7 @@
                               <Insets top="10.0" />
                            </padding>
                         </VBox>
-                        <Button id="bookSessionBtn" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
+                        <Button id="bookSessionBtn" fx:id="zumbaBookButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="78.0" style="-fx-font-size: 12;" styleClass="bookBtn" stylesheets="@assets/css/memberH1.css" text="Book">
                            <HBox.margin>
                               <Insets right="15.0" top="20.0" />
                            </HBox.margin>

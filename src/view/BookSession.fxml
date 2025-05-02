@@ -1,0 +1,1 @@
+<Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile"> 

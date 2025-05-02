@@ -22,9 +22,8 @@ CHECK (
 
 CREATE TABLE Branch(
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL,
+    Name VARCHAR(100) NOT NULL UNIQUE,
     Location VARCHAR(255) NOT NULL,
-    PhoneNumber VARCHAR(15) NOT NULL,
     OpeningDate DATE NOT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed')),
     AdminID INT NULL,
@@ -99,43 +98,20 @@ CREATE TABLE Session (
 
 CREATE TABLE Payment (
     PaymentID INT IDENTITY(1,1) PRIMARY KEY,
-    Category VARCHAR(50) NOT NULL CHECK (Category IN ('Membership','Expense','Other')),
+    Category VARCHAR(50) NOT NULL CHECK (Category IN ('Membership', 'Expense', 'Other')),
     MemberID INT NOT NULL, 
     PaymentMethod VARCHAR(20) CHECK (PaymentMethod IN ('CreditCard', 'DebitCard', 'Cash', 'BankTransfer', 'Other')),
     PaymentDate DATETIME DEFAULT GETDATE(),
     Amount DECIMAL(10,2) NOT NULL,
-    Status VARCHAR(20) NOT NULL CHECK (Status IN ('Completed', 'Pending')),
+    Status VARCHAR(20) DEFAULT 'Completed' NOT NULL CHECK (Status IN ('Completed', 'Cancelled')),
     CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
 );
-
-
 CREATE TABLE Booking (
     BookingID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT NOT NULL, 
     SessionID INT NOT NULL,
-    PaymentID INT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled')),
     BookingDate DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Booking_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID) ON DELETE CASCADE
 );
------------------------------------------Updates---------------------------------
-ALTER TABLE Payment
-ALTER COLUMN Category VARCHAR(50) NOT NULL;
-
-ALTER TABLE Payment
-ADD CONSTRAINT CHK_Payment_Category CHECK (Category IN ('Membership', 'Session', 'Expense', 'Other'))
-
-ALTER TABLE Payment
-ALTER COLUMN Status VARCHAR(20) NOT NULL;
-
-ALTER TABLE Payment
-ADD CONSTRAINT DF_Payment_Status DEFAULT 'Completed' FOR Status;
-
-ALTER TABLE Payment
-ADD CONSTRAINT CHK_Payment_Status CHECK (Status IN ('Completed','Cancelled'));
-
-ALTER TABLE Branch
-DROP COLUMN PhoneNumber 
-ALTER TABLE Branch
-ADD CONSTRAINT uq_Branch_Name UNIQUE (Name);

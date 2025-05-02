@@ -11,6 +11,8 @@ public class Session {
     private Timestamp dateTime;
     private int duration;
     private String status;
+    private String trainerName;
+    private String branchName;
 //================================================Constructor=============================================
     public Session(int sessionID, int trainerID, int branchID, String sessionType, int maxCapacity, Timestamp dateTime,
     int duration, String status) {
@@ -73,4 +75,17 @@ public class Session {
     public void setStatus(String status) {
         this.status = status;
     }
+    public String getTrainerName() {
+        return trainerName;
+    }
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
+    }
+    public String getBranchName() {
+        return branchName;
+    }
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+    
 }

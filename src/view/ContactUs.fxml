@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="view.ContactUsController">
+    <children>
+        <Button fx:id="profileButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleProfile" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Profile" />
+        
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+            <Label text="📞" style="-fx-font-size: 29px;" />
+            <Label text="Phone: +1234567890" style="-fx-font-size: 16px;" />
+        </HBox>
+        
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+            <Label text="✉" style="-fx-font-size: 25px;" />
+            <Label text="Email: contact@airgym.com" style="-fx-font-size: 16px;" />
+        </HBox>
+        
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+            <Label text="🏠" style="-fx-font-size: 32px;" />
+            <Label text="Address: 123 Gym Street, Fitness City" style="-fx-font-size: 16px;" />
+        </HBox>
+    </children>
+</VBox> 

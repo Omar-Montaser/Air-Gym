@@ -11,28 +11,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomeController">
     <children>
-       <VBox layoutX="27.0" layoutY="197.0" prefHeight="389.0" prefWidth="550.0" stylesheets="@assets/css/adminTemplate.css">
+       <VBox layoutX="12.0" layoutY="197.0" prefHeight="389.0" prefWidth="586.0" stylesheets="@assets/css/adminTemplate.css">
           <children>
              <Label id="welcomeLabel" prefHeight="53.0" prefWidth="313.0" style="-fx-font-size: 18;" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="Your Booked Sessions:" />
-             <TableView prefHeight="240.0" prefWidth="628.0">
+             <TableView fx:id="bookingsTable" prefHeight="238.0" prefWidth="489.0">
                <columns>
-                 <TableColumn prefWidth="109.14288711547852" text="Session" />
-                 <TableColumn prefWidth="157.71429443359375" text="Trainer" />
-                   <TableColumn prefWidth="120.57144165039062" text="Time" />
-                   <TableColumn prefWidth="140.00003051757812" text="Status" />
+                 <TableColumn text="Session" />
+                 <TableColumn prefWidth="72.57147979736328" text="Trainer" />
+                  <TableColumn prefWidth="118.28570556640625" text="Branch" />
+                   <TableColumn prefWidth="140.5714111328125" text="When" />
+                   <TableColumn prefWidth="91.99996948242188" text="Duration (mins)" />
+                  <TableColumn prefWidth="72.0" text="Status" />
                </columns>
              </TableView>
              <HBox prefHeight="102.0" prefWidth="628.0">
                 <children>
-                   <Button id="cancelSessionBtn" fx:id="cancelSessionButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" styleClass="delete-button" stylesheets="@assets/css/memberHome.css" text="Cancel Session(s)">
+                   <Button id="cancelSessionBtn" fx:id="cancelSessionButton" mnemonicParsing="false" onAction="#handleCancelSession" prefHeight="45.0" prefWidth="170.0" styleClass="delete-button" stylesheets="@assets/css/memberHome.css" text="Cancel Session(s)">
                       <HBox.margin>
-                         <Insets right="220.0" top="30.0" />
+                         <Insets top="30.0" />
                       </HBox.margin>
                    </Button>
-                   <Button id="bookSessionBtn" fx:id="boookSessionButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="170.0" styleClass="new-entry-button" stylesheets="@assets/css/memberH1.css" text="Book a Session">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*Select and click" wrappingWidth="207.27952003479004">
+                     <HBox.margin>
+                        <Insets left="10.0" top="45.0" />
+                     </HBox.margin>
+                  </Text>
+                   <Button id="bookSessionBtn" fx:id="boookSessionButton" mnemonicParsing="false" onAction="#handleBookSession" prefHeight="45.0" prefWidth="170.0" styleClass="new-entry-button" stylesheets="@assets/css/memberH1.css" text="Book a Session">
                       <HBox.margin>
                          <Insets top="30.0" />
                       </HBox.margin>

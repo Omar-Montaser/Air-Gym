@@ -383,12 +383,12 @@ CREATE OR ALTER PROCEDURE CancelSubscription
     END
 GO
 CREATE OR ALTER PROCEDURE UpdateMemberStatus    
---DOUBLE CHECKING
     AS
     BEGIN
         BEGIN TRY
             BEGIN TRANSACTION;
             
+            -- Update expired subscriptions
             UPDATE Member
             SET SubscriptionStatus = 'Expired'
             WHERE SubscriptionEndDate < GETDATE() AND SubscriptionStatus = 'Active';
@@ -398,10 +398,32 @@ CREATE OR ALTER PROCEDURE UpdateMemberStatus
             SET SubscriptionStatus = 'Active'
             WHERE FreezeEndDate < GETDATE() AND SubscriptionStatus = 'Frozen';
             
-            -- Mark completed sessions
+            -- Mark completed sessions and deduct from available sessions
             UPDATE Session
             SET Status = 'Completed'
-            WHERE DateTime < GETDATE() AND Status = 'Scheduled';
+            WHERE Status = 'Scheduled'
+            AND DATEADD(MINUTE, Duration, DateTime) < GETDATE();
+
+            -- Deduct completed sessions from member's available sessions
+            UPDATE m
+            SET m.SessionsAvailable = m.SessionsAvailable - completed_sessions.count
+            FROM Member m
+            JOIN (
+                SELECT b.UserID, COUNT(*) as count
+                FROM Booking b
+                JOIN Session s ON b.SessionID = s.SessionID
+                WHERE s.Status = 'Completed'
+                AND b.Status = 'Confirmed'
+                GROUP BY b.UserID
+            ) completed_sessions ON m.UserID = completed_sessions.UserID;
+
+            -- Update booking status for completed sessions
+            UPDATE b
+            SET b.Status = 'Completed'
+            FROM Booking b
+            JOIN Session s ON b.SessionID = s.SessionID
+            WHERE s.Status = 'Completed'
+            AND b.Status = 'Confirmed';
 
             COMMIT TRANSACTION;
         END TRY
@@ -916,22 +938,20 @@ CREATE OR ALTER PROCEDURE UpdateBookingStatus
 GO
 CREATE OR ALTER PROCEDURE CreateBooking
         @UserID INT,
-        @SessionID INT,
-        @PaymentID INT = NULL
+        @SessionID INT
     AS
     BEGIN
         BEGIN TRY
             BEGIN TRANSACTION;
             
-            -- Validate member exists
-            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID)
+
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SubscriptionStatus = 'Active')
             BEGIN
-                RAISERROR('Member does not exist.', 16, 1);
+                RAISERROR('Member does not exist or subscription is not active.', 16, 1);
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
-            
-            -- Validate session exists
+
             IF NOT EXISTS (SELECT 1 FROM Session WHERE SessionID = @SessionID)
             BEGIN
                 RAISERROR('Session does not exist.', 16, 1);
@@ -945,24 +965,24 @@ CREATE OR ALTER PROCEDURE CreateBooking
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
+
             IF EXISTS (SELECT 1 FROM Booking WHERE UserID = @UserID AND SessionID = @SessionID AND Status = 'Confirmed')
             BEGIN
                 RAISERROR('User already has a booking for this session.', 16, 1);
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
-            
-            -- Validate payment if provided
-            IF @PaymentID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Payment WHERE PaymentID = @PaymentID AND MemberID = @UserID)
+
+            IF NOT EXISTS (SELECT 1 FROM Member WHERE UserID = @UserID AND SessionsAvailable > 0)
             BEGIN
-                RAISERROR('Invalid payment ID.', 16, 1);
+                RAISERROR('No available sessions remaining.', 16, 1);
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
             
             -- Insert the booking
-            INSERT INTO Booking (UserID, SessionID, PaymentID, Status, BookingDate)
-            VALUES (@UserID, @SessionID, @PaymentID, 'Confirmed', GETDATE());
+            INSERT INTO Booking (UserID, SessionID, Status, BookingDate)
+            VALUES (@UserID, @SessionID, 'Confirmed', GETDATE());
             
             -- Check if session is now full
             DECLARE @CurrentBookings INT;

@@ -18,7 +18,7 @@ import view.LoginController;
 import javafx.stage.Stage;
 import model.accounts.*;
 import model.gym.Branch;
-import model.gym.members.MembershipType;
+import model.gym.members.*;
 import view.BookingController;
 import view.ContactUsController;
 
@@ -32,6 +32,8 @@ public class MainController {
             membershipTypeDao = new MembershipTypeDAO(conn);
             branchDAO = new BranchDAO(conn);
             trainerDAO = new TrainerDAO(conn);
+            sessionDAO = new SessionDAO(conn);
+            bookingDAO = new BookingDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(loginScene);
@@ -90,7 +92,6 @@ public class MainController {
         contactUsScene = new Scene(contactUsLoader.load());
         contactUsController =(ContactUsController) contactUsLoader.getController();
         contactUsController.setMain(this);
-
     }
     public void switchScene(Screen nextScreen){
         currentScreen = nextScreen;
@@ -99,9 +100,11 @@ public class MainController {
                 stage.setScene(loginScene);
                 break;
             case HOME:
+                homeController.fillBookingsTable();
                 stage.setScene(homeScene);
                 break;  
             case BOOKING:
+                bookingController.loadSessions();
                 stage.setScene(bookingScene);
                 break;
             case MEMBERSHIPS:
@@ -190,7 +193,18 @@ public class MainController {
         memberDAO.unfreezeSubscription(currentMember.getUserId());
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-//========================================GET AND SET========================================
+    public void bookSession(int sessionId){
+        bookingDAO.createBooking(currentMember.getUserId(), sessionId);
+    }
+    public void cancelBooking(int bookingId){
+        bookingDAO.cancelBooking(bookingId);
+    }
+        //========================================GET AND SET========================================
+
+    public List<Booking> getAllMemberBookings(){
+        return bookingDAO.getAllMemberBookings(currentMember.getUserId());
+    }
+
     public Member getCurrentMember(){
         return currentMember;
     }
@@ -239,6 +253,12 @@ public class MainController {
     public void setSelectedMembership(){
         if(!isGuest)selectedMembership=membershipTypeDao.getMembershipTypeById(currentMember.getMembershipId());
     }
+    public Session getEarliestSessionByType(String sessionType){
+        return sessionDAO.getEarliestSessionByType(sessionType);
+    }
+    public Session getSessionByID(int sessionID){
+        return sessionDAO.getSessionByID(sessionID);
+    }
     protected boolean isGuest;
     protected boolean isAdmin;
     private User currentUser;
@@ -252,7 +272,9 @@ public class MainController {
     private MembershipTypeDAO membershipTypeDao;
     private BranchDAO branchDAO;
     private TrainerDAO trainerDAO;
-    
+    private SessionDAO sessionDAO;
+    private BookingDAO bookingDAO;
+
     private Stage stage;
     private Screen currentScreen;
 
