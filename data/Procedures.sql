@@ -596,40 +596,6 @@ CREATE OR ALTER PROCEDURE CancelPayment
         END CATCH
 END;
 Go 
-CREATE OR ALTER PROCEDURE UpdateSessionStatus
-    AS
-    BEGIN
-        BEGIN TRY
-            BEGIN TRANSACTION;
-            --check which session is full
-            UPDATE Session
-            SET Status = 'Full'
-            WHERE SessionID IN (
-                SELECT s.SessionID
-                FROM Session s
-                JOIN (
-                    SELECT SessionID, COUNT(*) AS BookingCount
-                    FROM Booking
-                    WHERE Status = 'Confirmed'
-                    GROUP BY SessionID
-                ) b ON s.SessionID = b.SessionID
-                WHERE b.BookingCount >= s.MaxCapacity
-                AND s.Status = 'Scheduled'
-            );
-            --check which session went past deadline
-            UPDATE Session
-            SET Status = 'Completed'
-            WHERE Status = 'Scheduled'
-            AND DATEADD(MINUTE, Duration, DateTime) < GETDATE();
-            
-            COMMIT TRANSACTION;
-        END TRY
-        BEGIN CATCH
-            ROLLBACK TRANSACTION;
-            THROW;
-        END CATCH
-    END;
-GO
 CREATE OR ALTER PROCEDURE AddSession
         @TrainerID INT,
         @BranchID INT,

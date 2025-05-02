@@ -58,7 +58,7 @@
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
+                  <Button fx:id="contactUsButton" maxWidth="300.0" mnemonicParsing="false" onAction="#handleContactUs" prefHeight="74.0" prefWidth="200.0" style="-fx-border-radius: 0;" styleClass="nav-button" text="Contact Us">
                      <HBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

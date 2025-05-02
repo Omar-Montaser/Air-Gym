@@ -162,10 +162,10 @@ public class CheckoutController extends BaseController{
     private void handleMemberships(){
         mainController.switchScene(Screen.MEMBERSHIPS);
     }
-    // @FXML
-    // private void handleContactUs(){
-    //     mainController.switchScene(Screen.CONTACT_US);
-    // }
+    @FXML
+    private void handleContactUs(){
+        mainController.switchScene(Screen.CONTACT_US);
+    }
     @FXML
     private void handleCancel(){
         if(mainController.isExtending()||mainController.isFreezing())
