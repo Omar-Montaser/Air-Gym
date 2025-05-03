@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MemberViewController">
    <children>
       <VBox layoutX="-3.0" layoutY="-7.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: black;">
          <children>
@@ -46,7 +46,6 @@
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
          </children>
       </VBox>
       <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -63,24 +62,21 @@
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
+      <TableView fx:id="CustomerTable" layoutX="195.0" layoutY="109.0" prefHeight="480.0" prefWidth="911.0" style="-fx-border-color: #e3e3e3;" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
          <columns>
-            <TableColumn prefWidth="46.00001525878906" text="ID" />
-            <TableColumn prefWidth="84.0" text="Full Name" />
-            <TableColumn prefWidth="112.6666259765625" text="Phone Number" />
-            <TableColumn prefWidth="66.66668701171875" text="Birth Date" />
-            <TableColumn prefWidth="52.666748046875" text="Gender" />
-            <TableColumn prefWidth="70.0" text="Join Date" />
-            <TableColumn prefWidth="54.00006103515625" text="Branch" />
-            <TableColumn prefWidth="80.66668701171875" text="Membership" />
-            <TableColumn prefWidth="54.66668701171875" text="Trainer" />
-            <TableColumn prefWidth="109.33331298828125" text="Payment Method" />
-            <TableColumn prefWidth="134.66668701171875" text="Subscription Status" />
-            <TableColumn prefWidth="134.66668701171875" text=" Subscription Start Date" />
-            <TableColumn prefWidth="134.66668701171875" text="Subscription End Date" />
-            <TableColumn prefWidth="134.66668701171875" text="Freeze End Date" />
-            <TableColumn prefWidth="134.66668701171875" text="Sessions Available" />
-            <TableColumn prefWidth="134.66668701171875" text="Freezes Available" />
+            <TableColumn fx:id="idColumn" prefWidth="27.4285888671875" text="ID" />
+            <TableColumn fx:id="nameColumn" prefWidth="65.14289855957031" text="Name" />
+            <TableColumn fx:id="numberColumn" prefWidth="52.5714111328125" text="Number" />
+            <TableColumn fx:id="ageColumn" prefWidth="66.66668701171875" text="Age" />
+            <TableColumn fx:id="genderColumn" prefWidth="52.666748046875" text="Gender" />
+            <TableColumn fx:id="branchColumn" prefWidth="54.00006103515625" text="Branch" />
+            <TableColumn fx:id="membershipColumn" prefWidth="80.66668701171875" text="Membership" />
+            <TableColumn fx:id="trainerColumn" prefWidth="54.66668701171875" text="Trainer" />
+            <TableColumn fx:id="statusColumn" prefWidth="64.5714111328125" text="Status" />
+            <TableColumn fx:id="subscriptionEndColumn" prefWidth="122.28570556640625" text="Subscription End" />
+            <TableColumn fx:id="freezeEndColumn" prefWidth="66.857177734375" text="Freeze End" />
+            <TableColumn fx:id="sessionsColumn" prefWidth="51.99993896484375" text="Sessions" />
+            <TableColumn fx:id="freezesColumn" prefWidth="69.142822265625" text="Freezes" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

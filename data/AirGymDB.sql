@@ -1,4 +1,3 @@
-CREATE DATABASE AirGym;
 USE AirGym;
 GO
 CREATE TABLE Users(
@@ -8,7 +7,7 @@ CREATE TABLE Users(
     LastName VARCHAR(50) NOT NULL,
     PhoneNumber VARCHAR(15) NOT NULL UNIQUE,
     Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female')),
-    DateOfBirth DATE NOT CHECK (DateOfBirth <= DATEADD(YEAR, -16, GETDATE())),
+    DateOfBirth DATE NOT NULL,
     Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Member', 'Trainer'))
 );
 ALTER TABLE Users
@@ -106,10 +105,12 @@ CREATE TABLE Payment (
     Status VARCHAR(20) DEFAULT 'Completed' NOT NULL CHECK (Status IN ('Completed', 'Cancelled')),
     CONSTRAINT FK_Payment_Member FOREIGN KEY (MemberID) REFERENCES Member(UserID) ON DELETE CASCADE
 );
+
 CREATE TABLE Booking (
     BookingID INT IDENTITY(1,1) PRIMARY KEY,
     UserID INT NOT NULL, 
     SessionID INT NOT NULL,
+    PaymentID INT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Confirmed' CHECK (Status IN ('Confirmed', 'Cancelled')),
     BookingDate DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,

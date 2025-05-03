@@ -12,6 +12,12 @@ public class Member extends User{
     private int branchId;
     private Integer trainerId;
     private String subscriptionStatus;
+    private String fullName;
+    private int age;
+    private String branchName;
+    private String membershipName;
+    private String trainerName;
+
 
 //=======================================Constructor===================================
 public Member(
@@ -38,6 +44,23 @@ public Member(
     super(userId, firstName, lastName, password, phoneNumber, gender, dateOfBirth, "Member");
     this.membershipTypeId = membershipTypeId;
     this.branchId = branchId;
+}
+public Member( //only for admin's member view
+    int userId,String fullName,String phoneNumber, String gender, 
+    int age, String branchName,String trainerName, String mtName,Date subscriptionEndDate,
+    int sessionAvailable, String subscriptionStatus, int freezeAvailable, Date freezeEndDate
+){
+    super(userId, null, null,null, phoneNumber, gender, null, "Member"); 
+    this.fullName = fullName;
+    this.subscriptionEndDate = subscriptionEndDate;
+    this.sessionsAvailable = sessionAvailable;
+    this.subscriptionStatus = subscriptionStatus;
+    this.freezeAvailable = freezeAvailable;
+    this.freezeEndDate = freezeEndDate;
+    this.branchName = branchName;
+    this.membershipName = mtName;
+    this.trainerName = trainerName;
+    this.age=age;
 }
 
 //=======================================Get&Set=======================================
@@ -103,4 +126,41 @@ public void setFreezeAvailable(int freezeAvailable) {
 public void setFreezeEndDate(java.sql.Date freezeEndDate) {
     this.freezeEndDate = freezeEndDate;
 }
+public int getMembershipTypeId() {
+    return membershipTypeId;
+}
+public void setMembershipTypeId(int membershipTypeId) {
+    this.membershipTypeId = membershipTypeId;
+}
+public String getFullName() {
+    return fullName;
+}
+public void setFullName(String fullName) {
+    this.fullName = fullName;
+}
+public int getAge() {
+    return age;
+}
+public void setAge(int age) {
+    this.age = age;
+}
+public String getBranchName() {
+    return branchName;
+}
+public void setBranchName(String branchName) {
+    this.branchName = branchName;
+}
+public String getMembershipName() {
+    return membershipName;
+}
+public void setMembershipName(String membershipName) {
+    this.membershipName = membershipName;
+}
+public String getTrainerName() {
+    return trainerName;
+}
+public void setTrainerName(String trainerName) {
+    this.trainerName = trainerName;
+}
+
 }

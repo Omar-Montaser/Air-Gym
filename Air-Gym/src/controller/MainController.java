@@ -13,16 +13,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import view.CheckoutController;
-import view.DashboardController;
-import view.HomeController;
-import view.LoginController;
+import view.*;
 import javafx.stage.Stage;
 import model.accounts.*;
 import model.gym.Branch;
 import model.gym.members.*;
-import view.BookingController;
-import view.ContactUsController;
 
 
 public class MainController {
@@ -50,15 +45,50 @@ public class MainController {
         }
     }
     public void initializeScenes() throws Exception{
-        // FXMLLoader dashboardLoader = new FXMLLoader(getClass().getResource("../view/Dashboard.fxml"));
-        // dashboardScene = new Scene(dashboardLoader.load());
-        // // dashboardController =(DashboardController) dashboardLoader.getController();
-        // // dashboardController.setMain(this);
+        FXMLLoader dashboardLoader = new FXMLLoader(getClass().getResource("../view/Dashboard.fxml"));
+        dashboardScene = new Scene(dashboardLoader.load());
+        dashboardController =(DashboardController) dashboardLoader.getController();
+        dashboardController.setMain(this);
 
-        // FXMLLoader memberViewLoader= new FXMLLoader(getClass().getResource("../view/MemberView.fxml"));
-        // memberViewScene = new Scene(memberViewLoader.load());
-        // // memberViewController = (MemberViewController) memberViewLoader.getController();
-        // // memberViewController.setMain(this);
+        FXMLLoader memberViewLoader = new FXMLLoader(getClass().getResource("../view/MemberView.fxml"));
+        memberViewScene = new Scene(memberViewLoader.load());
+        memberViewController = (MemberViewController) memberViewLoader.getController();
+        memberViewController.setMain(this);
+
+        FXMLLoader trainerViewLoader = new FXMLLoader(getClass().getResource("../view/TrainerView.fxml"));
+        trainerViewScene = new Scene(trainerViewLoader.load());
+        trainerViewController = (TrainerViewController) trainerViewLoader.getController();
+        trainerViewController.setMain(this);
+
+        FXMLLoader branchViewLoader = new FXMLLoader(getClass().getResource("../view/BranchView.fxml"));
+        branchViewScene = new Scene(branchViewLoader.load());
+        branchViewController = (BranchViewController) branchViewLoader.getController();
+        branchViewController.setMain(this);
+
+        FXMLLoader equipmentViewLoader = new FXMLLoader(getClass().getResource("../view/EquipmentView.fxml"));
+        equipmentViewScene = new Scene(equipmentViewLoader.load());
+        equipmentViewController = (EquipmentViewController) equipmentViewLoader.getController();
+        equipmentViewController.setMain(this);
+
+        FXMLLoader sessionViewLoader = new FXMLLoader(getClass().getResource("../view/SessionView.fxml"));
+        sessionViewScene = new Scene(sessionViewLoader.load());
+        sessionViewController = (SessionViewController) sessionViewLoader.getController();
+        sessionViewController.setMain(this);
+
+        FXMLLoader membershipTypeViewLoader = new FXMLLoader(getClass().getResource("../view/MembershipTypeView.fxml"));
+        membershipTypeViewScene = new Scene(membershipTypeViewLoader.load());
+        membershipTypeViewController = (MembershipTypeViewController) membershipTypeViewLoader.getController();
+        membershipTypeViewController.setMain(this);
+
+        FXMLLoader paymentViewLoader = new FXMLLoader(getClass().getResource("../view/PaymentView.fxml"));
+        paymentViewScene = new Scene(paymentViewLoader.load());
+        paymentViewController = (PaymentViewController) paymentViewLoader.getController();
+        paymentViewController.setMain(this);
+
+        FXMLLoader bookingViewLoader = new FXMLLoader(getClass().getResource("../view/BookingView.fxml"));
+        bookingViewScene = new Scene(bookingViewLoader.load());
+        bookingViewController = (BookingViewController) bookingViewLoader.getController();
+        bookingViewController.setMain(this);
 
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
         loginScene = new Scene(loginLoader.load());
@@ -93,9 +123,7 @@ public class MainController {
         FXMLLoader contactUsLoader = new FXMLLoader(getClass().getResource("../view/ContactUs.fxml"));
         contactUsScene = new Scene(contactUsLoader.load());
         contactUsController =(ContactUsController) contactUsLoader.getController();
-        contactUsController.setMain(this);
-
-        ObservableList<Booking> testData = FXCollections.observableArrayList();
+        contactUsController.setMain(this);        
     }
     public void switchScene(Screen nextScreen){
         currentScreen = nextScreen;
@@ -126,6 +154,33 @@ public class MainController {
                 break;
             case CONTACT_US:
                 stage.setScene(contactUsScene);
+                break;
+            case DASHBOARD:
+                stage.setScene(dashboardScene);
+                break;
+            case MEMBER_VIEW:
+                stage.setScene(memberViewScene);
+                break;
+            case TRAINER_VIEW:
+                stage.setScene(trainerViewScene);
+                break;
+            case BRANCH_VIEW:
+                stage.setScene(branchViewScene);
+                break;
+            case EQUIPMENT_VIEW:
+                stage.setScene(equipmentViewScene);
+                break;
+            case SESSION_VIEW:
+                stage.setScene(sessionViewScene);
+                break;
+            case MEMBERSHIP_TYPE_VIEW:
+                stage.setScene(membershipTypeViewScene);
+                break;
+            case PAYMENT_VIEW:
+                stage.setScene(paymentViewScene);
+                break;
+            case BOOKING_VIEW:
+                stage.setScene(bookingViewScene);
                 break;
             default: break;
         }
@@ -306,4 +361,32 @@ public class MainController {
 
     private Scene contactUsScene;
     private ContactUsController contactUsController;
+
+    private Scene memberViewScene;
+    private MemberViewController memberViewController;
+    
+    private Scene trainerViewScene;
+    private TrainerViewController trainerViewController;
+    
+    private Scene branchViewScene;
+    private BranchViewController branchViewController;
+    
+    private Scene equipmentViewScene;
+    private EquipmentViewController equipmentViewController;
+    
+    private Scene sessionViewScene;
+    private SessionViewController sessionViewController;
+    
+    private Scene membershipTypeViewScene;
+    private MembershipTypeViewController membershipTypeViewController;
+    
+    private Scene paymentViewScene;
+    private PaymentViewController paymentViewController;
+    
+    private Scene bookingViewScene;
+    private BookingViewController bookingViewController;
+
+
+
+    
 }

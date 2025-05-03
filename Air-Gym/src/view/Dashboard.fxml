@@ -63,203 +63,220 @@
         </HBox>
       <AnchorPane layoutX="196.0" layoutY="53.0" prefHeight="487.0" prefWidth="873.0" styleClass="shadow" stylesheets="@assets/css/dashboard.css">
          <children>
-            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="845.0">
+            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="217.0" prefWidth="856.0">
                <children>
-                  <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="845.0" vbarPolicy="ALWAYS">
-                     <content>
-                        <AnchorPane prefHeight="201.0" prefWidth="846.0">
+                  <AnchorPane prefHeight="210.0" prefWidth="859.0">
+                     <children>
+                        <AnchorPane layoutX="34.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
                            <children>
-                              <AnchorPane layoutX="34.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="105.0" layoutY="95.0" prefHeight="25.0" prefWidth="133.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Active Members">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/user-solid.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="217.0" layoutY="14.0" prefHeight="25.0" prefWidth="22.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="300.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="83.0" layoutY="95.0" prefHeight="25.0" prefWidth="155.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Registered Members">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/users-solid.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="212.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="54">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="566.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="105.0" layoutY="95.0" prefHeight="25.0" prefWidth="133.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Announcements">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/notification.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="207.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
+                              <Label layoutX="105.0" layoutY="95.0" prefHeight="25.0" prefWidth="133.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Active Members">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/user-solid.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="217.0" layoutY="14.0" prefHeight="25.0" prefWidth="22.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                     </content>
-                  </ScrollPane>
+                        <AnchorPane layoutX="300.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="83.0" layoutY="95.0" prefHeight="25.0" prefWidth="155.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Registered Members">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/users-solid.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="212.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="54">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="566.0" layoutY="33.0" prefHeight="135.0" prefWidth="245.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="105.0" layoutY="95.0" prefHeight="25.0" prefWidth="133.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Announcements">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="81.0" fitWidth="93.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/notification.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="207.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="223.0" prefHeight="299.0" prefWidth="417.0" styleClass="shadow">
                <children>
-                  <PieChart fx:id="pcUsers" layoutX="20.0" layoutY="14.0" prefHeight="280.0" prefWidth="377.0" title="Users Report" />
+                  <PieChart fx:id="pcUsers" layoutX="20.0" layoutY="14.0" prefHeight="280.0" prefWidth="377.0" title="Users " />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="431.0" layoutY="241.0" prefHeight="254.0" prefWidth="417.0">
-               <children>
-                  <ScrollPane hbarPolicy="ALWAYS" prefHeight="254.0" prefWidth="417.0" vbarPolicy="ALWAYS">
-                     <content>
-                        <AnchorPane prefHeight="253.0" prefWidth="415.0" styleClass="shadow">
+            <AnchorPane layoutX="431.0" layoutY="241.0" prefHeight="254.0" prefWidth="390.0" />
+            <ScrollPane layoutX="402.0" layoutY="201.0" prefHeight="243.0" prefWidth="417.0">
+               <content>
+                  <AnchorPane prefHeight="366.0" prefWidth="391.0" styleClass="shadow">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="95.0" layoutY="68.0" prefHeight="25.0" prefWidth="75.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Staff Users">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/admin.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="208.0" layoutY="14.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="79.0" layoutY="68.0" prefHeight="25.0" prefWidth="91.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Active Trainers">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/user-tie-solid.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="154.0" layoutY="14.0" prefHeight="25.0" prefWidth="23.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="12">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="14.0" layoutY="127.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="43.0" layoutY="68.0" prefHeight="25.0" prefWidth="127.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Available Equipment">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/equipment.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="208.0" layoutY="127.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
-                                 <styleClass>
-                                    <String fx:value="bg-color-1" />
-                                    <String fx:value="radius" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <Label layoutX="83.0" layoutY="68.0" prefHeight="25.0" prefWidth="87.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Total Earnings">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@assets/icons/money-bill-trend-up-solid.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label layoutX="125.0" layoutY="14.0" prefHeight="25.0" prefWidth="52.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="\$3,560">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
+                              <Label layoutX="95.0" layoutY="68.0" prefHeight="25.0" prefWidth="75.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Admins">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/admin.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
+                        <AnchorPane layoutX="208.0" layoutY="14.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="79.0" layoutY="68.0" prefHeight="25.0" prefWidth="91.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Active Trainers">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/user-tie-solid.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="154.0" layoutY="14.0" prefHeight="25.0" prefWidth="23.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="12">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="127.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="43.0" layoutY="68.0" prefHeight="25.0" prefWidth="127.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Total Expenses">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" rotate="-180.0">
+                                 <image>
+                                    <Image url="@assets/icons/money-bill-trend-up-solid.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="208.0" layoutY="127.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="83.0" layoutY="68.0" prefHeight="25.0" prefWidth="87.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Total Earnings">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/money-bill-trend-up-solid.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="125.0" layoutY="14.0" prefHeight="25.0" prefWidth="52.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="\$3,560">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="249.0" prefHeight="102.0" prefWidth="155.0" stylesheets="@assets/css/dashboard.css">
+                           <styleClass>
+                              <String fx:value="bg-color-1" />
+                              <String fx:value="radius" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                           <children>
+                              <Label layoutX="43.0" layoutY="68.0" prefHeight="25.0" prefWidth="127.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="Available Equipment">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="54.0" fitWidth="58.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/equipment.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
     </children>

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PaymentViewController">
     <children>
         <VBox layoutX="-3.0" layoutY="-7.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: black;">
             <children>
@@ -45,8 +45,7 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
-                <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
+                <Button id="menuButton" mnemonicParsing="false" prefWidth="197.0" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">

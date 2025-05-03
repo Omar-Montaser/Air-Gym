@@ -40,34 +40,9 @@ public class HomeController extends BaseController{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
-            // Get all bookings for the current member
             List<Booking> bookings = mainController.getAllMemberBookings();
-            
-            // Debug logging for bookings
-            if (bookings != null && !bookings.isEmpty()) {
-                for (Booking booking : bookings) {
-                    System.out.println("Booking ID: " + booking.getBookingID());
-                    System.out.println("User ID: " + booking.getUserID());
-                    System.out.println("Session ID: " + booking.getSessionID());
-                    System.out.println("Booking Status: " + booking.getStatus());
-                    System.out.println("Booking Date: " + booking.getBookingDate());
-                    System.out.println("Session Name: " + booking.getSessionName());
-                    System.out.println("Session Date: " + booking.getSessionDate());
-                    System.out.println("Duration: " + booking.getDuration() + " minutes");
-                    System.out.println("Session Status: " + booking.getSessionStatus());
-                    System.out.println("Trainer Name: " + booking.getTrainerName());
-                    System.out.println("Branch Name: " + booking.getBranchName());
-                    System.out.println("--------------------------------------------------");
-                }
-            } else {
-                System.out.println("No confirmed bookings found for user ID: ");
-            }
-
-            // Clear previous items and set placeholder if needed
             bookingList.clear();
-            
-            // Add bookings to the table or show placeholder
+
             if (bookings == null || bookings.isEmpty()) {
                 bookingsTable.setPlaceholder(new Label("No bookings found"));
             } else {

@@ -256,6 +256,36 @@ public class MemberDAO {
         }
         return null;
     }
+    public List<Member> getAllMemberDetails() {
+        String sql = "SELECT * FROM GetMemberDetails()";
+        List<Member> members = new ArrayList<>();
+        
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Member member = new Member(
+                    rs.getInt("UserID"),
+                    rs.getString("Name"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Gender"),
+                    rs.getInt("Age"),
+                    rs.getString("BranchName"),
+                    rs.getString("Trainer"),
+                    rs.getString("Membership"),
+                    rs.getDate("SubscriptionEndDate"),
+                    rs.getInt("SessionsAvailable"),
+                    rs.getString("SubscriptionStatus"),
+                    rs.getInt("FreezesAvailable"),
+                    rs.getDate("FreezeEndDate")
+                );
+                member.setAge(rs.getInt("Age"));
+                members.add(member);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return members;
+    }
 }
 //     Get a member by ID
 //     public Member getMemberById(String userId) {

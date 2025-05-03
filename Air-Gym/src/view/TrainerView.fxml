@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #e3e3e3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TrainerViewController">
     <children>
         <VBox layoutX="-3.0" layoutY="-7.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: black;">
             <children>
@@ -46,7 +46,6 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -68,12 +67,11 @@
                 <TableColumn prefWidth="76.66665649414062" text="ID" />
                 <TableColumn prefWidth="74.66665649414062" text="Full Name" />
                 <TableColumn prefWidth="97.33334350585938" text="Phone Number" />
-                <TableColumn prefWidth="66.66668701171875" text="Birth Date" />
                 <TableColumn prefWidth="52.666748046875" text="Gender" />
                 <TableColumn prefWidth="86.6666259765625" text="Specialization" />
                 <TableColumn prefWidth="107.3333740234375" text="Experience Years" />
                 <TableColumn prefWidth="73.99993896484375" text="Salary" />
-                <TableColumn prefWidth="86.66668701171875" text="Branch ID" />
+                <TableColumn prefWidth="86.66668701171875" text="Branch" />
                 <TableColumn prefWidth="85.33331298828125" text="Status" />
             </columns>
             <columnResizePolicy>
