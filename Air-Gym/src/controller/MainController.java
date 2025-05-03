@@ -3,9 +3,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
-import view.MemberViewController;
-import view.MembershipsController;
-import view.ProfileController;
 import dao.*;
 import db.SqlServerConnect;
 import javafx.collections.FXCollections;
@@ -33,7 +30,7 @@ public class MainController {
             bookingDAO = new BookingDAO(conn);
             initializeScenes();
             this.stage=stage;
-            stage.setScene(loginScene);
+            stage.setScene(dashboardScene);
             stage.setResizable(true);
             stage.setTitle("Air Gym");
             Image logo = new Image(getClass().getResourceAsStream("../view/assets/images/LOGO.png"));
@@ -84,11 +81,42 @@ public class MainController {
         paymentViewScene = new Scene(paymentViewLoader.load());
         paymentViewController = (PaymentViewController) paymentViewLoader.getController();
         paymentViewController.setMain(this);
+        
+        FXMLLoader memberEntryLoader = new FXMLLoader(getClass().getResource("../entry/MemberEntry.fxml"));
+        memberEntryScene = new Scene(memberEntryLoader.load());
+        memberEntryController = (MemberEntryController) memberEntryLoader.getController();
+        memberEntryController.setMain(this);
 
-        FXMLLoader bookingViewLoader = new FXMLLoader(getClass().getResource("../view/BookingView.fxml"));
-        bookingViewScene = new Scene(bookingViewLoader.load());
-        bookingViewController = (BookingViewController) bookingViewLoader.getController();
-        bookingViewController.setMain(this);
+        // FXMLLoader trainerEntryLoader = new FXMLLoader(getClass().getResource("../entry/TrainerEntry.fxml"));
+        // trainerEntryScene = new Scene(trainerEntryLoader.load());
+        // trainerEntryController = (TrainerEntryController) trainerEntryLoader.getController();
+        // trainerEntryController.setMain(this);
+
+        // FXMLLoader branchEntryLoader = new FXMLLoader(getClass().getResource("../entry/BranchEntry.fxml"));
+        // branchEntryScene = new Scene(branchEntryLoader.load());
+        // branchEntryController = (BranchEntryController) branchEntryLoader.getController();
+        // branchEntryController.setMain(this);
+
+        // FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../entry/EquipmentEntry.fxml"));
+        // equipmentEntryScene = new Scene(equipmentEntryLoader.load());
+        // equipmentEntryController = (EquipmentEntryController) equipmentEntryLoader.getController();
+        // equipmentEntryController.setMain(this);
+
+        // FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../entry/SessionEntry.fxml"));
+        // sessionEntryScene = new Scene(sessionEntryLoader.load());
+        // sessionEntryController = (SessionEntryController) sessionEntryLoader.getController();
+        // sessionEntryController.setMain(this);
+
+        // FXMLLoader membershipTypeEntryLoader = new FXMLLoader(getClass().getResource("../entry/MembershipTypeEntry.fxml"));
+        // membershipTypeEntryScene = new Scene(membershipTypeEntryLoader.load());
+        // membershipTypeEntryController = (MembershipTypeEntryController) membershipTypeEntryLoader.getController();
+        // membershipTypeEntryController.setMain(this);
+
+        // FXMLLoader paymentEntryLoader = new FXMLLoader(getClass().getResource("../entry/PaymentEntry.fxml"));
+        // paymentEntryScene = new Scene(paymentEntryLoader.load());
+        // paymentEntryController = (PaymentEntryController) paymentEntryLoader.getController();
+        // paymentEntryController.setMain(this);
+
 
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
         loginScene = new Scene(loginLoader.load());
@@ -159,9 +187,11 @@ public class MainController {
                 stage.setScene(dashboardScene);
                 break;
             case MEMBER_VIEW:
+                memberViewController.fillMemberTable();
                 stage.setScene(memberViewScene);
                 break;
             case TRAINER_VIEW:
+                trainerViewController.fillTrainerTable();
                 stage.setScene(trainerViewScene);
                 break;
             case BRANCH_VIEW:
@@ -178,9 +208,6 @@ public class MainController {
                 break;
             case PAYMENT_VIEW:
                 stage.setScene(paymentViewScene);
-                break;
-            case BOOKING_VIEW:
-                stage.setScene(bookingViewScene);
                 break;
             default: break;
         }
@@ -259,8 +286,44 @@ public class MainController {
     public void cancelBooking(int bookingId){
         bookingDAO.cancelBooking(bookingId);
     }
-        //========================================GET AND SET========================================
+//=======================================Admin Logic===================================================
+public List<Member> getAllMemberDetails() {
+   return memberDAO.getAllMemberDetails();
+}
 
+public void createMember(Member member, int duration, double paymentAmount) {
+    memberDAO.createMember(member, duration, paymentAmount);
+}
+public void updateMember(Member member) {
+    memberDAO.updateMember(member);
+}
+// public void deleteMember(int memberId) {
+//     memberDAO.deleteMember(memberId);
+// }
+public Member getMemberById(int memberId) {
+    return memberDAO.getMemberById(memberId);
+}
+public List<Trainer> getAllTrainerDetails() {
+    return trainerDAO.getAllTrainerDetails();
+}
+//  public List<Branch> getAllBranchDetails() {
+//     return branchDAO.getAllBranchDetails();
+//  }
+//  public List<Equipment> getAllEquipmentDetails() {
+//     return equipmentDAO.getAllEquipmentDetails();
+//  }
+//  public List<Session> getAllSessionDetails() {
+//     return sessionDAO.getAllSessionDetails();
+//  }
+//  public List<MembershipType> getAllMTDetails() {
+//     return mempershipTypeDAO.getAllMTDetails();
+//  }
+//  public List<Payment> getAllPaymentDetails() {
+//     return paymentDAO.getAllPaymentDetails();
+//  }
+
+
+//========================================GET AND SET===================================================
     public List<Booking> getAllMemberBookings(){
         return bookingDAO.getAllMemberBookings(currentMember.getUserId());
     }
@@ -381,12 +444,9 @@ public class MainController {
     private MembershipTypeViewController membershipTypeViewController;
     
     private Scene paymentViewScene;
-    private PaymentViewController paymentViewController;
-    
-    private Scene bookingViewScene;
-    private BookingViewController bookingViewController;
+    private PaymentViewController paymentViewController;    
 
+    private Scene memberEntryScene;
+    private MemberEntryController memberEntryController;
 
-
-    
 }

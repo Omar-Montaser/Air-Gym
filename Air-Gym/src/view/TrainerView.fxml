@@ -41,9 +41,9 @@
                 </Button>
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Members" />
                 <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleBranches" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleEquipment" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleSessions" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             </children>
@@ -62,17 +62,17 @@
                 </Button>
             </children>
         </HBox>
-        <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
+        <TableView fx:id="trainersTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn prefWidth="76.66665649414062" text="ID" />
-                <TableColumn prefWidth="74.66665649414062" text="Full Name" />
-                <TableColumn prefWidth="97.33334350585938" text="Phone Number" />
-                <TableColumn prefWidth="52.666748046875" text="Gender" />
-                <TableColumn prefWidth="86.6666259765625" text="Specialization" />
-                <TableColumn prefWidth="107.3333740234375" text="Experience Years" />
-                <TableColumn prefWidth="73.99993896484375" text="Salary" />
-                <TableColumn prefWidth="86.66668701171875" text="Branch" />
-                <TableColumn prefWidth="85.33331298828125" text="Status" />
+                <TableColumn fx:id="id" prefWidth="76.66665649414062" text="ID" />
+                <TableColumn fx:id="name" prefWidth="74.66665649414062" text="Full Name" />
+                <TableColumn fx:id="number" prefWidth="97.33334350585938" text="Phone Number" />
+                <TableColumn fx:id="gender" prefWidth="52.666748046875" text="Gender" />
+                <TableColumn fx:id="specialization" prefWidth="86.6666259765625" text="Specialization" />
+                <TableColumn fx:id="experience" prefWidth="107.3333740234375" text="Experience Years" />
+                <TableColumn fx:id="salary" prefWidth="73.99993896484375" text="Salary" />
+                <TableColumn fx:id="branch" prefWidth="86.66668701171875" text="Branch" />
+                <TableColumn fx:id="status" prefWidth="85.33331298828125" text="Status" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

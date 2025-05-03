@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.accounts.Trainer;
 
@@ -41,5 +43,30 @@ public class TrainerDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    public List<Trainer> getAllTrainerDetails() {
+        List<Trainer> trainers = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM GetTrainerDetails()";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                trainers.add(new Trainer(
+                    rs.getInt("UserID"),
+                    rs.getString("TrainerName"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Gender"),
+                    rs.getString("Specialization"),
+                    rs.getInt("ExperienceYears"),
+                    rs.getDouble("Salary"),
+                    rs.getString("BranchName"),
+                    rs.getString("Status")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return trainers;
     }
 }

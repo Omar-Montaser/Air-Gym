@@ -18,5 +18,14 @@ public class Test {
             e.printStackTrace();
         }
         MemberDAO memberDAO = new MemberDAO(conn);
+        List<Member> members = memberDAO.getAllMemberDetails();
+        if (members.isEmpty()) {
+            System.out.println("The members list is empty. Check if data exists in the database.");
+        } else {
+            System.out.println("All Members: " + members.size() + " found");
+            for (int i = 0; i < members.size(); i++) {
+            System.out.println("Member " + i + ": " + members.get(i).getFullName());
+            }
+        }
     }
 }

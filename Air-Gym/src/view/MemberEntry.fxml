@@ -62,11 +62,11 @@
             </Button>
          </children>
       </HBox>
-      <Button layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
-      <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
+      <Button layoutX="753.0" layoutY="430.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
+      <Button layoutX="661.0" layoutY="431.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
       <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
       <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="275.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Member Entry" />
-      <VBox layoutX="667.0" layoutY="184.0" prefHeight="218.0" prefWidth="415.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+      <VBox layoutX="559.0" layoutY="184.0" prefHeight="218.0" prefWidth="415.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
          <children>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
@@ -123,8 +123,8 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" layoutX="666.0" layoutY="135.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
-      <VBox layoutX="215.0" layoutY="185.0" prefHeight="219.0" prefWidth="415.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+      <Label alignment="CENTER" layoutX="558.0" layoutY="135.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
+      <VBox layoutX="215.0" layoutY="185.0" prefHeight="219.0" prefWidth="300.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
          <children>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
@@ -181,6 +181,6 @@
             <Insets left="10.0" />
          </padding>
       </VBox>
-      <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
+      <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="44.0" prefWidth="300.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
    </children>
 </AnchorPane>

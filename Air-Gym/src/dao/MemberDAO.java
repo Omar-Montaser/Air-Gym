@@ -257,28 +257,35 @@ public class MemberDAO {
         return null;
     }
     public List<Member> getAllMemberDetails() {
-        String sql = "SELECT * FROM GetMemberDetails()";
+        String sql = "SELECT * FROM dbo.GetMemberDetails()";
         List<Member> members = new ArrayList<>();
         
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+            
+            ResultSetMetaData rsmd = rs.getMetaData();
+            List<String> columnNames = new ArrayList<>();
+            for (int i = 1; i <= 13; i++) {
+                String columnName = rsmd.getColumnName(i);
+                columnNames.add(columnName);
+                System.out.println(i + ": " + columnName);
+            }
             while (rs.next()) {
                 Member member = new Member(
                     rs.getInt("UserID"),
-                    rs.getString("Name"),
+                    rs.getString("FullName"),
                     rs.getString("PhoneNumber"),
-                    rs.getString("Gender"),
                     rs.getInt("Age"),
+                    rs.getString("Gender"),
                     rs.getString("BranchName"),
                     rs.getString("Trainer"),
                     rs.getString("Membership"),
+                    rs.getString("SubscriptionStatus"),
                     rs.getDate("SubscriptionEndDate"),
                     rs.getInt("SessionsAvailable"),
-                    rs.getString("SubscriptionStatus"),
                     rs.getInt("FreezesAvailable"),
                     rs.getDate("FreezeEndDate")
                 );
-                member.setAge(rs.getInt("Age"));
                 members.add(member);
             }
         } catch (SQLException e) {

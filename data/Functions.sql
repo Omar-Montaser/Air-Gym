@@ -88,7 +88,7 @@ CREATE OR ALTER FUNCTION GetMemberDetails()
     (
         SELECT 
             u.UserID, 
-            u.FirstName+' '+u.LastName AS Name,
+            u.FirstName + ' ' + u.LastName AS NVARCHAR(100)) AS FullName,
             u.PhoneNumber, 
             DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) AS Age,
             u.Gender,

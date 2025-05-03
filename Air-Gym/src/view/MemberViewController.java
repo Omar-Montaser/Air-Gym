@@ -3,21 +3,101 @@ package view;
 import java.sql.Date;
 import java.util.List;
 
-import javafx.beans.binding.When;
+import controller.Screen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.accounts.Member;
 import model.accounts.Trainer;
 import model.gym.Branch;
-import model.gym.members.Booking;
-import model.gym.members.Session;
 
 public class MemberViewController extends BaseController {
-    // Table columns for member data
+    static ObservableList<Member> memberList = FXCollections.observableArrayList();
+
+        public void fillMemberTable() {
+            try {
+                idColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+                nameColumn.setCellValueFactory(new PropertyValueFactory<>("FullName"));
+                numberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+                ageColumn.setCellValueFactory(new PropertyValueFactory<>("Age"));
+                genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+                branchColumn.setCellValueFactory(new PropertyValueFactory<>("BranchName"));
+                membershipColumn.setCellValueFactory(new PropertyValueFactory<>("membershipName"));
+                trainerColumn.setCellValueFactory(new PropertyValueFactory<>("TrainerName"));
+                statusColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionStatus"));
+                subscriptionEndColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionEndDate"));
+                freezeEndColumn.setCellValueFactory(new PropertyValueFactory<>("freezeEndDate"));
+                sessionsColumn.setCellValueFactory(new PropertyValueFactory<>("sessionsAvailable"));
+                freezesColumn.setCellValueFactory(new PropertyValueFactory<>("freezeAvailable"));
+
+                String leftPadding = "-fx-alignment: CENTER;";
+                idColumn.setStyle(leftPadding);
+                nameColumn.setStyle(leftPadding);
+                numberColumn.setStyle(leftPadding);
+                ageColumn.setStyle(leftPadding);
+                genderColumn.setStyle(leftPadding);
+                branchColumn.setStyle(leftPadding);
+                membershipColumn.setStyle(leftPadding);
+                trainerColumn.setStyle(leftPadding);
+                statusColumn.setStyle(leftPadding);
+                subscriptionEndColumn.setStyle(leftPadding);
+                freezeEndColumn.setStyle(leftPadding);
+                sessionsColumn.setStyle(leftPadding);
+                freezesColumn.setStyle(leftPadding);
+                
+                
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            List<Member> members = mainController.getAllMemberDetails();
+            memberList.clear();
+
+            if (members == null || members.isEmpty()) {
+                membersTable.setPlaceholder(new Label("No bookings found"));
+            } else {
+                memberList.addAll(members);
+                System.out.println("Added " + members.size() + " bookings to the table");
+            }
+            membersTable.setItems(memberList);
+            System.out.println("Members in the table:");
+            for (int i = 0; i < members.size(); i++) {
+                System.out.println("Member " + i + ": " + members.get(i).getFullName());
+                }
+    }
+    @FXML
+    private void handleDashBoard(){
+        mainController.switchScene(Screen.DASHBOARD);
+    }
+    
+    @FXML
+    private void handleTrainers(){
+        mainController.switchScene(Screen.TRAINER_VIEW);
+    }
+    
+    @FXML
+    private void handleBranches(){
+        mainController.switchScene(Screen.BRANCH_VIEW);
+    }
+    
+    @FXML
+    private void handleEquipment(){
+        mainController.switchScene(Screen.EQUIPMENT_VIEW);
+    }
+    
+    @FXML
+    private void handleSessions(){
+        mainController.switchScene(Screen.SESSION_VIEW);
+    }
+    
+    @FXML
+    private void handleMembershipTypes(){
+        mainController.switchScene(Screen.MEMBERSHIP_TYPE_VIEW);
+    }
     @FXML
     private TableColumn<Member, Integer> idColumn;
     @FXML
@@ -44,56 +124,19 @@ public class MemberViewController extends BaseController {
     private TableColumn<Member, Integer> sessionsColumn;
     @FXML
     private TableColumn<Member, Integer> freezesColumn;
-
- 
-        static ObservableList<Member> memberList = FXCollections.observableArrayList();
-
-        public void fillBookingsTable() {
-            try {
-                idColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-                nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-                numberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-                ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
-                genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
-                branchColumn.setCellValueFactory(new PropertyValueFactory<>("branchName"));
-                membershipColumn.setCellValueFactory(new PropertyValueFactory<>("membershipName"));
-                trainerColumn.setCellValueFactory(new PropertyValueFactory<>("trainerName"));
-                statusColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionStatus"));
-                subscriptionEndColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionEndDate"));
-                freezeEndColumn.setCellValueFactory(new PropertyValueFactory<>("freezeEndDate"));
-                sessionsColumn.setCellValueFactory(new PropertyValueFactory<>("sessionsAvailable"));
-                freezesColumn.setCellValueFactory(new PropertyValueFactory<>("freezeAvailable"));
-
-                String leftPadding = "-fx-alignment: CENTER;";
-                idColumn.setStyle(leftPadding);
-                nameColumn.setStyle(leftPadding);
-                numberColumn.setStyle(leftPadding);
-                ageColumn.setStyle(leftPadding);
-                genderColumn.setStyle(leftPadding);
-                branchColumn.setStyle(leftPadding);
-                membershipColumn.setStyle(leftPadding);
-                trainerColumn.setStyle(leftPadding);
-                statusColumn.setStyle(leftPadding);
-                subscriptionEndColumn.setStyle(leftPadding);
-                freezeEndColumn.setStyle(leftPadding);
-                sessionsColumn.setStyle(leftPadding);
-                freezesColumn.setStyle(leftPadding);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            List<Member> members = mainController.getAllMemberDetails();
-            memberList.clear();
-
-            if (members == null || members.isEmpty()) {
-                bookingsTable.setPlaceholder(new Label("No bookings found"));
-            } else {
-                bookingList.addAll(bookings);
-                System.out.println("Added " + bookings.size() + " bookings to the table");
-            }
-
-            bookingsTable.setItems(bookingList);
+    @FXML
+    private TableView<Member> membersTable;
+    
+    @FXML
+    private void handlePayments(){
+        mainController.switchScene(Screen.PAYMENT_VIEW);
     }
-    
-    
+    @FXML
+    private void handleEdit(){}
+    @FXML
+    private void handleEntry(){}
+    @FXML
+    private void handleDelete(){}
+    @FXML
+    private void handleLogout(){}
 }

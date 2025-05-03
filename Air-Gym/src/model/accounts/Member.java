@@ -17,8 +17,6 @@ public class Member extends User{
     private String branchName;
     private String membershipName;
     private String trainerName;
-
-
 //=======================================Constructor===================================
 public Member(
     int userId, String firstName, String lastName,
@@ -46,9 +44,9 @@ public Member(
     this.branchId = branchId;
 }
 public Member( //only for admin's member view
-    int userId,String fullName,String phoneNumber, String gender, 
-    int age, String branchName,String trainerName, String mtName,Date subscriptionEndDate,
-    int sessionAvailable, String subscriptionStatus, int freezeAvailable, Date freezeEndDate
+    int userId,String fullName,String phoneNumber, int age, String gender, 
+    String branchName,String trainerName,  String mtName, String subscriptionStatus,Date subscriptionEndDate,
+    int sessionAvailable, int freezeAvailable, Date freezeEndDate
 ){
     super(userId, null, null,null, phoneNumber, gender, null, "Member"); 
     this.fullName = fullName;
@@ -162,5 +160,4 @@ public String getTrainerName() {
 public void setTrainerName(String trainerName) {
     this.trainerName = trainerName;
 }
-
 }
