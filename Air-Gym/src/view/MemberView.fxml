@@ -62,7 +62,7 @@
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="membersTable" layoutX="195.0" layoutY="109.0" prefHeight="480.0" prefWidth="911.0" style="-fx-border-color: #e3e3e3;" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
+      <TableView fx:id="memberTable" layoutX="195.0" layoutY="109.0" prefHeight="480.0" prefWidth="911.0" style="-fx-border-color: #e3e3e3;" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
          <columns>
             <TableColumn fx:id="idColumn" prefWidth="30.0" text="ID" />
             <TableColumn fx:id="nameColumn" prefWidth="30.0" text="Name" />

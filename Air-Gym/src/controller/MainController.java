@@ -329,14 +329,14 @@ public void updateMember(Member member) {
 public void createTrainer(String firstName, String lastName, String phoneNumber, String gender, 
                          String specialization, int experienceYears, double salary, 
                          String status, java.sql.Date dateOfBirth, int branchId) throws SQLException{
-    Trainer trainer = new Trainer(userDAO.getMaxUserId()+1,firstName,lastName,"",phoneNumber,gender,dateOfBirth,specialization,experienceYears,
+    Trainer trainer = new Trainer(userDAO.getMaxUserId()+1,firstName,lastName,"T000000000",phoneNumber,gender,dateOfBirth,specialization,experienceYears,
     salary,branchId,status);
     trainerDAO.addNewTrainer(trainer);
 }
 public List<Trainer> getAllTrainerDetails() {
     return trainerDAO.getAllTrainerDetails();
 }
-public void updateTrainer(){
+public void updateTrainer() throws SQLException{
     trainerDAO.updateTrainer(currentTrainer);
 }
 //  public List<Branch> getAllBranchDetails() {
@@ -420,17 +420,10 @@ public Branch getBranchByName(String branchName) {
         return currentTrainer;
     }
     public void setCurrentTrainer(Trainer currentTrainer) {
+        if(currentTrainer!=null){
         this.currentTrainer = trainerDAO.getTrainerById(currentTrainer.getUserId());
-        System.out.println("Trainer ID: " + this.currentTrainer.getUserId());
-        System.out.println("Name: " + this.currentTrainer.getFirstName() + " " + this.currentTrainer.getLastName());
-        System.out.println("Phone: " + this.currentTrainer.getPhoneNumber());
-        System.out.println("Gender: " + this.currentTrainer.getGender());
-        System.out.println("Specialization: " + this.currentTrainer.getSpecialization());
-        System.out.println("Experience: " + this.currentTrainer.getExperienceYears() + " years");
-        System.out.println("Salary: $" + this.currentTrainer.getSalary());
-        System.out.println("Status: " + this.currentTrainer.getStatus());
-        System.out.println("Branch ID: " + this.currentTrainer.getBranchId());
-        System.out.println("DOB: " + this.currentTrainer.getBirthDateAsString());
+        }
+        else this.currentTrainer=null;
     }
     public void setCurrentMember(Member member) {
         this.currentMember = memberDAO.getMemberById(member.getUserId());
@@ -468,7 +461,9 @@ public Branch getBranchByName(String branchName) {
     public void setCurrentPayment(Payment currentPayment) {
         this.currentPayment = currentPayment;
     }
-
+    public void setTrainerViewLabel(boolean s){
+        trainerViewController.trainerMsgLabel.setVisible(s);
+    }
     private Stage stage;
     private Screen currentScreen;
 

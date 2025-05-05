@@ -74,4 +74,5 @@ public class Trainer extends User {
         this.branchName = branchName;
     }
     
+    
 }

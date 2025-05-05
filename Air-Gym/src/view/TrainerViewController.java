@@ -38,15 +38,18 @@ public class TrainerViewController extends BaseController{
     private TableColumn<Trainer, String> status;
     @FXML
     private TableView<Trainer> trainersTable;
+    @FXML
+    public Label trainerMsgLabel;
 
 
     static ObservableList<Trainer> TrainerList = FXCollections.observableArrayList();
 
         public void fillTrainerTable() {
+            trainerMsgLabel.setVisible(false);
             try {
                 id.setCellValueFactory(new PropertyValueFactory<>("userId"));
                 name.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-                number.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+                number.setCellValueFactory(new PropertyValueFactory<>("PhoneNumber"));
                 gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
                 specialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
                 experience.setCellValueFactory(new PropertyValueFactory<>("experienceYears"));
@@ -79,7 +82,6 @@ public class TrainerViewController extends BaseController{
             System.out.println("trainers in the table:");
             for (int i = 0; i < trainers.size(); i++)
                 System.out.println("Trainer " + i + ": " + trainers.get(i).getFullName());
-            
     
     }
     @FXML

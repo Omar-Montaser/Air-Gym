@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import db.SqlServerConnect;
 import model.accounts.Trainer;
 
 public class TrainerDAO {
@@ -49,6 +50,7 @@ public class TrainerDAO {
         List<Trainer> trainers = new ArrayList<>();
         try {
             String sql = "SELECT * FROM GetTrainerDetails()";
+            Connection conn = SqlServerConnect.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
@@ -91,13 +93,12 @@ public class TrainerDAO {
             }
         return -1;
     }
-    public boolean updateTrainer(Trainer trainer) {
-        try {
-            String sql = "EXEC UpdateTrainer ?, ?, ?, ?, ?, ?";
+    public boolean updateTrainer(Trainer trainer) throws SQLException{
+            Connection conn = SqlServerConnect.getConnection();
+            String sql = "EXEC UpdateTrainer ?, ?, ?, ?, ?, ?, ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, trainer.getUserId());
             
-            // Handle nullable parameters
             String phoneNumber = trainer.getPhoneNumber();
             if (phoneNumber != null) stmt.setString(2, phoneNumber);
             else stmt.setNull(2, java.sql.Types.VARCHAR);
@@ -118,13 +119,11 @@ public class TrainerDAO {
             if (status != null) stmt.setString(6, status);
             else stmt.setNull(6, java.sql.Types.VARCHAR);
             
+            String specialization =trainer.getSpecialization();
+            if(specialization!=null) stmt.setString(7, specialization);
+            else stmt.setNull(7, java.sql.Types.VARCHAR);
+            
             stmt.executeUpdate();
             return true;
-        } catch (SQLException e) {
-            System.out.println("ERROR HERE");
-            e.printStackTrace();
-            return false;
-        }
     }
-
 }

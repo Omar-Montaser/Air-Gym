@@ -12,6 +12,7 @@
     -fx-pref-height: 60px;
     -fx-border-color: transparent;
     -fx-margin: 5px 0;
+    -fx-cursor: hand;
 }
 
 #menuButton:hover {
@@ -92,16 +93,13 @@
 .table-row-cell:odd {
     -fx-background-color: #eaeaea;
 }
-
 .table-row-cell:selected {
     -fx-background-color: #bbbbbb;
     -fx-text-fill: white;
 }
-
 .table-row-cell:hover {
     -fx-background-color: #dddddd;
 }
-
 .new-entry-button {
     -fx-background-color: #d3d3d3; /* Light grey */
     -fx-text-fill: black;

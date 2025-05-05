@@ -28,7 +28,7 @@ public class MemberViewController extends BaseController {
                 genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
                 branchColumn.setCellValueFactory(new PropertyValueFactory<>("BranchName"));
                 membershipColumn.setCellValueFactory(new PropertyValueFactory<>("membershipName"));
-                trainerColumn.setCellValueFactory(new PropertyValueFactory<>("TrainerName"));
+                trainerColumn.setCellValueFactory(new PropertyValueFactory<>("trainerName"));
                 statusColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionStatus"));
                 subscriptionEndColumn.setCellValueFactory(new PropertyValueFactory<>("subscriptionEndDate"));
                 freezeEndColumn.setCellValueFactory(new PropertyValueFactory<>("freezeEndDate"));
@@ -49,14 +49,24 @@ public class MemberViewController extends BaseController {
                 freezeEndColumn.setStyle(leftPadding);
                 sessionsColumn.setStyle(leftPadding);
                 freezesColumn.setStyle(leftPadding);
-                
-                
-                
             } catch (Exception e) {
                 e.printStackTrace();
             }
             List<Member> members = mainController.getAllMemberDetails();
             memberList.clear();
+            // Print member details for debugging
+            if (members != null) {
+                System.out.println("Members retrieved from database: " + members.size());
+                for (Member member : members) {
+                    System.out.println("Member ID: " + member.getUserId() + 
+                                     ", Name: " + member.getFullName() + 
+                                     ", Phone: " + member.getPhoneNumber() + 
+                                     ", Branch: " + member.getBranchName() +
+                                     ", Membership: " + member.getMembershipName() +
+                                     ", Trainer: " + member.getTrainerName() +
+                                     ", Status: " + member.getSubscriptionStatus());
+                }
+            }
 
             if (members == null || members.isEmpty()) {
                 memberTable.setPlaceholder(new Label("No bookings found"));
