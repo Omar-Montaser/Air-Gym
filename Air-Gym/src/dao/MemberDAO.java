@@ -63,17 +63,6 @@ public class MemberDAO {
                 return false;
             }
         }
-    public boolean deleteMember(String userId) {
-        String sql = "EXEC DeleteUser ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            cstmt.setString(1, userId);
-            cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
     public boolean extendSubscription(int userId, int duration, String paymentMethod, double paymentAmount) {
         String sql = "EXEC ExtendSubscription ?, ?, ?, ?";
         try (CallableStatement cstmt = conn.prepareCall(sql)) {

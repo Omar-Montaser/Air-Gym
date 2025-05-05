@@ -1,6 +1,7 @@
 package controller;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import dao.*;
@@ -14,10 +15,33 @@ import view.*;
 import javafx.stage.Stage;
 import model.accounts.*;
 import model.gym.Branch;
+import model.gym.Equipment;
 import model.gym.members.*;
 
 
 public class MainController {
+    protected boolean isGuest;
+    protected boolean isAdmin;
+    private User currentUser;
+    private Member currentMember;
+    private Trainer currentTrainer;
+    private Branch currentBranch;
+    private Equipment currentEquipment;
+    private Session currentSession;
+    private MembershipType currentMembershipType;
+    private Payment currentPayment;
+    private MembershipType selectedMembership;
+    private boolean isExtending;
+    private boolean isFreezing;
+
+    private MemberDAO memberDAO;
+    private UserDAO userDAO;
+    private MembershipTypeDAO membershipTypeDao;
+    private BranchDAO branchDAO;
+    private TrainerDAO trainerDAO;
+    private SessionDAO sessionDAO;
+    private BookingDAO bookingDAO;
+
     public MainController(Stage stage){
         try{
             Connection conn = SqlServerConnect.getConnection();
@@ -82,37 +106,32 @@ public class MainController {
         paymentViewController = (PaymentViewController) paymentViewLoader.getController();
         paymentViewController.setMain(this);
         
-        FXMLLoader memberEntryLoader = new FXMLLoader(getClass().getResource("../entry/MemberEntry.fxml"));
-        memberEntryScene = new Scene(memberEntryLoader.load());
-        memberEntryController = (MemberEntryController) memberEntryLoader.getController();
-        memberEntryController.setMain(this);
+        FXMLLoader trainerEntryLoader = new FXMLLoader(getClass().getResource("../view/TrainerEntry.fxml"));
+        trainerEntryScene = new Scene(trainerEntryLoader.load());
+        trainerEntryController = (TrainerEntryController) trainerEntryLoader.getController();
+        trainerEntryController.setMain(this);
 
-        // FXMLLoader trainerEntryLoader = new FXMLLoader(getClass().getResource("../entry/TrainerEntry.fxml"));
-        // trainerEntryScene = new Scene(trainerEntryLoader.load());
-        // trainerEntryController = (TrainerEntryController) trainerEntryLoader.getController();
-        // trainerEntryController.setMain(this);
-
-        // FXMLLoader branchEntryLoader = new FXMLLoader(getClass().getResource("../entry/BranchEntry.fxml"));
+        // FXMLLoader branchEntryLoader = new FXMLLoader(getClass().getResource("../view/BranchEntry.fxml"));
         // branchEntryScene = new Scene(branchEntryLoader.load());
         // branchEntryController = (BranchEntryController) branchEntryLoader.getController();
         // branchEntryController.setMain(this);
 
-        // FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../entry/EquipmentEntry.fxml"));
+        // FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../view/EquipmentEntry.fxml"));
         // equipmentEntryScene = new Scene(equipmentEntryLoader.load());
         // equipmentEntryController = (EquipmentEntryController) equipmentEntryLoader.getController();
         // equipmentEntryController.setMain(this);
 
-        // FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../entry/SessionEntry.fxml"));
+        // FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../view/SessionEntry.fxml"));
         // sessionEntryScene = new Scene(sessionEntryLoader.load());
         // sessionEntryController = (SessionEntryController) sessionEntryLoader.getController();
         // sessionEntryController.setMain(this);
 
-        // FXMLLoader membershipTypeEntryLoader = new FXMLLoader(getClass().getResource("../entry/MembershipTypeEntry.fxml"));
+        // FXMLLoader membershipTypeEntryLoader = new FXMLLoader(getClass().getResource("../view/MembershipTypeEntry.fxml"));
         // membershipTypeEntryScene = new Scene(membershipTypeEntryLoader.load());
         // membershipTypeEntryController = (MembershipTypeEntryController) membershipTypeEntryLoader.getController();
         // membershipTypeEntryController.setMain(this);
 
-        // FXMLLoader paymentEntryLoader = new FXMLLoader(getClass().getResource("../entry/PaymentEntry.fxml"));
+        // FXMLLoader paymentEntryLoader = new FXMLLoader(getClass().getResource("../view/PaymentEntry.fxml"));
         // paymentEntryScene = new Scene(paymentEntryLoader.load());
         // paymentEntryController = (PaymentEntryController) paymentEntryLoader.getController();
         // paymentEntryController.setMain(this);
@@ -209,6 +228,9 @@ public class MainController {
             case PAYMENT_VIEW:
                 stage.setScene(paymentViewScene);
                 break;
+            case TRAINER_ENTRY:
+                trainerEntryController.setScreen();
+                stage.setScene(trainerEntryScene);
             default: break;
         }
     } 
@@ -286,25 +308,36 @@ public class MainController {
     public void cancelBooking(int bookingId){
         bookingDAO.cancelBooking(bookingId);
     }
+    public void updateMemberCredentials(String phoneNumber, String password){
+        currentMember.setPassword(password);
+        currentMember.setPhoneNumber(phoneNumber);
+        memberDAO.updateMember(currentMember);
+    }
 //=======================================Admin Logic===================================================
+public void deleteUser(int userId) {
+    userDAO.deleteUser(userId);
+}
 public List<Member> getAllMemberDetails() {
    return memberDAO.getAllMemberDetails();
 }
-
-public void createMember(Member member, int duration, double paymentAmount) {
-    memberDAO.createMember(member, duration, paymentAmount);
+public Member getMemberById(int memberId) {
+    return memberDAO.getMemberById(memberId);
 }
 public void updateMember(Member member) {
     memberDAO.updateMember(member);
 }
-// public void deleteMember(int memberId) {
-//     memberDAO.deleteMember(memberId);
-// }
-public Member getMemberById(int memberId) {
-    return memberDAO.getMemberById(memberId);
+public void createTrainer(String firstName, String lastName, String phoneNumber, String gender, 
+                         String specialization, int experienceYears, double salary, 
+                         String status, java.sql.Date dateOfBirth, int branchId) throws SQLException{
+    Trainer trainer = new Trainer(userDAO.getMaxUserId()+1,firstName,lastName,"",phoneNumber,gender,dateOfBirth,specialization,experienceYears,
+    salary,branchId,status);
+    trainerDAO.addNewTrainer(trainer);
 }
 public List<Trainer> getAllTrainerDetails() {
     return trainerDAO.getAllTrainerDetails();
+}
+public void updateTrainer(){
+    trainerDAO.updateTrainer(currentTrainer);
 }
 //  public List<Branch> getAllBranchDetails() {
 //     return branchDAO.getAllBranchDetails();
@@ -321,13 +354,14 @@ public List<Trainer> getAllTrainerDetails() {
 //  public List<Payment> getAllPaymentDetails() {
 //     return paymentDAO.getAllPaymentDetails();
 //  }
-
+public Branch getBranchByName(String branchName) {
+    return branchDAO.getBranchByName(branchName);
+}
 
 //========================================GET AND SET===================================================
     public List<Booking> getAllMemberBookings(){
         return bookingDAO.getAllMemberBookings(currentMember.getUserId());
     }
-
     public Member getCurrentMember(){
         return currentMember;
     }
@@ -382,21 +416,58 @@ public List<Trainer> getAllTrainerDetails() {
     public Session getSessionByID(int sessionID){
         return sessionDAO.getSessionByID(sessionID);
     }
-    protected boolean isGuest;
-    protected boolean isAdmin;
-    private User currentUser;
-    private Member currentMember;
-    private MembershipType selectedMembership;
-    private boolean isExtending;
-    private boolean isFreezing;
-
-    private MemberDAO memberDAO;
-    private UserDAO userDAO;
-    private MembershipTypeDAO membershipTypeDao;
-    private BranchDAO branchDAO;
-    private TrainerDAO trainerDAO;
-    private SessionDAO sessionDAO;
-    private BookingDAO bookingDAO;
+    public Trainer getCurrentTrainer() {
+        return currentTrainer;
+    }
+    public void setCurrentTrainer(Trainer currentTrainer) {
+        this.currentTrainer = trainerDAO.getTrainerById(currentTrainer.getUserId());
+        System.out.println("Trainer ID: " + this.currentTrainer.getUserId());
+        System.out.println("Name: " + this.currentTrainer.getFirstName() + " " + this.currentTrainer.getLastName());
+        System.out.println("Phone: " + this.currentTrainer.getPhoneNumber());
+        System.out.println("Gender: " + this.currentTrainer.getGender());
+        System.out.println("Specialization: " + this.currentTrainer.getSpecialization());
+        System.out.println("Experience: " + this.currentTrainer.getExperienceYears() + " years");
+        System.out.println("Salary: $" + this.currentTrainer.getSalary());
+        System.out.println("Status: " + this.currentTrainer.getStatus());
+        System.out.println("Branch ID: " + this.currentTrainer.getBranchId());
+        System.out.println("DOB: " + this.currentTrainer.getBirthDateAsString());
+    }
+    public void setCurrentMember(Member member) {
+        this.currentMember = memberDAO.getMemberById(member.getUserId());
+    }
+    public void setCurrentUser(User user) {
+        this.currentUser = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
+    }
+    public Branch getCurrentBranch() {
+        return currentBranch;
+    }
+    public void setCurrentBranch(Branch currentBranch) {
+        this.currentBranch = currentBranch;
+    }
+    public Equipment getCurrentEquipment() {
+        return currentEquipment;
+    }
+    public void setCurrentEquipment(Equipment currentEquipment) {
+        this.currentEquipment = currentEquipment;
+    }
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+    public void setCurrentSession(Session currentSession) {
+        this.currentSession = currentSession;
+    }
+    public MembershipType getCurrentMembershipType() {
+        return currentMembershipType;
+    }
+    public void setCurrentMembershipType(MembershipType currentMembershipType) {
+        this.currentMembershipType = currentMembershipType;
+    }
+    public Payment getCurrentPayment() {
+        return currentPayment;
+    }
+    public void setCurrentPayment(Payment currentPayment) {
+        this.currentPayment = currentPayment;
+    }
 
     private Stage stage;
     private Screen currentScreen;
@@ -446,7 +517,21 @@ public List<Trainer> getAllTrainerDetails() {
     private Scene paymentViewScene;
     private PaymentViewController paymentViewController;    
 
-    private Scene memberEntryScene;
-    private MemberEntryController memberEntryController;
+    private Scene trainerEntryScene;
+    private TrainerEntryController trainerEntryController;
 
+    // private Scene branchEntryScene;
+    // private BranchEntryController branchEntryController;
+
+    // private Scene equipmentEntryScene;
+    // private EquipmentEntryController equipmentEntryController;
+
+    // private Scene sessionEntryScene;
+    // private SessionEntryController sessionEntryController;
+
+    // private Scene membershipTypeEntryScene;
+    // private MembershipTypeEntryController membershipTypeEntryController;
+
+    // private Scene paymentEntryScene;
+    // private PaymentEntryController paymentEntryController;
 }

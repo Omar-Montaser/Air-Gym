@@ -50,11 +50,6 @@
                   <Insets left="30.0" />
                </padding>
             </HBox>
-            <Label prefHeight="22.0" prefWidth="220.0" styleClass="link-label" text="Forgot Password?">
-               <padding>
-                  <Insets left="120.0" />
-               </padding>
-            </Label>
             <HBox alignment="CENTER" prefHeight="53.0" prefWidth="382.0">
                <children>
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="42.0" prefWidth="174.0" styleClass="login-button" text="Login">

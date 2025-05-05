@@ -124,63 +124,67 @@
          </padding>
       </VBox>
       <Label alignment="CENTER" layoutX="558.0" layoutY="135.0" prefHeight="44.0" prefWidth="419.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Membership Details" />
-      <VBox layoutX="215.0" layoutY="185.0" prefHeight="219.0" prefWidth="300.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+      <VBox layoutX="223.0" layoutY="135.0" prefHeight="254.0" prefWidth="313.0">
          <children>
-            <HBox prefHeight="40.0" prefWidth="394.0">
+            <Label alignment="CENTER" prefHeight="44.0" prefWidth="347.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
+            <VBox prefHeight="219.0" prefWidth="300.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
                <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="First Name" />
-                  <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter First Name" style="-fx-font-size: 12;">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <HBox prefHeight="40.0" prefWidth="394.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="First Name" />
+                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter First Name" style="-fx-font-size: 12;">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="40.0" prefWidth="394.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Last Name" />
+                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Last Name" style="-fx-font-size: 12;">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="40.0" prefWidth="394.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Phone Number" />
+                        <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Number" style="-fx-font-size: 12;">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="40.0" prefWidth="394.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Birth Date" />
+                        <DatePicker>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </DatePicker>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="40.0" prefWidth="394.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
+                        <ChoiceBox prefWidth="150.0">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Last Name" />
-                  <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Last Name" style="-fx-font-size: 12;">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Phone Number" />
-                  <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Number" style="-fx-font-size: 12;">
-                     <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Birth Date" />
-                  <DatePicker>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </DatePicker>
-               </children>
-            </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Gender" />
-                  <ChoiceBox prefWidth="150.0">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </ChoiceBox>
-               </children>
-            </HBox>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </VBox>
          </children>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
       </VBox>
-      <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="44.0" prefWidth="300.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Personal Details" />
    </children>
 </AnchorPane>

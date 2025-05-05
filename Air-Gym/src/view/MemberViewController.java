@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.accounts.Member;
 import model.accounts.Trainer;
 import model.gym.Branch;
+import model.gym.members.Booking;
 
 public class MemberViewController extends BaseController {
     static ObservableList<Member> memberList = FXCollections.observableArrayList();
@@ -58,12 +59,12 @@ public class MemberViewController extends BaseController {
             memberList.clear();
 
             if (members == null || members.isEmpty()) {
-                membersTable.setPlaceholder(new Label("No bookings found"));
+                memberTable.setPlaceholder(new Label("No bookings found"));
             } else {
                 memberList.addAll(members);
                 System.out.println("Added " + members.size() + " bookings to the table");
             }
-            membersTable.setItems(memberList);
+            memberTable.setItems(memberList);
             System.out.println("Members in the table:");
             for (int i = 0; i < members.size(); i++) {
                 System.out.println("Member " + i + ": " + members.get(i).getFullName());
@@ -99,6 +100,26 @@ public class MemberViewController extends BaseController {
         mainController.switchScene(Screen.MEMBERSHIP_TYPE_VIEW);
     }
     @FXML
+    private void handlePayments(){
+        mainController.switchScene(Screen.PAYMENT_VIEW);
+    }
+    @FXML
+    private void handleDelete(){
+        Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
+        mainController.deleteUser(selectedMember.getUserId());
+        fillMemberTable();
+        return;
+    }
+    @FXML
+    private void handleCancelMembership() {
+        Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
+        mainController.setCurrentMember(selectedMember);
+        mainController.cancelSubscription();
+        fillMemberTable();
+    }
+    @FXML
+    private void handleLogout(){}
+    @FXML
     private TableColumn<Member, Integer> idColumn;
     @FXML
     private TableColumn<Member, String> nameColumn;
@@ -125,18 +146,6 @@ public class MemberViewController extends BaseController {
     @FXML
     private TableColumn<Member, Integer> freezesColumn;
     @FXML
-    private TableView<Member> membersTable;
+    private TableView<Member> memberTable;
     
-    @FXML
-    private void handlePayments(){
-        mainController.switchScene(Screen.PAYMENT_VIEW);
-    }
-    @FXML
-    private void handleEdit(){}
-    @FXML
-    private void handleEntry(){}
-    @FXML
-    private void handleDelete(){}
-    @FXML
-    private void handleLogout(){}
 }

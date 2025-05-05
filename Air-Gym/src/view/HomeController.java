@@ -60,12 +60,11 @@ public class HomeController extends BaseController{
            
     @FXML
     private void handleCancelSession() {
-    Booking selectedBooking = bookingsTable.getSelectionModel().getSelectedItem();
-            mainController.cancelBooking(selectedBooking.getBookingID());
-            fillBookingsTable();
-            return;
+        Booking selectedBooking = bookingsTable.getSelectionModel().getSelectedItem();
+        mainController.cancelBooking(selectedBooking.getBookingID());
+        fillBookingsTable();
     }
-    @FXML 
+    @FXML
     private void handleProfile(){
         mainController.switchScene(Screen.PROFILE);
     }

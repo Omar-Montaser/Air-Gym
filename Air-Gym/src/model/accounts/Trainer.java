@@ -21,7 +21,6 @@ public class Trainer extends User {
     public Trainer(int userId, String fullName, String phoneNumber, 
     String gender, String specialization, int experience, double Salary, 
     String branchName, String Status){
-        //for admin view only
         super(userId, null, null,null, phoneNumber, gender, null, "Trainer"); 
         this.fullName = fullName;
         this.experienceYears = experience;

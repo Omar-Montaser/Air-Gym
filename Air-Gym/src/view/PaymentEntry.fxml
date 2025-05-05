@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -45,7 +44,6 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="907.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -66,29 +64,9 @@
         <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
         <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
         <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Payment Entry" />
-        <VBox layoutX="215.0" layoutY="185.0" prefHeight="247.0" prefWidth="822.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+        <VBox alignment="CENTER" layoutX="215.0" layoutY="185.0" prefHeight="149.0" prefWidth="500.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
             <children>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Payment" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </Text>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Member" />
-                        <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Member ID" style="-fx-font-size: 12;">
-                            <HBox.margin>
-                                <Insets top="10.0" />
-                            </HBox.margin>
-                        </TextField>
-                    </children>
-                </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                <children>
                   <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Category" />
                   <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Category" style="-fx-font-size: 12;">
@@ -98,17 +76,7 @@
                   </TextField>
                </children>
             </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Payment Date" />
-                  <DatePicker>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </DatePicker>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
+                <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Amount" />
                   <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Amount" style="-fx-font-size: 12;">
@@ -118,7 +86,7 @@
                   </TextField>
                     </children>
                 </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
+                <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Method" />
                   <ChoiceBox prefHeight="25.0" prefWidth="173.0">
@@ -133,6 +101,6 @@
                 <Insets left="10.0" />
             </padding>
         </VBox>
-        <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="40.0" prefWidth="822.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Details" />
+        <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="40.0" prefWidth="500.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Details" />
     </children>
 </AnchorPane>

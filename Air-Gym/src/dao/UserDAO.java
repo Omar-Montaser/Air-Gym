@@ -139,4 +139,15 @@ public class UserDAO {
             return 0;
         }
     }
+    public boolean deleteUser(int userId) {
+        String sql = "EXEC DeleteUser ?";
+        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+            cstmt.setInt(1, userId);
+            cstmt.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

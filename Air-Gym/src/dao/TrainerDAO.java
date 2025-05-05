@@ -14,6 +14,7 @@ public class TrainerDAO {
     public TrainerDAO(Connection conn){
         this.conn = conn;
     }
+    
     public Trainer getTrainerById(int id){
         try{
             String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
@@ -69,4 +70,61 @@ public class TrainerDAO {
         }
         return trainers;
     }
+    public int addNewTrainer(Trainer trainer)throws SQLException{
+            String sql = "EXEC AddNewTrainer ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, trainer.getPassword());
+            stmt.setString(2, trainer.getFirstName());
+            stmt.setString(3, trainer.getLastName());
+            stmt.setString(4, trainer.getPhoneNumber());
+            stmt.setString(5, trainer.getGender());
+            stmt.setDate(6, new java.sql.Date(trainer.getBirthDate().getTime()));
+            stmt.setString(7, trainer.getSpecialization());
+            stmt.setInt(8, trainer.getExperienceYears());
+            stmt.setDouble(9, trainer.getSalary());
+            stmt.setInt(10, trainer.getBranchId());
+            stmt.setString(11, trainer.getStatus());
+            
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("NewTrainerID");
+            }
+        return -1;
+    }
+    public boolean updateTrainer(Trainer trainer) {
+        try {
+            String sql = "EXEC UpdateTrainer ?, ?, ?, ?, ?, ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, trainer.getUserId());
+            
+            // Handle nullable parameters
+            String phoneNumber = trainer.getPhoneNumber();
+            if (phoneNumber != null) stmt.setString(2, phoneNumber);
+            else stmt.setNull(2, java.sql.Types.VARCHAR);
+            
+            Integer experienceYears = trainer.getExperienceYears();
+            if (experienceYears != null) stmt.setInt(3, experienceYears);
+            else stmt.setNull(3, java.sql.Types.INTEGER);
+            
+            Double salary = trainer.getSalary();
+            if (salary != null) stmt.setDouble(4, salary);
+            else stmt.setNull(4, java.sql.Types.DECIMAL);
+            
+            Integer branchId = trainer.getBranchId();
+            if (branchId != null) stmt.setInt(5, branchId);
+            else stmt.setNull(5, java.sql.Types.INTEGER);
+            
+            String status = trainer.getStatus();
+            if (status != null) stmt.setString(6, status);
+            else stmt.setNull(6, java.sql.Types.VARCHAR);
+            
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("ERROR HERE");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

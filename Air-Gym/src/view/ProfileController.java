@@ -70,17 +70,41 @@ public class ProfileController extends BaseController{
         mainController.logout();
     }
     @FXML
-    public void handleHome(){
+    private void handleHome(){
         mainController.switchScene(Screen.HOME);
     }
     @FXML
-    public void handleMemberships(){
+    private void handleMemberships(){
         mainController.switchScene(Screen.MEMBERSHIPS);
     }
-    // @FXML
-    // public void handleContactUs(){
-    //     mainController.switchScene(Screen.CONTACT_US);
-    // }
+    @FXML
+    private void handleContactUs(){
+        mainController.switchScene(Screen.CONTACT_US);
+    }
+    @FXML
+    private void handleEditCredentials(){
+        try {
+            String newPassword = passwordChange.getText().trim();
+            String newPhoneNumber = numberChange.getText().trim();
+            
+            if (newPassword.isEmpty() || newPhoneNumber.isEmpty()) {
+                throw new IllegalArgumentException("Password and phone number cannot be empty");
+            }            
+            mainController.updateMemberCredentials(newPhoneNumber, newPassword);
+            
+            passwordChange.clear();
+            numberChange.clear();
+            
+            fillDetails(mainController.getCurrentMember());
+            
+        } catch (IllegalArgumentException e) {
+            System.err.println("Validation error: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Failed to update credentials: " + e.getMessage());
+        }
+    }
+    
     @FXML
     private Button homeButton;
     @FXML
@@ -121,9 +145,8 @@ public class ProfileController extends BaseController{
     private Label subscriptionEndDateLabel;
     @FXML
     private Label ptNameLabel;
-    
-    
-    
-
-    
+    @FXML
+    private TextField passwordChange;
+    @FXML
+    private TextField numberChange;    
 }

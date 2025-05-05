@@ -15,6 +15,7 @@ import model.accounts.Member;
 import model.accounts.Trainer;
 import model.accounts.Trainer;
 import model.gym.Branch;
+import model.gym.members.Booking;
 
 public class TrainerViewController extends BaseController{
     @FXML
@@ -63,19 +64,16 @@ public class TrainerViewController extends BaseController{
                 salary.setStyle(leftPadding);
                 branch.setStyle(leftPadding);
                 status.setStyle(leftPadding);
-                
-                
-                
             } catch (Exception e) {
                 e.printStackTrace();
             }
             List<Trainer> trainers = mainController.getAllTrainerDetails();
             TrainerList.clear();
             if (trainers == null || trainers.isEmpty()) {
-                trainersTable.setPlaceholder(new Label("No bookings found"));
+                trainersTable.setPlaceholder(new Label("No Trainers found"));
             } else {
                 TrainerList.addAll(trainers);
-                System.out.println("Added " + trainers.size() + " bookings to the table");
+                System.out.println("Added " + trainers.size() + " trainers to the table");
             }
             trainersTable.setItems(TrainerList);
             System.out.println("trainers in the table:");
@@ -83,6 +81,24 @@ public class TrainerViewController extends BaseController{
                 System.out.println("Trainer " + i + ": " + trainers.get(i).getFullName());
             
     
+    }
+    @FXML
+    private void handleEdit(){
+        Trainer selectedTrainer = trainersTable.getSelectionModel().getSelectedItem();
+        mainController.setCurrentTrainer(selectedTrainer);
+        mainController.switchScene(Screen.TRAINER_ENTRY);
+    }
+    @FXML
+    private void handleEntry(){
+        mainController.setCurrentTrainer(null);
+        mainController.switchScene(Screen.TRAINER_ENTRY);
+    }
+    @FXML
+    private void handleDelete(){
+        Trainer selectedTrainer = trainersTable.getSelectionModel().getSelectedItem();
+        mainController.deleteUser(selectedTrainer.getUserId());
+        fillTrainerTable();
+        return;
     }
     @FXML
     private void handleDashBoard(){
@@ -110,11 +126,16 @@ public class TrainerViewController extends BaseController{
     }
     
     @FXML
-    private void handletrainershipTypes(){
+    private void handleMembershipTypes(){
         mainController.switchScene(Screen.MEMBERSHIP_TYPE_VIEW);
     }
+
     @FXML
     private void handlePayments(){
         mainController.switchScene(Screen.PAYMENT_VIEW);
+    }
+    @FXML
+    private void handleMembers(){
+    mainController.switchScene(Screen.MEMBER_VIEW);    
     }
 }

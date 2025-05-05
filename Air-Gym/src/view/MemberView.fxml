@@ -45,7 +45,7 @@
             <Button id="menuButton" mnemonicParsing="false" onAction="#handleEquipment" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
             <Button id="menuButton" mnemonicParsing="false" onAction="#handleSessions" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" onAction="#handleMembershipTypes" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
+            <Button id="menuButton" mnemonicParsing="false" onAction="#handlePayments" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
          </children>
       </VBox>
       <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -94,22 +94,17 @@
             </Label>
             <TextField id="search-field" promptText="Search by ID" stylesheets="@assets/css/adminTemplate.css">
                <HBox.margin>
-                  <Insets left="10.0" right="300.0" top="15.0" />
+                  <Insets left="10.0" top="15.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="➕ New Entry">
+            <Button mnemonicParsing="false" onAction="#handleCancelMembership" prefHeight="34.0" prefWidth="174.0" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel Membership">
                <HBox.margin>
-                  <Insets top="15.0" />
+                  <Insets left="350.0" top="15.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="✏ Edit">
+            <Button mnemonicParsing="false" onAction="#handleDelete" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="🗑 Delete">
                <HBox.margin>
-                  <Insets left="20.0" top="15.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="🗑 Delete">
-               <HBox.margin>
-                  <Insets left="20.0" top="15.0" />
+                  <Insets left="10.0" top="15.0" />
                </HBox.margin>
             </Button>
          </children>
