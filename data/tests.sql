@@ -1,8 +1,8 @@
 EXEC AddNewMember
     @PaymentMethod = 'CreditCard', 
     @Duration = 12,  
-    @Password = 'test123',
-    @FirstName = 'John',
+    @Password = 'test1234567',
+    @FirstName = 'Johny',
     @LastName = 'Doe',
     @PhoneNumber = '123-456-7890',
     @Gender = 'Male',

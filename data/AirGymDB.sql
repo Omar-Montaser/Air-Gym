@@ -21,8 +21,9 @@ CHECK (
 
 CREATE TABLE Branch(
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL UNIQUE,
+    Name VARCHAR(100) NOT NULL,
     Location VARCHAR(255) NOT NULL,
+    PhoneNumber VARCHAR(15) NOT NULL,
     OpeningDate DATE NOT NULL,
     Status VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Maintenance', 'Closed')),
     AdminID INT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE Member (
     SessionsAvailable INT NOT NULL DEFAULT 0,
     FreezesAvailable INT NOT NULL DEFAULT 0,
     BranchID INT NULL, 
-    TrainerID INT NULL, 
+    TrainerID INT NULL,
     SubscriptionStatus VARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (SubscriptionStatus IN ('Active', 'Expired', 'Cancelled', 'Frozen')),
     CONSTRAINT FK_Member_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Member_MembershipType FOREIGN KEY (MembershipTypeID) REFERENCES MembershipType(MembershipTypeID) ON DELETE SET NULL,
@@ -116,3 +117,12 @@ CREATE TABLE Booking (
     CONSTRAINT FK_Booking_Member FOREIGN KEY (UserID) REFERENCES Member(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Booking_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID) ON DELETE CASCADE
 );
+-----------------------------------------Updates---------------------------------
+
+ALTER TABLE Branch
+DROP COLUMN PhoneNumber 
+ALTER TABLE Branch
+ADD CONSTRAINT uq_Branch_Name UNIQUE (Name);
+
+ALTER TABLE Booking
+DROP COLUMN PaymentID
