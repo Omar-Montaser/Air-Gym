@@ -55,7 +55,7 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+                <Button mnemonicParsing="false" onAction="#handleLogout" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="585.0" top="15.0" />
                     </HBox.margin>
@@ -90,17 +90,17 @@
                         <Insets left="10.0" right="300.0" top="15.0" />
                     </HBox.margin>
                 </TextField>
-                <Button mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="➕ New Entry">
+                <Button mnemonicParsing="false" onAction="#handleEntry" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="➕ New Entry">
                     <HBox.margin>
                         <Insets top="15.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="✏ Edit">
+                <Button mnemonicParsing="false" onAction="#handleEdit" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="✏ Edit">
                     <HBox.margin>
                         <Insets left="20.0" top="15.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="🗑 Delete">
+                <Button mnemonicParsing="false" onAction="#handleDelete" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="🗑 Delete">
                     <HBox.margin>
                         <Insets left="20.0" top="15.0" />
                     </HBox.margin>

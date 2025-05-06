@@ -125,10 +125,10 @@ public class MainController {
         branchEntryController = (BranchEntryController) branchEntryLoader.getController();
         branchEntryController.setMain(this);
 
-        // FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../view/EquipmentEntry.fxml"));
-        // equipmentEntryScene = new Scene(equipmentEntryLoader.load());
-        // equipmentEntryController = (EquipmentEntryController) equipmentEntryLoader.getController();
-        // equipmentEntryController.setMain(this);
+        FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../view/EquipmentEntry.fxml"));
+        equipmentEntryScene = new Scene(equipmentEntryLoader.load());
+        equipmentEntryController = (EquipmentEntryController) equipmentEntryLoader.getController();
+        equipmentEntryController.setMain(this);
 
         // FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../view/SessionEntry.fxml"));
         // sessionEntryScene = new Scene(sessionEntryLoader.load());
@@ -254,6 +254,11 @@ public class MainController {
                 branchEntryController.setScreen();
                 stage.setScene(branchEntryScene);
                 break;
+            case EQUPIMENT_ENTRY:
+                equipmentEntryController.setScreen();
+                stage.setScene(equipmentEntryScene);
+                break;
+
             default: break;
         }
     } 
@@ -375,18 +380,16 @@ public void createBranch(String name, String location, String status, int adminI
 public void updateBranch()throws SQLException{
     branchDAO.updateBranch(currentBranch);
 }
-//  public List<Equipment> getAllEquipmentDetails() {
-//     return equipmentDAO.getAllEquipmentDetails();
-//  }
-//  public List<Session> getAllSessionDetails() {
-//     return sessionDAO.getAllSessionDetails();
-//  }
-//  public List<MembershipType> getAllMTDetails() {
-//     return mempershipTypeDAO.getAllMTDetails();
-//  }
-//  public List<Payment> getAllPaymentDetails() {
-//     return paymentDAO.getAllPaymentDetails();
-//  }
+public void deleteEquipment() {
+    equipmentDAO.deleteEquipment(currentEquipment.getEquipmentID());
+}
+public void createEquipment(String name, String status,int branchID)throws SQLException{
+    Equipment e=new Equipment(equipmentDAO.getMaxEquipmentId()+1, name, null, null, status, branchID);
+    equipmentDAO.addNewEquipment(e);
+}
+public void updateEquipment()throws SQLException{
+    equipmentDAO.updateEquipment(currentEquipment);
+}
 public Branch getBranchByName(String branchName) {
     return branchDAO.getBranchByName(branchName);
 }
@@ -563,8 +566,8 @@ public List<Session> getAllSessions(){
     private Scene branchEntryScene;
     private BranchEntryController branchEntryController;
 
-    // private Scene equipmentEntryScene;
-    // private EquipmentEntryController equipmentEntryController;
+    private Scene equipmentEntryScene;
+    private EquipmentEntryController equipmentEntryController;
 
     // private Scene sessionEntryScene;
     // private SessionEntryController sessionEntryController;

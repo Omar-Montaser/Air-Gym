@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EquipmentEntryController">
     <children>
         <VBox layoutX="-3.0" layoutY="-7.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: black;">
             <children>
@@ -54,23 +53,23 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+                <Button mnemonicParsing="false" onAction="#handleLogout" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="550.0" right="10.0" top="15.0" />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
-        <Button layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
-        <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
+        <Button fx:id="saveButton" layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
+        <Button fx:id="cancelButton" layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
         <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
-        <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Equipment Entry" />
-        <VBox layoutX="215.0" layoutY="185.0" prefHeight="212.0" prefWidth="822.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
+        <Label fx:id="titleLabel" layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Equipment Entry" />
+        <VBox layoutX="215.0" layoutY="185.0" prefHeight="170.0" prefWidth="822.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
             <children>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Name" />
-                        <TextField prefHeight="25.0" prefWidth="260.0" promptText="Enter Equipment Name" style="-fx-font-size: 12;">
+                        <TextField fx:id="nameField" prefHeight="25.0" prefWidth="260.0" promptText="Enter Equipment Name" style="-fx-font-size: 12;">
                             <HBox.margin>
                                 <Insets top="10.0" />
                             </HBox.margin>
@@ -79,28 +78,8 @@
                 </HBox>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Purchase Date" />
-                  <DatePicker>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </DatePicker>
-                    </children>
-                </HBox>
-            <HBox prefHeight="40.0" prefWidth="394.0">
-               <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Maintenance Date" />
-                  <DatePicker>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </DatePicker>
-               </children>
-            </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Status" />
-                        <ChoiceBox prefHeight="25.0" prefWidth="173.0">
+                        <ChoiceBox fx:id="statusBox" prefHeight="25.0" prefWidth="173.0">
                             <HBox.margin>
                                 <Insets top="10.0" />
                             </HBox.margin>
@@ -110,7 +89,7 @@
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Branch " />
-                        <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Branch ID" style="-fx-font-size: 12;">
+                        <TextField fx:id="branchField" prefHeight="25.0" prefWidth="150.0" promptText="Enter Branch ID" style="-fx-font-size: 12;">
                             <HBox.margin>
                                 <Insets top="5.0" />
                             </HBox.margin>
@@ -123,5 +102,10 @@
             </padding>
         </VBox>
         <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="40.0" prefWidth="822.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Equipment Details" />
+      <Label fx:id="messageLabel" layoutX="776.0" layoutY="92.0" prefHeight="36.0" prefWidth="319.0" style="-fx-font-size: 14; -fx-background-radius: 8; -fx-text-fill: white; -fx-background-color: #ff5e5e;" text="Message Label">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
     </children>
 </AnchorPane>

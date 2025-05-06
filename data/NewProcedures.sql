@@ -553,8 +553,6 @@ CREATE OR ALTER PROCEDURE UpdateBranch
 GO
 CREATE OR ALTER PROCEDURE AddNewEquipment
         @Name VARCHAR(50),
-        @PurchaseDate DATE,
-        @MaintenanceDate DATE = NULL,
         @Status VARCHAR(20) = 'Available',
         @BranchID INT
     AS
@@ -576,22 +574,9 @@ CREATE OR ALTER PROCEDURE AddNewEquipment
                 RETURN;
             END
             
-            IF @PurchaseDate > GETDATE()
-            BEGIN
-                RAISERROR('Purchase date cannot be in the future', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
-            
-            IF @MaintenanceDate IS NOT NULL AND @MaintenanceDate < @PurchaseDate
-            BEGIN
-                RAISERROR('Maintenance date cannot be before purchase date', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
             
             INSERT INTO Equipment (Name, PurchaseDate, MaintenanceDate, Status, BranchID)
-            VALUES (@Name, @PurchaseDate, @MaintenanceDate, @Status, @BranchID);
+            VALUES (@Name, GETDATE(), GETDATE(), @Status, @BranchID);
             
             DECLARE @EquipmentID INT = SCOPE_IDENTITY();
             
@@ -603,46 +588,68 @@ CREATE OR ALTER PROCEDURE AddNewEquipment
             THROW;
         END CATCH
     END;
+
 GO
 CREATE OR ALTER PROCEDURE UpdateEquipment
-        @EquipmentID INT,
-        @Status VARCHAR(20)
+    @EquipmentID INT,
+    @Name VARCHAR(50) = NULL,
+    @BranchID INT = NULL,
+    @Status VARCHAR(20) = NULL
     AS
     BEGIN
-        BEGIN TRY
-            BEGIN TRANSACTION;
-            
-            IF NOT EXISTS (SELECT 1 FROM Equipment WHERE EquipmentID = @EquipmentID)
-            BEGIN
-                RAISERROR('Equipment ID does not exist', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
-            
-            IF @Status NOT IN ('Available', 'Maintenance', 'Retired')
-            BEGIN
-                RAISERROR('Invalid Status provided. Must be Available, Maintenance, or Retired', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
-            
-            UPDATE Equipment
-            SET Status = @Status
-            WHERE EquipmentID = @EquipmentID;
-            
-            IF @Status = 'Maintenance'
-            BEGIN
-                UPDATE Equipment
-                SET MaintenanceDate = GETDATE()
-                WHERE EquipmentID = @EquipmentID;
-            END
-            
-            COMMIT TRANSACTION;
-        END TRY
-        BEGIN CATCH
-            ROLLBACK TRANSACTION;
-            THROW;
-        END CATCH
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        IF NOT EXISTS (SELECT 1 FROM Equipment WHERE EquipmentID = @EquipmentID)
+        BEGIN
+        RAISERROR('Equipment ID does not exist', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+        END
+        
+        IF @Status IS NOT NULL AND @Status NOT IN ('Available', 'Maintenance', 'Retired')
+        BEGIN
+        RAISERROR('Invalid Status provided. Must be Available, Maintenance, or Retired', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+        END
+        
+        IF @BranchID IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Branch WHERE BranchID = @BranchID)
+        BEGIN
+        RAISERROR('Invalid BranchID provided', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+        END
+        
+        IF @Name IS NOT NULL AND EXISTS (
+        SELECT 1 FROM Equipment 
+        WHERE Name = @Name AND EquipmentID != @EquipmentID
+        )
+        BEGIN
+        RAISERROR('Equipment name already exists.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+        END
+        
+        UPDATE Equipment
+        SET Name = COALESCE(@Name, Name),
+        BranchID = COALESCE(@BranchID, BranchID),
+        Status = COALESCE(@Status, Status)
+        WHERE EquipmentID = @EquipmentID;
+        
+        IF @Status = 'Maintenance'
+        BEGIN
+        UPDATE Equipment
+        SET MaintenanceDate = GETDATE()
+        WHERE EquipmentID = @EquipmentID;
+        END
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
     END;
 GO
 CREATE OR ALTER PROCEDURE ExtendSubscription

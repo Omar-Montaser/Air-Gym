@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.gym.Branch;
 import model.gym.Equipment;
 
 import java.util.List;
@@ -50,11 +51,24 @@ public class EquipmentViewController extends BaseController {
     }
 
     @FXML
-    private void handleDelete() {
-        // Equipment selected = equipmentTable.getSelectionModel().getSelectedItem();
-        // mainController.setCurrentEquipment(selected);
-        // mainController.deleteEquipment();
-        // fillEquipmentTable();
+    private void handleDelete(){
+        Equipment selectedEquipment = equipmentTable.getSelectionModel().getSelectedItem();
+        mainController.setCurrentEquipment(selectedEquipment);
+        mainController.deleteEquipment();
+        fillEquipmentTable();
+        return;
+    }
+    @FXML
+    private void handleEdit(){
+        Equipment selectedEquipment = equipmentTable.getSelectionModel().getSelectedItem();
+        if(selectedEquipment==null) return;
+        mainController.setCurrentEquipment(selectedEquipment);
+        mainController.switchScene(Screen.EQUPIMENT_ENTRY);
+    }
+    @FXML
+    private void handleEntry(){
+        mainController.setCurrentEquipment(null);
+        mainController.switchScene(Screen.EQUPIMENT_ENTRY);
     }
 
     // Navigation handlers
