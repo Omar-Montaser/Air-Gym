@@ -6,6 +6,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controller.Screen;
@@ -58,7 +60,8 @@ public class TrainerEntryController extends BaseController{
             phone=currentTrainer.getPhoneNumber();
             experience=""+currentTrainer.getExperienceYears();
             salary=""+currentTrainer.getSalary();
-            branchChoiceBox.setValue(mainController.getBranchByID(currentTrainer.getBranchId()).getName());
+            if(!(currentTrainer.getBranchId()<1))
+                branchChoiceBox.setValue(mainController.getBranchByID(currentTrainer.getBranchId()).getName());
             specializationBox.setValue(currentTrainer.getSpecialization());
             statusChoiceBox.setValue(currentTrainer.getStatus());
         } else personalBox.setVisible(true);
@@ -108,8 +111,7 @@ public class TrainerEntryController extends BaseController{
                 experienceYears, salaryValue, status, java.sql.Date.valueOf(birthDate),
                 mainController.getBranchByName(branchName).getBranchID());
             }
-            mainController.setTrainerViewLabel(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.print(e.getMessage());
             messageLabel.setVisible(true);
             messageLabel.setText(e.getMessage());

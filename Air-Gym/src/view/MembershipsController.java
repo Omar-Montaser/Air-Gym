@@ -211,10 +211,6 @@ public class MembershipsController extends BaseController{
         mainController.switchScene(Screen.PROFILE);
     }
     @FXML
-    private void handleLogout(){
-        mainController.logout();
-    }
-    @FXML
     private Button homeButton;
     @FXML
     private Button profileButton;

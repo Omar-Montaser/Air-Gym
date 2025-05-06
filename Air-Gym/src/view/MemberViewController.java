@@ -116,14 +116,19 @@ public class MemberViewController extends BaseController {
         return;
     }
     @FXML
+    private void handleEdit(){
+        Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
+        if(selectedMember==null) return;
+        mainController.setCurrentMember(selectedMember);
+        mainController.switchScene(Screen.MEMBER_EDIT);
+    }
+    @FXML
     private void handleCancelMembership() {
         Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
         mainController.setCurrentMember(selectedMember);
         mainController.cancelSubscription();
         fillMemberTable();
     }
-    @FXML
-    private void handleLogout(){}
     @FXML
     private TableColumn<Member, Integer> idColumn;
     @FXML

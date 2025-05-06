@@ -322,7 +322,8 @@ CREATE OR ALTER PROCEDURE UpdateTrainer
         @ExperienceYears INT = NULL,
         @Salary DECIMAL(10,2) = NULL,
         @BranchID INT = NULL,
-        @Status VARCHAR(20) = NULL
+        @Status VARCHAR(20) = NULL,
+        @Specialization VARCHAR(100) =NULL
     AS
     BEGIN
         BEGIN TRY
@@ -383,13 +384,14 @@ CREATE OR ALTER PROCEDURE UpdateTrainer
             END
 
             IF @ExperienceYears IS NOT NULL OR @Salary IS NOT NULL OR 
-               @BranchID IS NOT NULL OR @Status IS NOT NULL
+               @BranchID IS NOT NULL OR @Status IS NOT NULL OR @Specialization IS NOT NULL 
             BEGIN
                 UPDATE Trainer
                 SET ExperienceYears = COALESCE(@ExperienceYears, ExperienceYears),
                     Salary = COALESCE(@Salary, Salary),
                     BranchID = COALESCE(@BranchID, BranchID),
-                    Status = COALESCE(@Status, Status)
+                    Status = COALESCE(@Status, Status),
+                    Specialization =COALESCE(@Specialization,Specialization)
                 WHERE UserID = @UserID;
             END
             
@@ -439,7 +441,6 @@ GO
 CREATE OR ALTER PROCEDURE AddNewBranch
         @Name VARCHAR(100),
         @Location VARCHAR(255),
-        @OpeningDate DATE,
         @Status VARCHAR(20) = 'Active',
         @AdminID INT = NULL
     AS
@@ -479,7 +480,7 @@ CREATE OR ALTER PROCEDURE AddNewBranch
             END
             
             INSERT INTO Branch (Name, Location, OpeningDate, Status, AdminID)
-            VALUES (@Name, @Location, @OpeningDate, @Status, @AdminID);
+            VALUES (@Name, @Location,GETDATE(), @Status, @AdminID);
             
             DECLARE @BranchID INT = SCOPE_IDENTITY();
             
@@ -603,7 +604,7 @@ CREATE OR ALTER PROCEDURE AddNewEquipment
         END CATCH
     END;
 GO
-CREATE OR ALTER PROCEDURE UpdateEquipmentStatus
+CREATE OR ALTER PROCEDURE UpdateEquipment
         @EquipmentID INT,
         @Status VARCHAR(20)
     AS

@@ -76,10 +76,6 @@ public class HomeController extends BaseController{
     private void handleContactUs(){
         mainController.switchScene(Screen.CONTACT_US);
     }
-    @FXML
-    private void handleLogout(){
-        mainController.logout();
-    }
 
     @FXML
     private Button homeButton;

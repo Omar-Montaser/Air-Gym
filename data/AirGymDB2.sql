@@ -55,7 +55,7 @@ CREATE TABLE Trainer (
 
 CREATE TABLE Member (
     UserID INT PRIMARY KEY,
-    MembershipTypeID INT NULL,
+    MembershipTypeID INT NOT NULL,
     SubscriptionStartDate DATE NOT NULL,
     SubscriptionEndDate DATE NOT NULL,
     FreezeEndDate DATE NULL,

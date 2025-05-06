@@ -151,10 +151,6 @@ public class CheckoutController extends BaseController{
         }
     }
     @FXML
-    private void handleLogout(){
-        mainController.logout();
-    }
-    @FXML
     private void handleHome(){
         mainController.switchScene(Screen.HOME);
     }

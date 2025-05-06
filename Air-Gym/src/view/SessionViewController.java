@@ -70,7 +70,7 @@ public class SessionViewController extends BaseController {
     @FXML private void handleSessions() { mainController.switchScene(Screen.SESSION_VIEW); }
     @FXML private void handleMembershipTypes() { mainController.switchScene(Screen.MEMBERSHIP_TYPE_VIEW); }
     @FXML private void handlePayments() { mainController.switchScene(Screen.PAYMENT_VIEW); }
-    @FXML private void handleLogout() {}
+
 
     @FXML private TableColumn<Session, Integer> idColumn;
     @FXML private TableColumn<Session, Integer> trainerIDColumn;

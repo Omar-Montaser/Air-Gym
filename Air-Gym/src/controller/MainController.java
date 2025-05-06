@@ -110,15 +110,20 @@ public class MainController {
         paymentViewController = (PaymentViewController) paymentViewLoader.getController();
         paymentViewController.setMain(this);
         
+        FXMLLoader memberEditLoader = new FXMLLoader(getClass().getResource("../view/MemberEntry.fxml"));
+        memberEditScene = new Scene(memberEditLoader.load());
+        memberEditController = (MemberEditController) memberEditLoader.getController();
+        memberEditController.setMain(this);
+
         FXMLLoader trainerEntryLoader = new FXMLLoader(getClass().getResource("../view/TrainerEntry.fxml"));
         trainerEntryScene = new Scene(trainerEntryLoader.load());
         trainerEntryController = (TrainerEntryController) trainerEntryLoader.getController();
         trainerEntryController.setMain(this);
 
-        // FXMLLoader branchEntryLoader = new FXMLLoader(getClass().getResource("../view/BranchEntry.fxml"));
-        // branchEntryScene = new Scene(branchEntryLoader.load());
-        // branchEntryController = (BranchEntryController) branchEntryLoader.getController();
-        // branchEntryController.setMain(this);
+        FXMLLoader branchEntryLoader = new FXMLLoader(getClass().getResource("../view/BranchEntry.fxml"));
+        branchEntryScene = new Scene(branchEntryLoader.load());
+        branchEntryController = (BranchEntryController) branchEntryLoader.getController();
+        branchEntryController.setMain(this);
 
         // FXMLLoader equipmentEntryLoader = new FXMLLoader(getClass().getResource("../view/EquipmentEntry.fxml"));
         // equipmentEntryScene = new Scene(equipmentEntryLoader.load());
@@ -237,9 +242,18 @@ public class MainController {
                 paymentViewController.fillPaymentTable();
                 stage.setScene(paymentViewScene);
                 break;
+            case MEMBER_EDIT:
+                memberEditController.setScreen();
+                stage.setScene(memberEditScene);
+                break;
             case TRAINER_ENTRY:
                 trainerEntryController.setScreen();
                 stage.setScene(trainerEntryScene);
+                break;
+            case BRANCH_ENTRY:
+                branchEntryController.setScreen();
+                stage.setScene(branchEntryScene);
+                break;
             default: break;
         }
     } 
@@ -348,8 +362,18 @@ public List<Trainer> getAllTrainerDetails() {
 public void updateTrainer() throws SQLException{
     trainerDAO.updateTrainer(currentTrainer);
 }
+public void updateMember() throws SQLException{
+    memberDAO.updateMember(currentMember);
+}
 public void deleteBranch(){
     branchDAO.deleteBranch(currentBranch.getBranchID());
+}
+public void createBranch(String name, String location, String status, int adminID) throws SQLException{
+    Branch branch = new Branch(branchDAO.getMaxBranchId() + 1, name, location, status, adminID);
+    branchDAO.createBranch(branch);
+}
+public void updateBranch()throws SQLException{
+    branchDAO.updateBranch(currentBranch);
 }
 //  public List<Equipment> getAllEquipmentDetails() {
 //     return equipmentDAO.getAllEquipmentDetails();
@@ -438,16 +462,19 @@ public List<Session> getAllSessions(){
         return currentTrainer;
     }
     public void setCurrentTrainer(Trainer currentTrainer) {
-        if(currentTrainer!=null){
-        this.currentTrainer = trainerDAO.getTrainerById(currentTrainer.getUserId());
-        }
+        if(currentTrainer!=null)
+            this.currentTrainer = trainerDAO.getTrainerById(currentTrainer.getUserId());
         else this.currentTrainer=null;
     }
     public void setCurrentMember(Member member) {
-        this.currentMember = memberDAO.getMemberById(member.getUserId());
+        if(currentMember!=null)
+            this.currentMember = memberDAO.getMemberById(member.getUserId());
+        else this.currentMember=null;
     }
     public void setCurrentUser(User user) {
-        this.currentUser = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
+        if(currentUser!=null)
+            this.currentUser = userDAO.getUserByPhoneNumber(user.getPhoneNumber());
+        else this.currentUser=null;
     }
     public Branch getCurrentBranch() {
         return currentBranch;
@@ -478,9 +505,6 @@ public List<Session> getAllSessions(){
     }
     public void setCurrentPayment(Payment currentPayment) {
         this.currentPayment = currentPayment;
-    }
-    public void setTrainerViewLabel(boolean s){
-        trainerViewController.trainerMsgLabel.setVisible(s);
     }
     private Stage stage;
     private Screen currentScreen;
@@ -530,11 +554,14 @@ public List<Session> getAllSessions(){
     private Scene paymentViewScene;
     private PaymentViewController paymentViewController;    
 
+    private Scene memberEditScene;
+    private MemberEditController memberEditController;
+
     private Scene trainerEntryScene;
     private TrainerEntryController trainerEntryController;
 
-    // private Scene branchEntryScene;
-    // private BranchEntryController branchEntryController;
+    private Scene branchEntryScene;
+    private BranchEntryController branchEntryController;
 
     // private Scene equipmentEntryScene;
     // private EquipmentEntryController equipmentEntryController;

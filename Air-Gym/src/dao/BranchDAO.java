@@ -1,11 +1,11 @@
 package dao;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import model.gym.Branch;
 import utils.SqlServerConnect;
@@ -30,7 +30,7 @@ public class BranchDAO {
                     resultSet.getString("Location"),
                     resultSet.getDate("OpeningDate"),
                     resultSet.getString("Status"),
-                    resultSet.getString("AdminID")
+                    resultSet.getInt("AdminID")
                 );
                 branches.add(branch);
             }
@@ -54,7 +54,7 @@ public class BranchDAO {
                     resultSet.getString("Location"),
                     resultSet.getDate("OpeningDate"),
                     resultSet.getString("Status"),
-                    resultSet.getString("AdminID")
+                    resultSet.getInt("AdminID")
                 );
                 }
         }
@@ -77,7 +77,7 @@ public class BranchDAO {
                     resultSet.getString("Location"),
                     resultSet.getDate("OpeningDate"),
                     resultSet.getString("Status"),
-                    resultSet.getString("AdminID")
+                    resultSet.getInt("AdminID")
                 );
             }
         }
@@ -95,6 +95,43 @@ public class BranchDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public int getMaxBranchId(){
+        String sql = "SELECT MAX(BranchID) FROM Branch";
+     
+        try (Connection conn = SqlServerConnect.getConnection();Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+                if (rs.next()) return rs.getInt(1);
+                else return 0; 
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public void createBranch(Branch branch) throws SQLException{
+        int newBranchId = -1;
+            String query = "EXEC AddNewBranch @Name = ?, @Location = ?, @Status = ?, @AdminID = ?";
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, branch.getName());
+            statement.setString(2, branch.getLocation());
+            statement.setString(3, branch.getStatus());
+            statement.setInt(4, branch.getAdminID());
+            ResultSet resultSet = statement.executeQuery();
+    }
+    public void updateBranch(Branch branch) throws SQLException {
+        String query = "EXEC UpdateBranch @BranchID = ?, @Name = ?, @Location = ?, @Status = ?, @AdminID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, branch.getBranchID());
+            statement.setString(2, branch.getName());
+            statement.setString(3, branch.getLocation());
+            statement.setString(4, branch.getStatus());
+            statement.setInt(5, branch.getAdminID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 }

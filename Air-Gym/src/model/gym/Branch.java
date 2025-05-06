@@ -11,13 +11,20 @@ public class Branch {
     private String location;
     private Date openingDate;
     private String status;
-    private String adminID;
+    private int adminID;
 //================================================Constructor=============================================
-public Branch(int branchID, String name, String location, Date openingDate, String status, String adminID) {
+public Branch(int branchID, String name, String location, Date openingDate, String status, int adminID) {
     this.branchID = branchID;
     this.name = name;
     this.location = location;
     this.openingDate = openingDate;
+    this.status = status;
+    this.adminID = adminID;
+}
+public Branch(int branchID, String name, String location, String status, int adminID) {
+    this.branchID = branchID;
+    this.name = name;
+    this.location = location;
     this.status = status;
     this.adminID = adminID;
 }
@@ -52,10 +59,10 @@ public Branch(int branchID, String name, String location, Date openingDate, Stri
     public void setStatus(String status) {
         this.status = status;
     }
-    public String getAdminID() {
+    public int getAdminID() {
         return adminID;
     }
-    public void setAdminID(String adminID) {
+    public void setAdminID(int adminID) {
         this.adminID = adminID;
     }
 }

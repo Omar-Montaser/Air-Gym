@@ -96,7 +96,17 @@ public class BranchViewController extends BaseController {
         return;
     }
     @FXML
-    private void handleLogout(){}
+    private void handleEdit(){
+        Branch selectedBranch = branchTable.getSelectionModel().getSelectedItem();
+        if(selectedBranch==null) return;
+        mainController.setCurrentBranch(selectedBranch);
+        mainController.switchScene(Screen.BRANCH_ENTRY);
+    }
+    @FXML
+    private void handleEntry(){
+        mainController.setCurrentBranch(null);
+        mainController.switchScene(Screen.BRANCH_ENTRY);
+    }
     @FXML
     private TableColumn<Member, Integer> idColumn;
     @FXML

@@ -70,11 +70,6 @@ public class BookingController extends BaseController{
             mainController.switchScene(Screen.HOME);
         });
     }
-
-    @FXML
-    private void handleLogout(){
-        mainController.logout();
-    }
     @FXML
     private void handleMemberships(){
         mainController.switchScene(Screen.MEMBERSHIPS);

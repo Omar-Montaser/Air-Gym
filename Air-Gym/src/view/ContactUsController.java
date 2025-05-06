@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class ContactUsController extends BaseController{
-@FXML
-private void handleLogout(){
-    mainController.logout();
-}
+
 @FXML
 private void handleHome(){
     mainController.switchScene(Screen.HOME);
