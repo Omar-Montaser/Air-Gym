@@ -50,5 +50,8 @@ public class DashboardController extends BaseController implements Initializable
     private void handlePayments(){
         mainController.switchScene(Screen.PAYMENT_VIEW);
     }
-
+    @FXML
+    private void handleMembershipTypes(){
+        mainController.switchScene(Screen.MEMBERSHIP_TYPE_VIEW);
+    }
 }

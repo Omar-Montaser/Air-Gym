@@ -80,7 +80,8 @@ CREATE OR ALTER FUNCTION CountAllActiveMembers()
         WHERE Status = 'Active';
         RETURN @Count;
     END;
-go
+USE AirGym;
+GO
 CREATE OR ALTER FUNCTION GetMemberDetails()
     RETURNS TABLE
     AS
@@ -88,18 +89,18 @@ CREATE OR ALTER FUNCTION GetMemberDetails()
     (
         SELECT 
             u.UserID, 
-            u.FirstName + ' ' + u.LastName AS NVARCHAR(100)) AS FullName,
+            CAST(u.FirstName + ' ' + u.LastName AS NVARCHAR(100)) AS FullName,
             u.PhoneNumber, 
             DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) AS Age,
             u.Gender,
             b.Name AS BranchName,
-            t.FirstName + ' ' + t.LastName AS Trainer,
+            ISNULL(CAST(tu.FirstName + ' ' + tu.LastName AS NVARCHAR(100)), 'No Trainer Assigned') AS Trainer,
             mt.Name AS Membership,
             m.SubscriptionStatus,
             m.SubscriptionEndDate,
             m.SessionsAvailable,
             m.FreezesAvailable,
-            m.freezeEndDate
+            m.FreezeEndDate
         FROM 
             Member m
         INNER JOIN 
@@ -107,8 +108,8 @@ CREATE OR ALTER FUNCTION GetMemberDetails()
         LEFT JOIN 
             Branch b ON m.BranchID = b.BranchID
         LEFT JOIN 
-            Users t ON m.TrainerID = t.UserID
-        INNER JOIN
+            Users tu ON m.TrainerID = tu.UserID
+        LEFT JOIN
             MembershipType mt ON m.MembershipTypeID = mt.MembershipTypeID
     );
 go
@@ -288,17 +289,6 @@ CREATE OR ALTER FUNCTION CountAllAdmins()
         RETURN @Count;
     END;
 GO
-CREATE OR ALTER FUNCTION GetAllBranches()
-    RETURNS TABLE
-    AS
-    RETURN
-    (
-        SELECT 
-            b.*
-        FROM 
-            Branch b
-    );
-GO
 CREATE OR ALTER FUNCTION GetMostDenseBranch()
     RETURNS INT
     AS
@@ -391,19 +381,6 @@ CREATE OR ALTER FUNCTION CountAllBranches()
 
 ---------------------------------------------EquipmentFunctions-------------------------------------------------
 GO
-CREATE OR ALTER FUNCTION GetAllEquipment()
-    RETURNS TABLE
-    AS
-    RETURN
-    (
-        SELECT 
-            e.*,b.name as branch
-        FROM 
-            Equipment e
-        JOIN 
-            Branch b ON e.BranchID = b.BranchID
-    );
-GO
 CREATE OR ALTER FUNCTION GetAllAvailableEquipment()
     RETURNS TABLE
     AS
@@ -439,16 +416,6 @@ CREATE OR ALTER FUNCTION CountAllAvailableEquipment()
         RETURN @Count;
     END;
 ---------------------------------------------Membership Functions-------------------------------------------------
-GO
-CREATE OR ALTER FUNCTION GetAllMembershipTypes()
-    RETURNS TABLE
-    AS
-    RETURN
-    (
-        SELECT *
-        FROM 
-            MembershipType
-    );
 GO
 CREATE OR ALTER FUNCTION GetBestSellingMembership()
     RETURNS INT

@@ -34,18 +34,18 @@
         </VBox>
         <VBox layoutX="-1.0" layoutY="113.0" prefHeight="487.0" prefWidth="197.0" style="-fx-background-color: #d3d3d3;">
             <children>
-                <Button id="menuButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="200.0" stylesheets="@assets/css/adminTemplate.css" text="Dashboard">
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleDashBoard" prefHeight="79.0" prefWidth="200.0" stylesheets="@assets/css/adminTemplate.css" text="Dashboard">
                     <VBox.margin>
                         <Insets top="2.0" />
                     </VBox.margin>
                 </Button>
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Members" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleMembers" stylesheets="@assets/css/adminTemplate.css" text="Members" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleTrainers" stylesheets="@assets/css/adminTemplate.css" text="Trainers" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleBranches" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleEquipment" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handleSessions" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" layoutX="10.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
-                <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
+                <Button id="menuButton" mnemonicParsing="false" onAction="#handlePayments" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="911.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -62,18 +62,18 @@
                 </Button>
             </children>
         </HBox>
-        <TableView fx:id="CustomerTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
+        <TableView fx:id="membershipTable" layoutX="209.0" layoutY="114.0" prefHeight="480.0" prefWidth="885.0" stylesheets="@assets/css/adminTemplate.css" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn prefWidth="34.666656494140625" text="ID" />
-                <TableColumn prefWidth="60.66667175292969" text="Name" />
-                <TableColumn prefWidth="88.66668701171875" text="Description " />
-                <TableColumn prefWidth="56.6666259765625" text="Price" />
-                <TableColumn prefWidth="63.999969482421875" text="Duration" />
-                <TableColumn prefWidth="124.0" text="Number of Sessions" />
-                <TableColumn prefWidth="152.0" text="Number of Private Sessions" />
-                <TableColumn prefWidth="110.66668701171875" text="Freeze Duration" />
-                <TableColumn prefWidth="60.0" text="In Body" />
-                <TableColumn prefWidth="108.666748046875" text="Access Level" />
+                <TableColumn fx:id="idColumn" prefWidth="34.666656494140625" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="60.66667175292969" text="Name" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="88.66668701171875" text="Description " />
+                <TableColumn fx:id="monthlyPriceColumn" prefWidth="56.6666259765625" text="Price" />
+                <TableColumn fx:id="sessionsColumn" prefWidth="124.0" text="Number of Sessions" />
+                <TableColumn fx:id="freezeDurationColumn" prefWidth="110.66668701171875" text="Freeze Duration" />
+                <TableColumn fx:id="inBodyColumn" prefWidth="60.0" text="In Body" />
+                <TableColumn fx:id="accessLevelColumn" prefWidth="108.666748046875" text="Access Level" />
+            <TableColumn fx:id="colorHexColumn" prefWidth="108.666748046875" text="Color" />
+            <TableColumn fx:id="privateTrainerColumn" prefWidth="108.666748046875" text="Private Trainer" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

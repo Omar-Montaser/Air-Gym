@@ -54,7 +54,7 @@ public class MemberViewController extends BaseController {
             }
             List<Member> members = mainController.getAllMemberDetails();
             memberList.clear();
-            // Print member details for debugging
+            //Print member details for debugging
             if (members != null) {
                 System.out.println("Members retrieved from database: " + members.size());
                 for (Member member : members) {
@@ -69,16 +69,11 @@ public class MemberViewController extends BaseController {
             }
 
             if (members == null || members.isEmpty()) {
-                memberTable.setPlaceholder(new Label("No bookings found"));
+                memberTable.setPlaceholder(new Label("No members found"));
             } else {
                 memberList.addAll(members);
-                System.out.println("Added " + members.size() + " bookings to the table");
             }
             memberTable.setItems(memberList);
-            System.out.println("Members in the table:");
-            for (int i = 0; i < members.size(); i++) {
-                System.out.println("Member " + i + ": " + members.get(i).getFullName());
-                }
     }
     @FXML
     private void handleDashBoard(){

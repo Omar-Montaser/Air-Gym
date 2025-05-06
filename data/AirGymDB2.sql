@@ -18,7 +18,6 @@ CHECK (
     AND SUBSTRING(PhoneNumber, 3, 1) IN ('0', '1', '2', '5')
     AND PhoneNumber NOT LIKE '%[A-Za-z]%'
 );
-
 CREATE TABLE Branch(
     BranchID INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL UNIQUE,
@@ -68,6 +67,7 @@ CREATE TABLE Member (
     CONSTRAINT FK_Member_User FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
     CONSTRAINT FK_Member_MembershipType FOREIGN KEY (MembershipTypeID) REFERENCES MembershipType(MembershipTypeID) ON DELETE SET NULL,
     CONSTRAINT FK_Member_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE SET NULL,
+    CONSTRAINT FK_Member_Trainer FOREIGN KEY (TrainerID) REFERENCES Trainer(UserID) ON DELETE SET NULL,
     CONSTRAINT CK_Subscription_Duration CHECK (DATEDIFF(day, SubscriptionStartDate, SubscriptionEndDate) <= 365),
     CONSTRAINT CK_Subscription_Dates CHECK (SubscriptionStartDate <= SubscriptionEndDate)
 );
@@ -91,7 +91,7 @@ CREATE TABLE Session (
     DateTime DATETIME NOT NULL,
     Duration INT NOT NULL CHECK (Duration > 0),
     Status VARCHAR(20) NOT NULL DEFAULT 'Scheduled' CHECK (Status IN ('Scheduled', 'Completed', 'Cancelled', 'Full')),
-    CONSTRAINT FK_Session_Trainer FOREIGN KEY (TrainerID) REFERENCES Trainer(UserID) ON DELETE CASCADE,
+    CONSTRAINT FK_Session_Trainer FOREIGN KEY (TrainerID) REFERENCES Trainer(UserID) ON DELETE Set null,
     CONSTRAINT FK_Session_Branch FOREIGN KEY (BranchID) REFERENCES Branch(BranchID) ON DELETE CASCADE
 );
 

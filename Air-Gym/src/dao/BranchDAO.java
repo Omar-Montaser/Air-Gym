@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.gym.Branch;
+import utils.SqlServerConnect;
 
 public class BranchDAO {
     private Connection connection;
@@ -16,10 +17,11 @@ public class BranchDAO {
     }
     public List<Branch> getBranches(){
         List<Branch> branches = new ArrayList<>();
-        
+
         try{
+            Connection conn = SqlServerConnect.getConnection();
             String query = "SELECT * FROM Branch";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 Branch branch = new Branch(
@@ -83,5 +85,16 @@ public class BranchDAO {
             e.printStackTrace();
         }
         return branch;
+    }
+    
+    public void deleteBranch(int branchId) {
+        try {
+            String query = "EXEC DeleteBranch @BranchID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, branchId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

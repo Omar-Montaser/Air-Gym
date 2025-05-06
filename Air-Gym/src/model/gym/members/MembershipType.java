@@ -87,6 +87,9 @@ public class MembershipType {
     public void setColorHex(String colorHex) {
         this.colorHex = colorHex;
     }
+    public String getPrivateTrainer(){
+        return (privateTrainer)?"Yes":"No";
+    }
 
     
 }

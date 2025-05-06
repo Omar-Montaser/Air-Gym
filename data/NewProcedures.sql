@@ -1,4 +1,4 @@
-USE AirGym;
+USE AirGym2;
 --------------------------------Members--------------------------------
 GO
 CREATE OR ALTER PROCEDURE AddNewMember
@@ -204,7 +204,41 @@ CREATE OR ALTER PROCEDURE UpdateMember (
             THROW;
         END CATCH
     END;
-	--------------------------------Trainer--------------------------------
+GO
+
+CREATE OR ALTER FUNCTION GetMemberDetails()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        u.UserID, 
+        CAST(u.FirstName + ' ' + u.LastName AS NVARCHAR(100)) AS FullName,
+        u.PhoneNumber, 
+        DATEDIFF(YEAR, u.DateOfBirth, GETDATE()) AS Age,
+        u.Gender,
+        b.Name AS BranchName,
+        ISNULL(CAST(tu.FirstName + ' ' + tu.LastName AS NVARCHAR(100)), 'No Trainer Assigned') AS Trainer,
+        mt.Name AS Membership,
+        m.SubscriptionStatus,
+        m.SubscriptionEndDate,
+        m.SessionsAvailable,
+        m.FreezesAvailable,
+        m.FreezeEndDate
+    FROM 
+        Member m
+    INNER JOIN 
+        Users u ON m.UserID = u.UserID
+    LEFT JOIN 
+        Branch b ON m.BranchID = b.BranchID
+    LEFT JOIN 
+        Trainer t ON m.TrainerID = t.UserID
+    LEFT JOIN 
+        Users tu ON t.UserID = tu.UserID  -- Join to get trainer's name
+    INNER JOIN
+        MembershipType mt ON m.MembershipTypeID = mt.MembershipTypeID
+);
+--------------------------------Trainer--------------------------------
 GO
 CREATE OR ALTER PROCEDURE AddNewTrainer
         @Password VARCHAR(255),
@@ -368,27 +402,38 @@ CREATE OR ALTER PROCEDURE UpdateTrainer
     END;
 GO
 CREATE OR ALTER PROCEDURE DeleteUser
-        @UserID INT
-    AS
-    BEGIN
-        BEGIN TRY
-            BEGIN TRANSACTION;
-            
-            IF NOT EXISTS (SELECT 1 FROM Users WHERE UserID = @UserID)
-            BEGIN
-                RAISERROR('User does not exist.', 16, 1);
-                ROLLBACK TRANSACTION;
-                RETURN;
-            END
-            DELETE FROM Users WHERE UserID = @UserID;
-            
-            COMMIT TRANSACTION;
-        END TRY
-        BEGIN CATCH
+    @UserID INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        IF NOT EXISTS (SELECT 1 FROM Users WHERE UserID = @UserID)
+        BEGIN
+            RAISERROR('User does not exist.', 16, 1);
             ROLLBACK TRANSACTION;
-            THROW;
-        END CATCH
-    END;
+            RETURN;
+        END
+        
+        UPDATE Member
+        SET TrainerID = NULL
+        WHERE TrainerID = @UserID;
+        
+        DELETE FROM Booking WHERE UserID = @UserID;
+        DELETE FROM Payment WHERE MemberID = @UserID;
+        DELETE FROM Member WHERE UserID = @UserID;
+        
+        DELETE FROM Trainer WHERE UserID = @UserID;
+
+        DELETE FROM Users WHERE UserID = @UserID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
 GO
 --------------------------------Branches--------------------------------
 CREATE OR ALTER PROCEDURE AddNewBranch
@@ -447,12 +492,12 @@ CREATE OR ALTER PROCEDURE AddNewBranch
         END CATCH
     END;
 GO
-
 CREATE OR ALTER PROCEDURE UpdateBranch
         @BranchID INT,
         @Name VARCHAR(100) = NULL,
         @Location VARCHAR(255) = NULL,
-        @Status VARCHAR(20) = NULL
+        @Status VARCHAR(20) = NULL,
+        @AdminID INT =NULL
     AS
     BEGIN
         BEGIN TRY
@@ -474,7 +519,12 @@ CREATE OR ALTER PROCEDURE UpdateBranch
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
-            
+            IF NOT EXISTS (SELECT 1 FROM USERS WHERE USERID =@AdminID)
+                        BEGIN
+                RAISERROR('Admin ID does not exist', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
             IF @Status IS NOT NULL AND
                @Status NOT IN ('Active', 'Maintenance', 'Closed')
             BEGIN
@@ -486,7 +536,8 @@ CREATE OR ALTER PROCEDURE UpdateBranch
             UPDATE Branch
             SET Name = COALESCE(@Name, Name),
                 Location = COALESCE(@Location, Location),
-                Status = COALESCE(@Status, Status)
+                Status = COALESCE(@Status, Status),
+                AdminID= COALESCE(@AdminID,AdminID)
             WHERE BranchID = @BranchID;
             
             COMMIT TRANSACTION;
@@ -496,8 +547,9 @@ CREATE OR ALTER PROCEDURE UpdateBranch
             THROW;
         END CATCH
     END;
-GO
+
 --------------------------------Equipment--------------------------------
+GO
 CREATE OR ALTER PROCEDURE AddNewEquipment
         @Name VARCHAR(50),
         @PurchaseDate DATE,
@@ -725,7 +777,7 @@ CREATE OR ALTER PROCEDURE CancelSubscription
             END
 
             UPDATE Member
-            SET SubscriptionStatus = 'Cancelled',SubscriptionStartDate=GetDate()
+            SET SubscriptionStatus = 'Cancelled',SubscriptionEndDate=GetDate()
             WHERE UserID = @UserID;
 
             UPDATE Booking

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.SqlServerConnect;
 import model.accounts.Trainer;
+import utils.SqlServerConnect;
 
 public class TrainerDAO {
     private Connection conn;

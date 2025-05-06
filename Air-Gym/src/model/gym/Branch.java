@@ -2,6 +2,9 @@ package model.gym;
 
 import java.sql.Date;
 
+import dao.UserDAO;
+import utils.SqlServerConnect;
+
 public class Branch {
     private int branchID;
     private String name;

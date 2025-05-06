@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dao.*;
-import db.SqlServerConnect;
+import utils.SqlServerConnect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +41,8 @@ public class MainController {
     private TrainerDAO trainerDAO;
     private SessionDAO sessionDAO;
     private BookingDAO bookingDAO;
+    private EquipmentDAO equipmentDAO;
+    private PaymentDAO paymentDAO;
 
     public MainController(Stage stage){
         try{
@@ -52,6 +54,8 @@ public class MainController {
             trainerDAO = new TrainerDAO(conn);
             sessionDAO = new SessionDAO(conn);
             bookingDAO = new BookingDAO(conn);
+            equipmentDAO = new EquipmentDAO(conn);
+            paymentDAO = new PaymentDAO(conn);
             initializeScenes();
             this.stage=stage;
             stage.setScene(dashboardScene);
@@ -214,18 +218,23 @@ public class MainController {
                 stage.setScene(trainerViewScene);
                 break;
             case BRANCH_VIEW:
+                branchViewController.fillBranchTable();
                 stage.setScene(branchViewScene);
                 break;
             case EQUIPMENT_VIEW:
+                equipmentViewController.fillEquipmentTable();
                 stage.setScene(equipmentViewScene);
                 break;
             case SESSION_VIEW:
+                sessionViewController.fillSessionTable();
                 stage.setScene(sessionViewScene);
                 break;
             case MEMBERSHIP_TYPE_VIEW:
+                membershipTypeViewController.fillMembershipTable();
                 stage.setScene(membershipTypeViewScene);
                 break;
             case PAYMENT_VIEW:
+                paymentViewController.fillPaymentTable();
                 stage.setScene(paymentViewScene);
                 break;
             case TRAINER_ENTRY:
@@ -339,9 +348,9 @@ public List<Trainer> getAllTrainerDetails() {
 public void updateTrainer() throws SQLException{
     trainerDAO.updateTrainer(currentTrainer);
 }
-//  public List<Branch> getAllBranchDetails() {
-//     return branchDAO.getAllBranchDetails();
-//  }
+public void deleteBranch(){
+    branchDAO.deleteBranch(currentBranch.getBranchID());
+}
 //  public List<Equipment> getAllEquipmentDetails() {
 //     return equipmentDAO.getAllEquipmentDetails();
 //  }
@@ -357,8 +366,19 @@ public void updateTrainer() throws SQLException{
 public Branch getBranchByName(String branchName) {
     return branchDAO.getBranchByName(branchName);
 }
-
-//========================================GET AND SET===================================================
+public List<Branch> getAllBranches(){
+    return branchDAO.getBranches();
+}
+public List<Equipment> getAllEquipment(){
+    return equipmentDAO.getEquipment();
+}    
+public List<Payment> getAllPayments(){
+    return paymentDAO.getAllPayments();
+}
+public List<Session> getAllSessions(){
+    return sessionDAO.getAllSessions();
+}
+//========================================Member Getters/Setters===================================================
     public List<Booking> getAllMemberBookings(){
         return bookingDAO.getAllMemberBookings(currentMember.getUserId());
     }
@@ -377,9 +397,7 @@ public Branch getBranchByName(String branchName) {
     public Branch getBranchByID(int branchId){
         return branchDAO.getBranchById(branchId);
     }
-    public List<Branch> getAllBranches(){
-        return branchDAO.getBranches();
-    }
+
     public boolean isGuest(){
         return isGuest;
     }

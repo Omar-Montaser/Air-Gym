@@ -2,6 +2,8 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.CallableStatement;             
 import java.sql.*;
 
@@ -79,6 +81,30 @@ public class SessionDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public List<Session> getAllSessions() {
+        List<Session> sessions = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Session";
+            PreparedStatement statement = conn.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Session session = new Session(
+                    resultSet.getInt("SessionID"),
+                    resultSet.getInt("TrainerID"),
+                    resultSet.getInt("BranchID"),
+                    resultSet.getString("SessionType"),
+                    resultSet.getInt("MaxCapacity"),
+                    resultSet.getTimestamp("DateTime"),
+                    resultSet.getInt("Duration"),
+                    resultSet.getString("Status")
+                );
+                sessions.add(session);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
     }
 
 }

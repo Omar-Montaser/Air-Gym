@@ -1,4 +1,3 @@
-
 package view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +27,6 @@ public class TrainerEntryController extends BaseController{
     @FXML private ChoiceBox<String> statusChoiceBox;
     @FXML private DatePicker birthDatePicker;
     @FXML private VBox personalBox;
-
 
     public void setScreen() {
         messageLabel.setVisible(false);
