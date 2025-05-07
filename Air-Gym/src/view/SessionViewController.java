@@ -52,13 +52,25 @@ public class SessionViewController extends BaseController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void handleDelete() {
-        // Session selected = sessionTable.getSelectionModel().getSelectedItem();
-        // mainController.setCurrentSession(selected);
-        // mainController.deleteSession();
-        // fillSessionTable();
+        Session selectedSession = sessionTable.getSelectionModel().getSelectedItem();
+        if (selectedSession == null) return;
+        mainController.setCurrentSession(selectedSession);
+        mainController.deleteSession();
+        fillSessionTable();
+    }
+    @FXML
+    private void handleEdit() {
+        Session selectedSession = sessionTable.getSelectionModel().getSelectedItem();
+        if (selectedSession == null) return;
+        mainController.setCurrentSession(selectedSession);
+        mainController.switchScene(Screen.SESSION_ENTRY);
+    }
+    @FXML
+    private void handleEntry() {
+        mainController.setCurrentSession(null);
+        mainController.switchScene(Screen.SESSION_ENTRY);
     }
 
     // Navigation handlers

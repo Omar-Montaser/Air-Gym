@@ -1,6 +1,9 @@
 package view;
 
 import model.accounts.Member;
+
+import java.sql.SQLException;
+
 import controller.Screen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class ProfileController extends BaseController{
-    public void fillDetails(Member member){
+    @FXML private Label messageLabel;
+    public void fillDetails(){
+        Member member=mainController.getCurrentMember();
+        messageLabel.setVisible(false);
         fistNameLabel.setText(member.getFirstName());
         lastNameLabel.setText(member.getLastName());
         phoneNumberLabel.setText(member.getPhoneNumber());
@@ -25,44 +31,35 @@ public class ProfileController extends BaseController{
     }
     @FXML
     private void handleExtendMembership(){
-        try{
         mainController.setIsExtending(true);
         mainController.setIsFreezing(false);
         mainController.setSelectedMembership();
         mainController.switchScene(Screen.CHECKOUT);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
     }
     @FXML
     private void handleFreezeMembership(){
-        try{
         mainController.setIsExtending(false);
         mainController.setIsFreezing(true);
         mainController.setSelectedMembership();
         mainController.switchScene(Screen.CHECKOUT);
-        // mainController.freezeSubscription(durationTextField.getText());
-        
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            //errorlabel handle
-        }
     }
     @FXML
     private void handleUnfreezeMembership(){
+        try{
         mainController.unfreezeSubscription();
-        fillDetails(mainController.getCurrentMember());
+        fillDetails();}
+        catch(SQLException e){
+            messageLabel.setText(e.getMessage());
+        }
     }
     @FXML
     private void handleCancelMembership(){
         try{
         mainController.cancelSubscription();
-        fillDetails(mainController.getCurrentMember());
+        fillDetails();
         }
         catch(Exception e){
-            e.printStackTrace();
+            messageLabel.setText(e.getMessage());
         }
     }
     @FXML
@@ -91,13 +88,14 @@ public class ProfileController extends BaseController{
             passwordChange.clear();
             numberChange.clear();
             
-            fillDetails(mainController.getCurrentMember());
+            fillDetails();
             
         } catch (IllegalArgumentException e) {
-            System.err.println("Validation error: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Failed to update credentials: " + e.getMessage());
+            messageLabel.setVisible(true);
+            messageLabel.setText(e.getMessage());
+        } catch (SQLException e) {
+            messageLabel.setVisible(true);
+            messageLabel.setText(e.getMessage());
         }
     }
     

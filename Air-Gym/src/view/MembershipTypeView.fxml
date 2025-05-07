@@ -44,7 +44,6 @@
                 <Button id="menuButton" mnemonicParsing="false" onAction="#handleBranches" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" onAction="#handleEquipment" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" onAction="#handleSessions" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
-            <Button id="menuButton" layoutX="10.0" layoutY="372.0" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" onAction="#handlePayments" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             </children>
         </VBox>

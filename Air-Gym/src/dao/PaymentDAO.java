@@ -14,6 +14,7 @@ public class PaymentDAO {
 
         List<Payment> payments = new ArrayList<>();
         try {
+            Connection conn = SqlServerConnect.getConnection();
             String query = "SELECT * FROM Payment";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -33,5 +34,28 @@ public class PaymentDAO {
             e.printStackTrace();
         }
         return payments;
+    }
+    public void createPayment(int memberID, String category, String paymentMethod, double amount) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
+        String sql = "EXEC AddPayment ?, ?, ?, ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, memberID);
+            ps.setString(2, category);
+            ps.setString(3, paymentMethod);
+            ps.setDouble(4, amount);
+            ps.executeUpdate();
+    }
+
+    public boolean cancelPayment(int paymentID) {
+        
+        String sql = "EXEC CancelPayment ?";
+        try (Connection conn = SqlServerConnect.getConnection();PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, paymentID);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

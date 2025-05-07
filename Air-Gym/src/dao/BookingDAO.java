@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.gym.members.Booking;
+import utils.SqlServerConnect;
 
 import java.sql.ResultSet;
 
@@ -17,7 +18,7 @@ public class BookingDAO {
     }
     public List<Booking> getAllMemberBookings(int userId) {
         String sql = "SELECT * FROM dbo.GetAllMemberBookings(?)";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, userId);
             ResultSet rs = cstmt.executeQuery();
             List<Booking> bookings = new ArrayList<>();
@@ -44,24 +45,18 @@ public class BookingDAO {
     }
     
 
-    public int createBooking(int userId, int sessionId) {
+    public void createBooking(int userId, int sessionId) throws SQLException{
         String sql = "EXEC CreateBooking ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        Connection conn = SqlServerConnect.getConnection();
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.setInt(2, sessionId);
-            ResultSet rs = cstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("BookingID");
-            }
-            return -1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
+            cstmt.executeQuery();
     }
     public boolean cancelBooking(int bookingId) {
         String sql = "EXEC CancelBooking ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();
+        CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, bookingId);
             cstmt.execute();
             return true;
@@ -72,7 +67,8 @@ public class BookingDAO {
     }
     public boolean deleteBooking(int bookingId) {
         String sql = "EXEC DeleteBooking ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();
+        CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, bookingId);
             cstmt.execute();
             return true;
@@ -83,7 +79,8 @@ public class BookingDAO {
     }
     public boolean updateBookingStatus() {
         String sql = "EXEC UpdateBookingStatus";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();
+        CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.execute();
             return true;
         } catch (SQLException e) {

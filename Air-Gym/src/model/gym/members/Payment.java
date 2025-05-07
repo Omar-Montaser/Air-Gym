@@ -20,6 +20,13 @@ public class Payment {
         this.amount = amount;
         this.status = status;
     }
+    public Payment(int memberID, String category, String paymentMethod, double amount) {
+
+        this.category = category;
+        this.memberID = memberID;
+        this.paymentMethod = paymentMethod;
+        this.amount = amount;
+    }
 //==================================================Get&Set===============================================
     public int getPaymentID() {
         return paymentID;

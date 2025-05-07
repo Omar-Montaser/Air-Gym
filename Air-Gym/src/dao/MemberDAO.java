@@ -1,20 +1,20 @@
 package dao;
 
 import java.sql.*;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import model.accounts.Member;
+import utils.SqlServerConnect;
 
 public class MemberDAO {
     public MemberDAO(Connection conn){
         this.conn = conn;
     }
     private Connection conn;
-    public boolean createMember(Member member,int duration,double paymentAmount) {
+    public void createMember(Member member,int duration,double paymentAmount) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC AddNewMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
-
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setString(1, "CreditCard");
             cstmt.setDouble(2, paymentAmount);
             cstmt.setInt(3, duration);
@@ -26,20 +26,13 @@ public class MemberDAO {
             cstmt.setDate(9, member.getBirthDate());
             cstmt.setInt(10, member.getMembershipId());
             cstmt.setInt(11, member.getBranchId());
-
             cstmt.execute();
-            return true;
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+            cstmt.close();
     }
-    public boolean updateMember(Member member){
-    
+    public void updateMember(Member member) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC UpdateMember ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
-            // Set parameters for the stored procedure
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, member.getUserId());
             cstmt.setString(2, member.getFirstName());
             cstmt.setString(3, member.getLastName());
@@ -57,55 +50,40 @@ public class MemberDAO {
             cstmt.setDate(15, member.getFreezeEndDate());
 
             cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
         }
-    public boolean extendSubscription(int userId, int duration, String paymentMethod, double paymentAmount) {
+    public void extendSubscription(int userId, int duration, String paymentMethod, double paymentAmount) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC ExtendSubscription ?, ?, ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setString(3, paymentMethod);
             cstmt.setDouble(4, paymentAmount);
             cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
-    public boolean renewSubscription(int userId,int duration, int membershipTypeId, String paymentMethod, double paymentAmount) {
+    public void renewSubscription(int userId,int duration, int membershipTypeId, String paymentMethod, double paymentAmount) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC RenewSubscription ?, ?, ?, ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.setInt(3, membershipTypeId);
             cstmt.setString(4, paymentMethod);
             cstmt.setDouble(5, paymentAmount);
             cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }    
     }
-    public boolean cancelSubscription(int userId) {
+    public boolean cancelSubscription(int userId) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC CancelSubscription ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.execute();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
     public boolean updateMemberStatus(int userId, String status) {
         String sql = "EXEC UpdateMemberStatus";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();
+        CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.execute();
             return true;
         } catch (SQLException e) {
@@ -113,28 +91,20 @@ public class MemberDAO {
             return false;
         }
     }
-    public boolean freezeSubscription(int userId, int duration) {
+    public void freezeSubscription(int userId, int duration) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC FreezeSubscription ?, ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.setInt(2, duration);
             cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
-    public boolean unfreezeSubscription(int userId) {
+    public void unfreezeSubscription(int userId) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
         String sql = "EXEC UnfreezeSubscription ?";
-        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+        CallableStatement cstmt = conn.prepareCall(sql);
             cstmt.setInt(1, userId);
             cstmt.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
     
 
@@ -144,7 +114,8 @@ public class MemberDAO {
                      "m.SessionsAvailable, m.SubscriptionStatus, m.FreezesAvailable, m.FreezeEndDate " +
                      "FROM Users u JOIN Member m ON u.UserID = m.UserID WHERE u.UserID = ?";
         
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             
@@ -175,12 +146,13 @@ public class MemberDAO {
         return null;
     }
     public List<Member> getAllMembers() {
+        
         String sql = "SELECT u.UserID, u.FirstName, u.LastName, u.Password, u.PhoneNumber, u.Gender, u.DateOfBirth, " +
                      "m.MembershipTypeID, m.BranchID, m.TrainerID, m.SubscriptionStartDate, m.SubscriptionEndDate, " +
                      "m.SessionsAvailable, m.SubscriptionStatus, m.FreezesAvailable, m.FreezeEndDate " +
                      "FROM Users u JOIN Member m ON u.UserID = m.UserID";
         List<Member> members = new ArrayList<>();
-        try (Statement stmt = conn.createStatement();
+        try (Connection conn = SqlServerConnect.getConnection(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 members.add(mapResultSetToMember(rs));
@@ -213,7 +185,7 @@ public class MemberDAO {
     public Member getMemberByPhoneNumber(String phoneNumber){
         System.out.println("Getting member by phone number: " + phoneNumber);
         String sql = "SELECT * FROM GetMemberByPhoneNumber(?)";        
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SqlServerConnect.getConnection();PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, phoneNumber);
             System.out.println("Executing query");
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -249,7 +221,7 @@ public class MemberDAO {
         String sql = "SELECT * FROM dbo.GetMemberDetails()";
         List<Member> members = new ArrayList<>();
         
-        try (Statement stmt = conn.createStatement();
+        try (Connection conn = SqlServerConnect.getConnection();Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
             ResultSetMetaData rsmd = rs.getMetaData();

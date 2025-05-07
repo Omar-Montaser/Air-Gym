@@ -2,12 +2,12 @@ package controller;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import dao.*;
 import utils.SqlServerConnect;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -58,7 +58,8 @@ public class MainController {
             paymentDAO = new PaymentDAO(conn);
             initializeScenes();
             this.stage=stage;
-            stage.setScene(dashboardScene);
+            stage.setScene(loginScene);
+            loginController.clearFields();
             stage.setResizable(true);
             stage.setTitle("Air Gym");
             Image logo = new Image(getClass().getResourceAsStream("../view/assets/images/LOGO.png"));
@@ -130,20 +131,20 @@ public class MainController {
         equipmentEntryController = (EquipmentEntryController) equipmentEntryLoader.getController();
         equipmentEntryController.setMain(this);
 
-        // FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../view/SessionEntry.fxml"));
-        // sessionEntryScene = new Scene(sessionEntryLoader.load());
-        // sessionEntryController = (SessionEntryController) sessionEntryLoader.getController();
-        // sessionEntryController.setMain(this);
+        FXMLLoader sessionEntryLoader = new FXMLLoader(getClass().getResource("../view/SessionEntry.fxml"));
+        sessionEntryScene = new Scene(sessionEntryLoader.load());
+        sessionEntryController = (SessionEntryController) sessionEntryLoader.getController();
+        sessionEntryController.setMain(this);
 
         // FXMLLoader membershipTypeEntryLoader = new FXMLLoader(getClass().getResource("../view/MembershipTypeEntry.fxml"));
         // membershipTypeEntryScene = new Scene(membershipTypeEntryLoader.load());
         // membershipTypeEntryController = (MembershipTypeEntryController) membershipTypeEntryLoader.getController();
         // membershipTypeEntryController.setMain(this);
 
-        // FXMLLoader paymentEntryLoader = new FXMLLoader(getClass().getResource("../view/PaymentEntry.fxml"));
-        // paymentEntryScene = new Scene(paymentEntryLoader.load());
-        // paymentEntryController = (PaymentEntryController) paymentEntryLoader.getController();
-        // paymentEntryController.setMain(this);
+        FXMLLoader paymentEntryLoader = new FXMLLoader(getClass().getResource("../view/PaymentEntry.fxml"));
+        paymentEntryScene = new Scene(paymentEntryLoader.load());
+        paymentEntryController = (PaymentEntryController) paymentEntryLoader.getController();
+        paymentEntryController.setMain(this);
 
 
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
@@ -185,6 +186,7 @@ public class MainController {
         currentScreen = nextScreen;
         switch(currentScreen){
             case LOGIN:
+                loginController.clearFields();
                 stage.setScene(loginScene);
                 break;
             case HOME:
@@ -205,7 +207,7 @@ public class MainController {
                 stage.setScene(checkoutScene);
                 break;
             case PROFILE:
-                profileController.fillDetails(currentMember);
+                profileController.fillDetails();
                 stage.setScene(profileScene);
                 break;
             case CONTACT_US:
@@ -258,19 +260,37 @@ public class MainController {
                 equipmentEntryController.setScreen();
                 stage.setScene(equipmentEntryScene);
                 break;
+            case SESSION_ENTRY:
+                sessionEntryController.setScreen();
+                stage.setScene(sessionEntryScene);
+                break;
+            // case MEMBERSHIP_TYPE_ENTRY:
+            //     membershipTypeEntryController.setScreen();
+            //     stage.setScene(membershipTypeEntryScene);
+            //     break;
+            case PAYMENT_ENTRY:
+                paymentEntryController.setScreen();
+                stage.setScene(paymentEntryScene);
+                break;
 
             default: break;
         }
     } 
 //========================================LOGIN========================================
     public boolean login(String phoneNumber, String password) throws Exception {
-        isGuest = false; isAdmin = false;
         if (userDAO.getUserByPhoneNumber(phoneNumber)==null) return false;
         else{
+            System.out.println("AAAAAAAAAAAAA");
             String role = userDAO.validateLogin(phoneNumber, password);
             currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
             if(role.equals("Member"))
-                currentMember = memberDAO.getMemberByPhoneNumber(phoneNumber);
+                {currentMember = memberDAO.getMemberByPhoneNumber(phoneNumber);
+                isAdmin=false;}
+            
+            else if(role.equals("Admin")){
+                currentUser= userDAO.getUserByPhoneNumber(phoneNumber);
+                isAdmin=true;
+            }
             return true;
         }
     }
@@ -282,7 +302,7 @@ public class MainController {
     }
 //========================================MEMBER/GUEST LOGIC========================================
     public void guestCheckout(Double paymentAmount, String firstName, String lastName, String password,
-    String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName){
+    String phoneNumber, String gender, Date dateOfBirth,int duration,String branchName) throws SQLException{
         Branch branch = branchDAO.getBranchByName(branchName);
         Member member = new Member(
             userDAO.getMaxUserId()+1,
@@ -296,47 +316,46 @@ public class MainController {
             branch.getBranchID()
         );
         memberDAO.createMember(member,duration,paymentAmount);
+        System.out.println("Member Details:");
+        System.out.println("User ID: " + member.getUserId());
+        System.out.println("First Name: " + member.getFirstName());
+        System.out.println("Last Name: " + member.getLastName());
+        System.out.println("Phone Number: " + member.getPhoneNumber());
+        System.out.println("Gender: " + member.getGender());
+        System.out.println("Date of Birth: " + member.getBirthDateAsString());
+        System.out.println("Membership Type ID: " + member.getMembershipId());
+        System.out.println("Branch ID: " + branch.getBranchID());
         currentMember = memberDAO.getMemberById(member.getUserId());
-        currentUser = userDAO.getUserByPhoneNumber(phoneNumber);
         isGuest=false;
     }
-    public void extendSubscription(int duration,double paymentAmount){        
+    public void extendSubscription(int duration,double paymentAmount) throws SQLException{        
         memberDAO.extendSubscription(currentMember.getUserId(), duration, "CreditCard", paymentAmount);
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    public void freezeSubscription(int duration){
+    public void freezeSubscription(int duration) throws SQLException{
         System.out.println("Freezing");
         memberDAO.freezeSubscription(currentMember.getUserId(),duration);
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
-        System.out.println("Member found with ID: " + currentMember.getUserId());
-        System.out.println("Name: " + currentMember.getFirstName() + " " + currentMember.getLastName());
-        System.out.println("Phone: " + currentMember.getPhoneNumber());
-        System.out.println("Membership Type: " + currentMember.getMembershipId());
-        System.out.println("Subscription Status: " + currentMember.getSubscriptionStatus());
-        System.out.println("Subscription End Date: " + currentMember.getSubscriptionEndDate());
-        System.out.println("Sessions Available: " + currentMember.getSessionsAvailable());
-        System.out.println("Freezes Available: " + currentMember.getFreezeAvailable());
-
     }
-    public void renewSubscription(int duration,double paymentAmount){
+    public void renewSubscription(int duration,double paymentAmount)throws SQLException{
         memberDAO.renewSubscription(currentMember.getUserId(), duration, selectedMembership.getMembershipTypeID(), "CreditCard", paymentAmount);
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    public void cancelSubscription(){
+    public void cancelSubscription()throws SQLException {
         memberDAO.cancelSubscription(currentMember.getUserId());
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    public void unfreezeSubscription(){
+    public void unfreezeSubscription()throws SQLException{
         memberDAO.unfreezeSubscription(currentMember.getUserId());
         currentMember = memberDAO.getMemberById(currentMember.getUserId());
     }
-    public void bookSession(int sessionId){
+    public void bookSession(int sessionId) throws SQLException{
         bookingDAO.createBooking(currentMember.getUserId(), sessionId);
     }
     public void cancelBooking(int bookingId){
         bookingDAO.cancelBooking(bookingId);
     }
-    public void updateMemberCredentials(String phoneNumber, String password){
+    public void updateMemberCredentials(String phoneNumber, String password) throws SQLException{
         currentMember.setPassword(password);
         currentMember.setPhoneNumber(phoneNumber);
         memberDAO.updateMember(currentMember);
@@ -351,7 +370,7 @@ public List<Member> getAllMemberDetails() {
 public Member getMemberById(int memberId) {
     return memberDAO.getMemberById(memberId);
 }
-public void updateMember(Member member) {
+public void updateMember(Member member) throws SQLException{
     memberDAO.updateMember(member);
 }
 public void createTrainer(String firstName, String lastName, String phoneNumber, String gender, 
@@ -387,6 +406,44 @@ public void createEquipment(String name, String status,int branchID)throws SQLEx
     Equipment e=new Equipment(equipmentDAO.getMaxEquipmentId()+1, name, null, null, status, branchID);
     equipmentDAO.addNewEquipment(e);
 }
+public void updateSession() throws SQLException {
+    sessionDAO.updateSession(currentSession);
+}
+public void deleteSession() {
+    sessionDAO.deleteSession(currentSession.getSessionID());
+}
+public void createSession(int trainerID, int branchID, String sessionType, int maxCapacity, LocalDateTime dateTime,
+    int duration, String status) throws SQLException {
+        Session session = new Session(
+            sessionDAO.getMaxSessionId() + 1,
+            trainerID,
+            branchID,
+            sessionType,
+            maxCapacity,
+            Timestamp.valueOf(dateTime),
+            duration,
+            status
+        );
+    sessionDAO.createSession(session);
+}
+
+// public void updateMembershipType() throws SQLException {
+//     membershipTypeDao.updateMembershipType(currentMembershipType);
+// }
+// public void deleteMembershipType() {
+//     membershipTypeDao.deleteMembershipType(currentMembershipType.getMembershipTypeID());
+// }
+// public void createMembershipType(String name, double price, int duration, String description) throws SQLException {
+//     MembershipType membershipType = new MembershipType(membershipTypeDao.getMaxMembershipTypeId() + 1, name, price, duration, description);
+//     membershipTypeDao.addNewMembershipType(membershipType);
+// }
+public void cancelPayment() {
+    paymentDAO.cancelPayment(currentPayment.getPaymentID());
+}
+public void createPayment(int memberID, String category, String paymentMethod, double amount) throws SQLException {
+    paymentDAO.createPayment(memberID, category, paymentMethod, amount);
+}
+
 public void updateEquipment()throws SQLException{
     equipmentDAO.updateEquipment(currentEquipment);
 }
@@ -569,12 +626,12 @@ public List<Session> getAllSessions(){
     private Scene equipmentEntryScene;
     private EquipmentEntryController equipmentEntryController;
 
-    // private Scene sessionEntryScene;
-    // private SessionEntryController sessionEntryController;
+    private Scene sessionEntryScene;
+    private SessionEntryController sessionEntryController;
 
     // private Scene membershipTypeEntryScene;
     // private MembershipTypeEntryController membershipTypeEntryController;
 
-    // private Scene paymentEntryScene;
-    // private PaymentEntryController paymentEntryController;
+    private Scene paymentEntryScene;
+    private PaymentEntryController paymentEntryController;
 }

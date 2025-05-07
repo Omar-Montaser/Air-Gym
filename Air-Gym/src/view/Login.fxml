@@ -28,6 +28,11 @@
       </HBox>
       <VBox layoutX="327.0" layoutY="200.0" prefHeight="387.0" prefWidth="442.0" styleClass="login-container" stylesheets="@assets/css/login.css">
          <children>
+            <Label fx:id="messageLabel" prefHeight="36.0" prefWidth="301.0" style="-fx-font-size: 14; -fx-background-radius: 8; -fx-text-fill: white; -fx-background-color: #ff5e5e;" text="Message Label">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="603.0" style="-fx-font-size: 30;" text="Login" />
             <HBox prefHeight="11.0" prefWidth="382.0">
                <children>

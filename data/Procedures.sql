@@ -1,4 +1,4 @@
-USE AirGym;
+USE AirGym2;
 --------------------------------Members--------------------------------
 GO
 CREATE OR ALTER PROCEDURE AddNewMember

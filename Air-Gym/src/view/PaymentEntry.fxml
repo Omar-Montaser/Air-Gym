@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.PaymentEntryController">
     <children>
         <VBox layoutX="-3.0" layoutY="-7.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: black;">
             <children>
@@ -42,7 +42,6 @@
                 <Button id="menuButton" layoutX="10.0" layoutY="72.0" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Branches" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Equipment" />
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
                 <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
             </children>
         </VBox>
@@ -60,26 +59,26 @@
                 </Button>
             </children>
         </HBox>
-        <Button layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
-        <Button layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
+        <Button fx:id="saveButton" layoutX="887.0" layoutY="500.0" mnemonicParsing="false" styleClass="new-entry-button" stylesheets="@assets/css/adminTemplate.css" text="Save Changes" />
+        <Button fx:id="cancelButton" layoutX="795.0" layoutY="499.0" mnemonicParsing="false" styleClass="delete-button" stylesheets="@assets/css/adminTemplate.css" text="Cancel" />
         <Label layoutX="323.0" layoutY="150.0" prefHeight="44.0" prefWidth="135.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" />
-        <Label layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Payment Entry" />
+        <Label fx:id="titleLabel" layoutX="224.0" layoutY="58.0" prefHeight="58.0" prefWidth="357.0" styleClass="form-title" stylesheets="@assets/css/adminTemplate.css" text="New Payment Entry" />
         <VBox alignment="CENTER" layoutX="215.0" layoutY="185.0" prefHeight="149.0" prefWidth="500.0" style="-fx-background-color: #f0f0f0;" stylesheets="@assets/css/adminTemplate.css">
             <children>
             <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                <children>
                   <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Category" />
-                  <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Category" style="-fx-font-size: 12;">
+                  <ChoiceBox fx:id="categoryBox" prefHeight="25.0" prefWidth="173.0">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="8.0" />
                      </HBox.margin>
-                  </TextField>
+                  </ChoiceBox>
                </children>
             </HBox>
                 <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Amount" />
-                  <TextField prefHeight="25.0" prefWidth="150.0" promptText="Enter Amount" style="-fx-font-size: 12;">
+                  <TextField fx:id="amountField" prefHeight="25.0" prefWidth="150.0" promptText="Enter Amount" style="-fx-font-size: 12;">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
@@ -89,18 +88,33 @@
                 <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
                     <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Method" />
-                  <ChoiceBox prefHeight="25.0" prefWidth="173.0">
+                  <ChoiceBox fx:id="paymentMethodBox" prefHeight="25.0" prefWidth="173.0">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
                   </ChoiceBox>
                     </children>
                 </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="394.0">
+               <children>
+                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Member ID" />
+                  <TextField fx:id="memberIDField" prefHeight="25.0" prefWidth="150.0" promptText="Enter ID" style="-fx-font-size: 12;">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
             </children>
             <padding>
                 <Insets left="10.0" />
             </padding>
         </VBox>
         <Label alignment="CENTER" layoutX="214.0" layoutY="136.0" prefHeight="40.0" prefWidth="500.0" style="-fx-background-color: #dbdbdb; -fx-text-alignment: center;" styleClass="form-sh" stylesheets="@assets/css/adminTemplate.css" text="Payment Details" />
+      <Label fx:id="messageLabel" layoutX="776.0" layoutY="91.0" prefHeight="36.0" prefWidth="301.0" style="-fx-font-size: 14; -fx-background-radius: 8; -fx-text-fill: white; -fx-background-color: #ff5e5e;" text="Message Label">
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
     </children>
 </AnchorPane>

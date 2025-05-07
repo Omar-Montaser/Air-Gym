@@ -71,4 +71,5 @@ public class MembershipTypeDAO {
             rs.getString("ColorHex")
         );
     }
+
 }

@@ -44,6 +44,13 @@ CREATE OR ALTER PROCEDURE AddNewMember
                 ROLLBACK TRANSACTION;
                 RETURN;
             END
+            IF LEN(@Password) < 8
+                BEGIN
+                    RAISERROR('Password must be at least 8 characters long.', 16, 1);
+                    ROLLBACK TRANSACTION;
+                    RETURN;
+                END
+
 
             INSERT INTO Users (Password, FirstName, LastName, PhoneNumber, Gender, DateOfBirth, Role)
             VALUES (@Password, @FirstName, @LastName, @PhoneNumber, @Gender, @DateOfBirth, 'Member');

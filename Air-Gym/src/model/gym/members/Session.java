@@ -1,15 +1,16 @@
 package model.gym.members;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Session {
-    private int sessionID;
-    private int trainerID;
-    private int branchID;
+    private Integer sessionID;
+    private Integer trainerID;
+    private Integer branchID;
     private String sessionType;
-    private int maxCapacity;
+    private Integer maxCapacity;
     private Timestamp dateTime;
-    private int duration;
+    private Integer duration;
     private String status;
     private String trainerName;
     private String branchName;
@@ -27,19 +28,19 @@ public class Session {
     }
 //==================================================Get&Set===============================================
 
-    public int getSessionID() {
+    public Integer getSessionID() {
         return sessionID;
     }
     public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
     }
-    public int getTrainerID() {
+    public Integer getTrainerID() {
         return trainerID;
     }
     public void setTrainerID(int trainerID) {
         this.trainerID = trainerID;
     }
-    public int getBranchID() {
+    public Integer getBranchID() {
         return branchID;
     }
     public void setBranchID(int branchID) {
@@ -51,7 +52,7 @@ public class Session {
     public void setSessionType(String sessionType) {
         this.sessionType = sessionType;
     }
-    public int getMaxCapacity() {
+    public Integer getMaxCapacity() {
         return maxCapacity;
     }
     public void setMaxCapacity(int maxCapacity) {
@@ -60,10 +61,10 @@ public class Session {
     public Timestamp getDateTime() {
         return dateTime;
     }
-    public void setDateTime(Timestamp dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = Timestamp.valueOf(dateTime);
     }
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
     public void setDuration(int duration) {

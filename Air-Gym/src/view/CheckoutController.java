@@ -3,6 +3,7 @@ package view;
 import model.accounts.Member;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 import controller.Screen;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ public class CheckoutController extends BaseController{
     int months;
     int days;
     public void modifyScreen(){
+        messageLabel.setVisible(false);
         paymentLabel.setText("Payment");
         checkoutButton.setText("Checkout");
         if(mainController.isGuest()){
@@ -129,14 +131,27 @@ public class CheckoutController extends BaseController{
     }
     @FXML
     private void handleCheckout(){
+        try{
         if(mainController.isGuest()){
+            if (firstNameTextField.getText() == null || firstNameTextField.getText().trim().isEmpty() ||
+                lastNameTextField.getText() == null || lastNameTextField.getText().trim().isEmpty() ||
+                passwordTextField.getText() == null || passwordTextField.getText().trim().isEmpty() ||
+                phoneNumberTextField.getText() == null || phoneNumberTextField.getText().trim().isEmpty() ||
+                genderChoiceBox.getValue() == null ||
+                birthDatePicker.getValue() == null ||
+                branchChoiceBox.getValue() == null ||
+                durationChoiceBox.getValue() == null) {
+                throw new IllegalArgumentException("Please fill all details");
+            }
             mainController.guestCheckout(totalPrice, firstNameTextField.getText(), lastNameTextField.getText(), 
-            passwordTextField.getText(), phoneNumberTextField.getText(), genderChoiceBox.getValue(), 
-            java.sql.Date.valueOf(birthDatePicker.getValue()),months, branchChoiceBox.getValue());
+                        passwordTextField.getText(), phoneNumberTextField.getText(), genderChoiceBox.getValue(), 
+                        java.sql.Date.valueOf(birthDatePicker.getValue()), months, branchChoiceBox.getValue());
             mainController.switchScene(Screen.PROFILE);
         }
         else {
+            if(durationChoiceBox.getValue() == null) throw new IllegalArgumentException("Please provide duration");
             if(mainController.isExtending()){
+                
                 mainController.extendSubscription(months,totalPrice);
                 mainController.switchScene(Screen.PROFILE);
             }
@@ -149,6 +164,15 @@ public class CheckoutController extends BaseController{
                 mainController.switchScene(Screen.PROFILE);
             }
         }
+        }
+        catch(IllegalArgumentException e){
+            messageLabel.setVisible(true);
+            messageLabel.setText(e.getMessage());
+        }   
+        catch(SQLException e){
+            messageLabel.setVisible(true);
+            messageLabel.setText(e.getMessage());
+        }   
     }
     @FXML
     private void handleHome(){
@@ -211,10 +235,6 @@ public class CheckoutController extends BaseController{
     private Button cancelButton;
     @FXML
     private TextField passwordTextField;
-
-
-
-
-
-
+    @FXML
+    private Label messageLabel;
 }

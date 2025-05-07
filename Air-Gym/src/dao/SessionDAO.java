@@ -1,13 +1,11 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.CallableStatement;             
 import java.sql.*;
 
 import model.gym.members.Session;
+import utils.SqlServerConnect;
 
 public class SessionDAO {
     private Connection conn;
@@ -83,8 +81,10 @@ public class SessionDAO {
         }
     }
     public List<Session> getAllSessions() {
+
         List<Session> sessions = new ArrayList<>();
         try {
+            Connection conn = SqlServerConnect.getConnection();
             String query = "SELECT * FROM Session";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -106,5 +106,88 @@ public class SessionDAO {
         }
         return sessions;
     }
-
+    public void updateSession(Session session) throws SQLException{
+        Connection conn = SqlServerConnect.getConnection();
+        String sql = "EXEC UpdateSession ?, ?, ?, ?, ?, ?, ?, ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, session.getSessionID());
+            if (session.getTrainerID() != null) {
+                stmt.setInt(2, session.getTrainerID());
+            } else {
+                stmt.setNull(2, java.sql.Types.INTEGER);
+            }
+            if (session.getBranchID() != null) {
+                stmt.setInt(3, session.getBranchID());
+            } else {
+                stmt.setNull(3, java.sql.Types.INTEGER);
+            }
+            if (session.getSessionType() != null) {
+                stmt.setString(4, session.getSessionType());
+            } else {
+                stmt.setNull(4, java.sql.Types.VARCHAR);
+            }
+            if (session.getMaxCapacity() != null) {
+                stmt.setInt(5, session.getMaxCapacity());
+            } else {
+                stmt.setNull(5, java.sql.Types.INTEGER);
+            }
+            if (session.getDateTime() != null) {
+                stmt.setTimestamp(6, session.getDateTime());
+            } else {
+                stmt.setNull(6, java.sql.Types.TIMESTAMP);
+            }
+            if (session.getDuration() != null) {
+                stmt.setInt(7, session.getDuration());
+            } else {
+                stmt.setNull(7, java.sql.Types.INTEGER);
+            }
+            if (session.getStatus() != null) {
+                stmt.setString(8, session.getStatus());
+            } else {
+                stmt.setNull(8, java.sql.Types.VARCHAR);
+            }
+            stmt.executeUpdate();
+    }
+    public void createSession(Session session) throws SQLException {
+        Connection conn = SqlServerConnect.getConnection();
+        String sql = "EXEC AddSession "
+                   + "@TrainerID = ?, "
+                   + "@BranchID = ?, "
+                   + "@SessionType = ?, "
+                   + "@MaxCapacity = ?, "
+                   + "@DateTime = ?, "
+                   + "@Duration = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, session.getTrainerID());
+        stmt.setInt(2, session.getBranchID());
+        stmt.setString(3, session.getSessionType());
+        stmt.setInt(4, session.getMaxCapacity());
+        stmt.setTimestamp(5, session.getDateTime());
+        stmt.setInt(6, session.getDuration());
+        
+        stmt.executeQuery();
+    }
+    public void deleteSession(int sessionId) {
+        try {
+            String query = "EXEC DeleteSession @SessionID = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, sessionId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public int getMaxSessionId() {
+        String sql = "SELECT MAX(SessionID) FROM Session";
+        try (Connection conn = SqlServerConnect.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

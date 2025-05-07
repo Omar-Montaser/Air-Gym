@@ -20,5 +20,6 @@
         "c:\\Users\\MONTASER YOUSUF\\Desktop\\javafx-sdk-17.0.14\\lib\\javafx.controls.jar",
         "c:\\javafx-sdk-17.0.14\\lib\\javafx-swt.jar",
         "c:\\javafx-sdk-17.0.14\\lib\\javafx.controls.jar"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

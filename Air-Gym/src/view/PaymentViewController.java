@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.accounts.Member;
 import model.gym.members.*;
 
 import java.util.List;
@@ -52,11 +53,17 @@ public class PaymentViewController extends BaseController {
     }
 
     @FXML
-    private void handleDelete() {
-        Payment selected = paymentTable.getSelectionModel().getSelectedItem();
-        mainController.setCurrentPayment(selected);
-        // mainController.deletePayment();
+    private void handleCancelPayment() {
+        Payment selectedPayment = paymentTable.getSelectionModel().getSelectedItem();
+        mainController.setCurrentPayment(selectedPayment);
+        mainController.cancelPayment();
         fillPaymentTable();
+    }
+
+    @FXML
+    private void handlePaymentEntry() {
+        mainController.setCurrentPayment(null);
+        mainController.switchScene(Screen.PAYMENT_ENTRY);
     }
 
     // Navigation

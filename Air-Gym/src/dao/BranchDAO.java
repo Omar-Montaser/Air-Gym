@@ -111,14 +111,12 @@ public class BranchDAO {
         }
     }
     public void createBranch(Branch branch) throws SQLException{
-        int newBranchId = -1;
             String query = "EXEC AddNewBranch @Name = ?, @Location = ?, @Status = ?, @AdminID = ?";
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, branch.getName());
             statement.setString(2, branch.getLocation());
             statement.setString(3, branch.getStatus());
             statement.setInt(4, branch.getAdminID());
-            ResultSet resultSet = statement.executeQuery();
     }
     public void updateBranch(Branch branch) throws SQLException {
         String query = "EXEC UpdateBranch @BranchID = ?, @Name = ?, @Location = ?, @Status = ?, @AdminID = ?";

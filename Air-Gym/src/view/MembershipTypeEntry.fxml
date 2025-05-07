@@ -44,7 +44,6 @@
                 <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Sessions" />
             <Button id="menuButton" mnemonicParsing="false" style="-fx-background-color: #999999;" stylesheets="@assets/css/adminTemplate.css" text="Membership Types" />
             <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Payment Tracking" />
-            <Button id="menuButton" mnemonicParsing="false" stylesheets="@assets/css/adminTemplate.css" text="Booking Tracking" />
             </children>
         </VBox>
         <HBox layoutX="194.0" layoutY="-5.0" prefHeight="60.0" prefWidth="907.0" style="-fx-background-color: #1a1a1a;" stylesheets="@assets/css/adminTemplate.css">
@@ -69,16 +68,6 @@
             <children>
                 <HBox prefHeight="40.0" prefWidth="394.0">
                     <children>
-                        <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="ID" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 12;" styleClass="form-sh" text="Auto Fill" wrappingWidth="164.27782440185547">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </Text>
-                    </children>
-                </HBox>
-                <HBox prefHeight="40.0" prefWidth="394.0">
-                    <children>
                         <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Name" />
                         <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Name" style="-fx-font-size: 12;">
                             <HBox.margin>
@@ -100,11 +89,11 @@
                 <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
                   <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Price" />
-                  <ChoiceBox prefHeight="25.0" prefWidth="173.0">
+                  <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Description" style="-fx-font-size: 12;">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
-                  </ChoiceBox>
+                  </TextField>
                </children>
                 </HBox>
                 <HBox prefHeight="40.0" prefWidth="394.0">
@@ -129,12 +118,12 @@
             </HBox>
             <HBox prefHeight="40.0" prefWidth="394.0">
                <children>
-                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Number of Private Sessions" />
-                  <TextField prefHeight="25.0" prefWidth="203.0" promptText="Enter Number of Private Sessions" style="-fx-font-size: 12;">
+                  <Label prefHeight="44.0" prefWidth="150.0" styleClass="form-sh" text="Private Trainer" />
+                  <ChoiceBox prefWidth="150.0">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
-                  </TextField>
+                  </ChoiceBox>
                </children>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="394.0" />
