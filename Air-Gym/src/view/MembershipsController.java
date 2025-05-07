@@ -18,12 +18,13 @@ import controller.Screen;
 public class MembershipsController extends BaseController{
     public void populateMembershipTypes(){
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event->{
-            double deltaY = event.getDeltaY() * 3;
+            double deltaY = event.getDeltaY() * 2;
             scrollPane.setVvalue(scrollPane.getVvalue() - deltaY / scrollPane.getContent().getBoundsInLocal().getHeight());
             event.consume();
         });
         List<MembershipType> membershipTypes = mainController.getAllMembershipTypes();
         membershipContainer.getChildren().clear();
+        membershipContainer.setPrefHeight(400.0);
         for (MembershipType membershipType : membershipTypes)
             System.out.println(membershipType.getName());
         int totalMemberships = membershipTypes.size();
@@ -209,6 +210,10 @@ public class MembershipsController extends BaseController{
     @FXML
     private void handleProfile(){
         mainController.switchScene(Screen.PROFILE);
+    }
+    @FXML
+    private void handleContactUs(){
+        mainController.switchScene(Screen.CONTACT_US);
     }
     @FXML
     private Button homeButton;

@@ -54,7 +54,7 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+                <Button mnemonicParsing="false" onAction="#handleLogout" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="550.0" right="10.0" top="15.0" />
                     </HBox.margin>
@@ -84,7 +84,7 @@
                                     <Image url="@assets/icons/user-solid.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="217.0" layoutY="14.0" prefHeight="25.0" prefWidth="22.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                              <Label fx:id="activeMembers" layoutX="217.0" layoutY="14.0" prefHeight="25.0" prefWidth="22.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -108,7 +108,7 @@
                                     <Image url="@assets/icons/users-solid.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="212.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="54">
+                              <Label fx:id="allMembers" layoutX="212.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="54">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -149,7 +149,7 @@
                </children>
             </AnchorPane>
             <AnchorPane layoutX="431.0" layoutY="241.0" prefHeight="254.0" prefWidth="390.0" />
-            <ScrollPane layoutX="402.0" layoutY="201.0" prefHeight="238.0" prefWidth="417.0">
+            <ScrollPane layoutX="402.0" layoutY="201.0" prefHeight="241.0" prefWidth="417.0">
                <content>
                   <AnchorPane prefHeight="366.0" prefWidth="391.0" styleClass="shadow">
                      <children>
@@ -170,7 +170,7 @@
                                     <Image url="@assets/icons/admin.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
+                              <Label fx:id="allAdmins" layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="7">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -194,7 +194,7 @@
                                     <Image url="@assets/icons/user-tie-solid.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="154.0" layoutY="14.0" prefHeight="25.0" prefWidth="23.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="12">
+                              <Label fx:id="activeTrainers" layoutX="154.0" layoutY="14.0" prefHeight="25.0" prefWidth="23.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="12">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -218,7 +218,7 @@
                                     <Image url="@assets/icons/money-bill-trend-up-solid.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                              <Label fx:id="totalExpenses" layoutX="116.0" layoutY="14.0" prefHeight="25.0" prefWidth="61.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -242,7 +242,7 @@
                                     <Image url="@assets/icons/money-bill-trend-up-solid.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="125.0" layoutY="14.0" prefHeight="25.0" prefWidth="52.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="\$3,560">
+                              <Label fx:id="totalRevenue" layoutX="101.0" layoutY="14.0" prefHeight="25.0" prefWidth="76.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="\$3,560">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -266,7 +266,7 @@
                                     <Image url="@assets/icons/equipment.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
+                              <Label fx:id="allAvailableEquipment" layoutX="161.0" layoutY="14.0" prefHeight="17.0" prefWidth="16.0" styleClass="font-color-1" stylesheets="@assets/css/dashboard.css" text="6">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

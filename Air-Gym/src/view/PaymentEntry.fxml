@@ -52,7 +52,7 @@
                         <Insets left="10.0" top="20.0" />
                     </HBox.margin>
                 </Text>
-                <Button mnemonicParsing="false" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
+                <Button mnemonicParsing="false" onAction="#handleLogout" prefWidth="101.0" styleClass="logout-button" stylesheets="@assets/css/adminTemplate.css" text="Logout">
                     <HBox.margin>
                         <Insets left="550.0" right="10.0" top="15.0" />
                     </HBox.margin>

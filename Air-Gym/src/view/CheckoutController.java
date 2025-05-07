@@ -168,10 +168,12 @@ public class CheckoutController extends BaseController{
         catch(IllegalArgumentException e){
             messageLabel.setVisible(true);
             messageLabel.setText(e.getMessage());
+            return;
         }   
         catch(SQLException e){
             messageLabel.setVisible(true);
             messageLabel.setText(e.getMessage());
+            return;
         }   
     }
     @FXML

@@ -1,4 +1,4 @@
-Use AirGym;
+Use AirGym2;
 ---------------------------------------------Member Functions-------------------------------------------------
 go
 CREATE OR ALTER FUNCTION GetMemberByPhoneNumber(@PhoneNumber VARCHAR(15))
@@ -80,7 +80,6 @@ CREATE OR ALTER FUNCTION CountAllActiveMembers()
         WHERE Status = 'Active';
         RETURN @Count;
     END;
-USE AirGym;
 GO
 CREATE OR ALTER FUNCTION GetMemberDetails()
     RETURNS TABLE

@@ -211,6 +211,7 @@ public class MainController {
                 stage.setScene(profileScene);
                 break;
             case CONTACT_US:
+                contactUsController.setView();
                 stage.setScene(contactUsScene);
                 break;
             case DASHBOARD:
@@ -527,7 +528,7 @@ public List<Session> getAllSessions(){
         else this.currentTrainer=null;
     }
     public void setCurrentMember(Member member) {
-        if(currentMember!=null)
+        if(member!=null)
             this.currentMember = memberDAO.getMemberById(member.getUserId());
         else this.currentMember=null;
     }
