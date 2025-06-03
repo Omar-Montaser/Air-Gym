@@ -2,8 +2,9 @@
 
 **Air-Gym** is a JavaFX desktop application designed for comprehensive gym membership management. It leverages the Model-View-Controller (MVC) architecture alongside the Data Access Object (DAO) pattern to ensure a modular and maintainable codebase. The application interfaces with a Microsoft SQL Server backend, utilizing JDBC for database operations.
 
-📺 Demo Video
-🎥 Watch Air-Gym in action on YouTube: https://youtu.be/diQB5B5d1SY
+## Demo Video
+🎥 Watch Air-Gym in action on [YouTube](https://youtu.be/diQB5B5d1SY)
+
 
 ## Features
 
